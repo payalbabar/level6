@@ -1,86 +1,41 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Wallet, Shield, Zap, ArrowRight, Flame, Database } from "lucide-react";
+import { Wallet, Shield, Zap, ArrowRight, Flame, Database, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/AuthContext";
+import { checkConnection, retrievePublicKey } from "@/lib/freighter";
 
 export default function Landing() {
   const navigate = useNavigate();
   const { login, logout, isAuthenticated } = useAuth();
   const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [isSepolia, setIsSepolia] = useState(false);
+  const [publicKey, setPublicKey] = useState("");
+  const [isConnecting, setIsConnecting] = useState(false);
   
   useEffect(() => {
     if (isAuthenticated) setIsWalletConnected(true);
   }, [isAuthenticated]);
 
   const connectWallet = async () => {
-    if (!window.ethereum) {
-      toast({ title: "MetaMask Not Found", description: "Please install MetaMask browser extension to continue", variant: "destructive" });
-      return;
-    }
     try {
-      toast({ title: "Connecting MetaMask...", description: "Requesting wallet permissions" });
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      if (accounts.length > 0) {
-        setIsWalletConnected(true);
-        login(); // Also log into app session
-        // Check if already on Sepolia
-        const chainId = await window.ethereum.request({ method: "eth_chainId" });
-        if (chainId === "0xaa36a7") {
-          setIsSepolia(true);
-          toast({ title: "Wallet Connected", description: `Connected on Sepolia: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` });
-        } else {
-          toast({ title: "Wallet Connected", description: "Please switch to Sepolia network to continue" });
-        }
+      setIsConnecting(true);
+      toast({ title: "Connecting Freighter...", description: "Requesting wallet permissions" });
+      const allowed = await checkConnection();
+      if (!allowed) {
+        toast({ title: "Freighter Not Found", description: "Please install Freighter browser extension to continue", variant: "destructive" });
+        return;
       }
+      const key = await retrievePublicKey();
+      setPublicKey(key);
+      setIsWalletConnected(true);
+      login(); // Also log into app session
+      toast({ title: "Wallet Connected", description: `Connected: ${key.slice(0, 6)}...${key.slice(-4)}` });
     } catch (err) {
       console.error(err);
       toast({ title: "Connection Failed", description: err.message || "User rejected the request", variant: "destructive" });
-    }
-  };
-
-  const switchToSepolia = async () => {
-    if (!window.ethereum) return;
-    try {
-      toast({ title: "Switching Network...", description: "Requesting switch to Sepolia Testnet" });
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0xaa36a7" }],
-      });
-      setIsSepolia(true);
-      toast({ title: "Network Switched", description: "Now on Sepolia Testnet" });
-    } catch (switchError) {
-      // If Sepolia is not added to MetaMask, add it
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0xaa36a7",
-                chainName: "Sepolia Test Network",
-                nativeCurrency: {
-                  name: "Sepolia ETH",
-                  symbol: "ETH",
-                  decimals: 18,
-                },
-                rpcUrls: ["https://rpc.sepolia.org"],
-                blockExplorerUrls: ["https://sepolia.etherscan.io"],
-              },
-            ],
-          });
-          setIsSepolia(true);
-          toast({ title: "Sepolia Added & Switched", description: "Now on Sepolia Testnet" });
-        } catch (addError) {
-          console.error(addError);
-          toast({ title: "Failed to Add Sepolia", description: addError.message || "Could not add network", variant: "destructive" });
-        }
-      } else {
-        console.error(switchError);
-        toast({ title: "Network Switch Failed", description: switchError.message || "User rejected the request", variant: "destructive" });
-      }
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -99,15 +54,11 @@ export default function Landing() {
           <div className="flex items-center gap-4">
             {isWalletConnected ? (
               <div className="flex items-center gap-2">
-                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold">
-                  <div className={`h-1.5 w-1.5 rounded-full ${isSepolia ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-                  0xfbb5...5cff {isSepolia ? '• Sepolia' : ''}
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold">
+                  <div className={`h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse`} />
+                  {publicKey ? `${publicKey.slice(0, 6)}...${publicKey.slice(-4)}` : "Connected"} • Testnet
                 </div>
-                {isSepolia ? (
-                  <Button onClick={() => navigate('/dashboard')} size="sm" variant="outline" className="rounded-full text-[10px] font-bold h-8">Dashboard</Button>
-                ) : (
-                  <Button onClick={switchToSepolia} size="sm" variant="outline" className="rounded-full text-[10px] font-bold h-8 border-amber-500/50 text-amber-500 hover:bg-amber-500/5">Switch to Sepolia</Button>
-                )}
+                <Button onClick={() => navigate('/dashboard')} size="sm" variant="outline" className="rounded-full text-[10px] font-bold h-8">Dashboard</Button>
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -146,24 +97,16 @@ export default function Landing() {
           </h1>
           
           <p className="max-w-2xl mx-auto text-slate-400 text-lg leading-relaxed">
-            Book LPG cylinders with MetaMask wallet payments on Sepolia testnet. <br />
+            Book LPG cylinders with Freighter wallet payments on Stellar testnet. <br />
             Every transaction is immutably recorded on-chain for full transparency.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-6 pt-6">
             {!isWalletConnected ? (
-              <Button onClick={connectWallet} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-primary hover:scale-105 transition-transform shadow-2xl shadow-primary/20">
-                Connect Wallet
+              <Button onClick={connectWallet} disabled={isConnecting} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-primary hover:scale-105 transition-transform shadow-2xl shadow-primary/20">
+                {isConnecting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
+                {isConnecting ? "Connecting..." : "Connect Wallet"}
               </Button>
-            ) : !isSepolia ? (
-              <div className="space-y-4 w-full flex flex-col items-center">
-                <div className="px-6 py-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-amber-500 flex items-center gap-3 text-sm font-medium">
-                  <Shield className="h-5 w-5" /> Please switch to Sepolia Testnet to continue
-                </div>
-                <Button onClick={switchToSepolia} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-[#f6851b] hover:bg-[#e2761b] hover:scale-105 transition-all shadow-2xl shadow-orange-500/20">
-                  Switch to Sepolia Network
-                </Button>
-              </div>
             ) : (
               <Button onClick={() => navigate('/book')} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-primary hover:scale-105 transition-transform shadow-2xl shadow-primary/20">
                 Book & Pay Now <ArrowRight className="ml-2 h-5 w-5" />
@@ -178,8 +121,8 @@ export default function Landing() {
         <div className="grid md:grid-cols-3 gap-6">
           <FeatureCard 
             icon={Wallet}
-            title="MetaMask Payments"
-            description="Pay with ETH on Sepolia testnet. Booking confirmed only after on-chain transaction success."
+            title="Freighter Payments"
+            description="Pay with XLM on Stellar testnet. Booking confirmed only after on-chain transaction success."
           />
           <FeatureCard 
             icon={Shield}
@@ -203,8 +146,8 @@ export default function Landing() {
             {/* Connector Lines */}
             <div className="hidden md:block absolute top-10 left-[25%] right-[25%] h-px bg-gradient-to-r from-primary/50 to-primary/10 -z-10" />
             
-            <Step number="01" title="Connect Wallet" desc="Connect MetaMask and switch to Sepolia testnet network." />
-            <Step number="02" title="Book & Pay" desc="Fill booking details and pay with SepoliaETH via MetaMask." />
+            <Step number="01" title="Connect Wallet" desc="Connect Freighter wallet and switch to Stellar testnet network." />
+            <Step number="02" title="Book & Pay" desc="Fill booking details and pay with XLM via Freighter." />
             <Step number="03" title="Track On-Chain" desc="Monitor real-time blockchain supply chain events for your booking." />
         </div>
       </section>

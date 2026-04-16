@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import { ShoppingCart, Loader2, Shield, Wallet, MapPin } from "lucide-react";
 import { generateHash, generateBlockHash, generateBookingId, CYLINDER_PRICES, CYLINDER_LABELS } from "@/lib/blockchain";
+import { checkConnection, sendXLM } from "@/lib/freighter";
 
 const STATES_CITIES = {
   "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
@@ -62,72 +63,25 @@ export default function BookCylinder() {
 
     setLoading(true);
     
-    if (form.payment_method === 'metamask') {
-      if (!window.ethereum) {
-        toast({ title: "MetaMask Not Found", description: "Please install MetaMask to use this payment method", variant: "destructive" });
+    if (form.payment_method === 'freighter') {
+      const allowed = await checkConnection();
+      if (!allowed) {
+        toast({ title: "Freighter Not Found", description: "Please install Freighter to use this payment method", variant: "destructive" });
         setLoading(false);
         return;
       }
 
       try {
         toast({ title: "Connecting Wallet...", description: "Please confirm the connection request" });
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
 
-        // Check/Switch to Sepolia (ChainID: 0xaa36a7)
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0xaa36a7' }],
-          });
-        } catch (switchError) {
-          if (switchError.code === 4902) {
-            // Sepolia not added — add it automatically
-            try {
-              await window.ethereum.request({
-                method: 'wallet_addEthereumChain',
-                params: [
-                  {
-                    chainId: '0xaa36a7',
-                    chainName: 'Sepolia Test Network',
-                    nativeCurrency: {
-                      name: 'Sepolia ETH',
-                      symbol: 'ETH',
-                      decimals: 18,
-                    },
-                    rpcUrls: ['https://rpc.sepolia.org'],
-                    blockExplorerUrls: ['https://sepolia.etherscan.io'],
-                  },
-                ],
-              });
-            } catch (addError) {
-              toast({ title: "Failed to Add Sepolia", description: addError.message || "Could not add the Sepolia network", variant: "destructive" });
-              setLoading(false);
-              return;
-            }
-          } else {
-            toast({ title: "Network Switch Failed", description: switchError.message || "Could not switch to Sepolia", variant: "destructive" });
-            setLoading(false);
-            return;
-          }
-        }
+        // Calculate Price in XLM (Simplified: 1 INR = 0.1 XLM for demo)
+        const xlmPrice = (finalAmount * 0.1).toFixed(2);
 
-        // Calculate Price in ETH (Simplified: 1 INR = 0.0000001 ETH for demo)
-        const ethPrice = (finalAmount * 0.000001).toFixed(6);
-        const hexPrice = "0x" + (Math.floor(parseFloat(ethPrice) * 1e18)).toString(16);
-
-        toast({ title: "Payment Pending", description: "Please confirm the transaction in MetaMask" });
+        toast({ title: "Payment Pending", description: `Please confirm the transaction of ${xlmPrice} XLM in Freighter` });
         
-        // Trigger real transaction
-        const txHash = await window.ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [{
-            from: account,
-            to: '0x000000000000000000000000000000000000dEaD', // GasChain Treasury Placeholder
-            value: hexPrice,
-            gas: '0x5208', // 21000
-          }],
-        });
+        // Trigger real transaction to a dummy treasury address
+        const res = await sendXLM('GAQ4A6ZBYZ2HTEETXMYNDIUKQW2VDKGUTDUMQ5CHFFV2QBNXONMWW7BB', xlmPrice);
+        const txHash = res.hash || res.transaction_hash || "unknown_hash";
 
         toast({ title: "Payment Confirmed!", description: `TX: ${txHash.slice(0, 10)}...` });
         
@@ -146,7 +100,7 @@ export default function BookCylinder() {
           final_amount: finalAmount,
           status: "confirmed", // Mark as confirmed immediately since payed
           block_hash: blockHash,
-          metadata: JSON.stringify({ txHash, network: "Sepolia", priceEth: ethPrice }),
+          metadata: JSON.stringify({ txHash, network: "Stellar Testnet", priceXLM: xlmPrice }),
         });
 
         // Create genesis & payment blocks
@@ -158,9 +112,9 @@ export default function BookCylinder() {
           timestamp: new Date().toISOString(),
           booking_id: bookingId,
           event_type: "booking_created",
-          event_data: JSON.stringify({ customer: form.customer_name, eth_payment: true }),
-          location: "Ethereum Node (Sepolia)",
-          verified_by: "MetaMask",
+          event_data: JSON.stringify({ customer: form.customer_name, stellar_payment: true }),
+          location: "Stellar Node (Testnet)",
+          verified_by: "Freighter",
           nonce: Math.floor(Math.random() * 100000),
         });
 
@@ -358,9 +312,9 @@ export default function BookCylinder() {
               <SelectContent>
                 <SelectItem value="online">Online Payment (UPI/Card)</SelectItem>
                 <SelectItem value="cod">Cash on Delivery</SelectItem>
-                <SelectItem value="metamask">
+                <SelectItem value="freighter">
                   <span className="flex items-center gap-2">
-                    <Wallet className="h-3 w-3" /> Pay via MetaMask (Web3)
+                    <Wallet className="h-3 w-3" /> Pay via Freighter (Stellar)
                   </span>
                 </SelectItem>
                 <SelectItem value="subsidy_wallet">Subsidy Wallet</SelectItem>
