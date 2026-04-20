@@ -18,11 +18,13 @@ Blockchain-powered LPG cylinder management system. This application provides a t
 
 | Landing Page | Dashboard |
 | :---: | :---: |
-| ![Landing](/screenshots/landing.png) | ![Dashboard](/screenshots/dashboard.png) |
+| ![Landing](public/screenshots/landing.png) | ![Dashboard](public/screenshots/dashboard.png) |
+
 
 | Booking & Subsidy | Supply Chain Tracking |
 | :---: | :---: |
-| ![Booking](/screenshots/booking.png) | ![Supply Chain](/screenshots/supply_chain.png) |
+| ![Booking](public/screenshots/booking.png) | ![Supply Chain](public/screenshots/supply_chain.png) |
+
 
 
 ## Tech Stack 🛠️
