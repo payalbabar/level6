@@ -6,11 +6,11 @@ pub struct GasChainContract;
 
 #[contractimpl]
 impl GasChainContract {
-    pub fn hello(_env: Env, _to: Symbol) -> Symbol {
+    pub fn hello(env: Env, to: Symbol) -> Symbol {
         symbol_short!("Hello")
     }
 
-    pub fn book_cylinder(_env: Env, _user: Symbol) -> bool {
+    pub fn book_cylinder(env: Env, user: Symbol) -> bool {
         // Simple booking logic simulation
         true
     }
