@@ -23,3 +23,12 @@ pnpm-debug.log*
 
 # Vite
 .vite/
+dist/
+
+# Rust
+target/
+
+# Environment
+.env
+.env.*
+!.env.example
