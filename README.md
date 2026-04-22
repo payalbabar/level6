@@ -83,7 +83,7 @@ Based on the feedback collected from 34 users, we completed our first major impr
 
 ## 🎬 Project Deliverables
 
-- **Live Demo**: [lpg-connect-wallet.vercel.app](https://lpg-connect-wallet.vercel.app/)
+- **Live Demo**: https://splendorous-clafoutis-f7b51c.netlify.app/
 - **Demo Video**: [Full MVP Functionality Walkthrough](https://youtu.be/xtzdsvQu-Ew)
 - **Architecture Document**: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - **CI/CD Pipeline**: [GitHub Actions Workflow](./.github/workflows/ci.yml)
