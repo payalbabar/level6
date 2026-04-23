@@ -39,12 +39,13 @@ These addresses have actively interacted with the GasChain Smart Contract:
 
 ### 📈 Metrics Dashboard
 *   **Access Link**: [Production Metrics Dashboard](https://lpg-connect-wallet.vercel.app/dashboard)
+*   **Screenshot**: [Metrics Interface Overview](./public/screenshots/dashboard.png)
 *   **Tracked KPIs**: Daily Active Users (DAU), Cumulative Transaction Volume, Subsidy Distribution Heatmap, and Node Uptime.
 
 ### 🛡️ System Monitoring & Telemetry
 *   **Live Explorer**: [GasChain Network Monitoring Explorer](https://lpg-connect-wallet.vercel.app/ledger)
 *   **Description**: We provide direct on-chain telemetry visualization, allowing stakeholders to monitor block propagation times, smart contract execution health, and real-time event logs.
-*   **Screenshot**: [Monitoring Interface Status](./public/screenshots/monitoring_preview.png) *(Recommended: Replace with your actual screenshot)*
+*   **Screenshot**: [Ledger & Monitoring Nexus](./public/screenshots/ledger.png)
 
 ---
 
