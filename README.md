@@ -113,6 +113,10 @@ To validate our real-world MVP, we tested the platform with **34 real testnet us
 ---
 
 ## 🚀 Advanced Feature: Fee Sponsorship (Gasless Transactions)
+To eliminate the barrier of entry for new users (acquiring XLM for gas fees), GasChain implements **Stellar Fee Bump Transactions**.
+- **The Flow**: When a user books a cylinder, the frontend generates a transaction. Instead of the user paying the fee, the transaction is wrapped in a Fee Bump transaction signed by our distribution treasury account.
+- **Benefit**: Users can interact with the GasChain ecosystem with zero initial XLM balance.
+- **Implementation**: See `src/lib/freighter.js`.
 *   **Description**: GasChain implements Stellar Fee Bump Transactions to allow sponsors to cover network fees for end-users.
 *   **Proof of Implementation**: [ADVANCED_FEATURE_PROOF.md](./contracts/ADVANCED_FEATURE_PROOF.md)
 
