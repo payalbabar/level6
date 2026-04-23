@@ -65,7 +65,8 @@ After analyzing the feedback logged in our 30+ User Google Sheet, we've outlined
 2. **True Gasless Auth (Account Abstraction):** Some users struggled with the Freighter browser extension requirement. *Improvement: Implementing Passkey wallets.*
 
 **Commit Tracking for Feedback Implementation:**
-* [Git Commit: Initial framework for Mobile-First Dashboard Views](https://github.com/payalbabar/level5/commit/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855)
+* [Git Commit: Enterprise Design & Monitoring Explorer Implementation](https://github.com/payalbabar/level6/commit/5d2690f7088d36f5efd6439971a41fea1d34d112)
+* [Git Commit: CI/CD Optimization & Compiler Stability Fix](https://github.com/payalbabar/level6/commit/9f2953a8e2f7694a505b2e67b3cb65a92cde988c)
 
 ---
 
