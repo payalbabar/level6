@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { generateHash, generateBlockHash, generateBookingId } from "@/lib/blockchain";
-import { Zap, Terminal } from "lucide-react";
+import { Terminal } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const CUSTOMERS = ["Amit Sharma", "Priya Patel", "Vikram Singh", "Anjali Gupta", "Rahul Verma"];

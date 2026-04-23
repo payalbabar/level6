@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { 
-  Database, Search, Loader2, Hash, Shield, ChevronDown, 
-  ChevronUp, CheckCircle2, Link2, X, ChevronRight,
-  Globe, Zap, Activity, Box, Lock, Terminal
+  Database, Search, Hash, Shield, ChevronDown, CheckCircle2, Link2, X, ChevronRight, Activity, Lock, Terminal
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

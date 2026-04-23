@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Database, MapPin, Clock, Shield, Loader2, Hash, Terminal, Link2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Database, MapPin, Clock, Loader2, Terminal, Link2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { STATUS_COLORS, EVENT_LABELS, generateBlockHash } from "@/lib/blockchain";

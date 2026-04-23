@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { 
-  Wallet, Shield, Zap, ArrowRight, Database, Loader2, 
+  Wallet, Shield, Zap, Database, Loader2, 
   ChevronRight, Globe, Lock, BarChart3, TrendingUp 
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";

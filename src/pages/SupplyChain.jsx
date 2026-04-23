@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { 
-  Link2, Search, Loader2, Database, MapPin, Clock, 
+  Link2, Search, MapPin, Clock, 
   Shield, ChevronDown, ChevronUp, Hash, CheckCircle2,
-  Globe, Activity, Box, Lock, Activity as ActivityIcon
+  Globe, Box, Lock, Activity as ActivityIcon
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { EVENT_LABELS } from "@/lib/blockchain";

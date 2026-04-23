@@ -1,8 +1,8 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
-  LayoutDashboard, ShoppingCart, Link2, Wallet, ClipboardList,
-  Database, Menu, ChevronRight, LogOut, User, Activity, Globe,
+  LayoutDashboard, ShoppingCart, ClipboardList,
+  Database, Menu, LogOut, User, Activity, Globe,
   ShieldCheck, Zap, Bell
 } from "lucide-react";
 import { cn } from "@/lib/utils";

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { 
-  Wallet, Loader2, CheckCircle2, Clock, XCircle, 
+  Wallet, CheckCircle2, Clock, XCircle, 
   AlertCircle, ClipboardList, FilterX, Shield,
-  ChevronRight, Box, CircleDollarSign, ArrowUpRight
+  ChevronRight, CircleDollarSign
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import moment from "moment";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { TrendingUp, Users, BarChart3, Calendar, ShieldCheck, Activity, Globe } from "lucide-react";
+import { TrendingUp, Users, Calendar, ShieldCheck, Activity, Globe } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import moment from "moment";
 import { cn } from "@/lib/utils";

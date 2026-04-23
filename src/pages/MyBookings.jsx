@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Link } from "react-router-dom";
 import { 
-  ClipboardList, Loader2, ChevronRight, Hash, 
-  MapPin, Clock, Tag, Box, ArrowUpRight, Zap
+  ClipboardList, ChevronRight, Hash, 
+  MapPin, Clock, Box, Zap
 } from "lucide-react";
 import { STATUS_COLORS, CYLINDER_LABELS } from "@/lib/blockchain";
 import { cn } from "@/lib/utils";

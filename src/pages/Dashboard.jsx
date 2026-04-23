@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import {
-  ShoppingCart, Wallet, Database, TrendingUp, Flame,
-  X, ArrowRight, Clock, Shield, CheckCircle2, Package, Loader2,
+  ShoppingCart, Wallet, Database, TrendingUp,
+  X, ArrowRight, Shield, CheckCircle2, Loader2,
   Box, Activity, Layers
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { STATUS_COLORS, CYLINDER_LABELS, EVENT_LABELS } from "@/lib/blockchain";
+import { STATUS_COLORS, CYLINDER_LABELS } from "@/lib/blockchain";
 import { Button } from "@/components/ui/button";
 import StatCard from "../components/dashboard/StatCard";
 import RecentBlocks from "../components/dashboard/RecentBlocks";
