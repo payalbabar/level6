@@ -46,11 +46,12 @@ Blockchain-powered LPG cylinder management system. This application provides a t
 *   **Fonts**: Inter & JetBrains Mono
 
 ## Project Structure 🏗️
-*   `/src`: Frontend React application logic and Enterprise UI components.
-*   `/contracts`: Soroban (Rust) smart contracts for on-chain booking validation.
-*   `.github/workflows`: Automated CI/CD pipeline using GitHub Actions for build/lint/test verification.
 
----
+- **`/src`**: Frontend React application logic.
+- **[`/contracts`](./contracts)**: Soroban (Rust) smart contracts for on-chain booking validation.
+- **`.github/workflows`**: Automated CI/CD pipeline using GitHub Actions.
+
+
 
 ## Getting Started 🏁
 
