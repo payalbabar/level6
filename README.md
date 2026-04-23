@@ -121,8 +121,10 @@ To eliminate the barrier of entry for new users (acquiring XLM for gas fees), Ga
 *   **Proof of Implementation**: [ADVANCED_FEATURE_PROOF.md](./contracts/ADVANCED_FEATURE_PROOF.md)
 
 ## 📈 Monitoring, Indexing & Scalability
-*   **Live Metrics Dashboard**: [REPLACE_WITH_METRICS_LINK]
-*   **Production Monitoring**: [REPLACE_WITH_MONITORING_LINK]
+*   **Live Metrics Dashboard**: https://level6-xi.vercel.app/dashboard/metrics
+*   **Production Monitoring**: https://level6-xi.vercel.app/dashboard
+*   <img width="1920" height="1080" alt="Screenshot 2026-04-23 202753" src="https://github.com/user-attachments/assets/70b8867a-7dd2-4e0b-bd50-89146444b2f1" />
+
 *   **Security Audit**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 *   **Community Impact**: [REPLACE_WITH_TWITTER_LINK]
 
