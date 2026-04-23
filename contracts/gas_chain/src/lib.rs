@@ -1,6 +1,6 @@
 #![no_std]
 use soroban_sdk::{
-    contract, contractimpl, contracttype, symbol_short, Address, Env, String, Symbol, Vec,
+    contract, contractimpl, contracttype, symbol_short, Address, Env, String,
 };
 
 #[derive(Clone)]
@@ -13,7 +13,7 @@ pub enum DataKey {
     BookingCount,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 #[contracttype]
 pub enum BookingStatus {
     Pending = 0,
