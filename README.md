@@ -55,7 +55,7 @@ Blockchain-powered LPG cylinder management system. This application provides a t
 ## Getting Started 🏁
 
 ### 🌟 Project Demo & Links
-*   **Live Demo**: [REPLACE_WITH_LIVE_URL]
+*   **Live Demo**: https://level6-xi.vercel.app/
 *   **Demo Video**: [REPLACE_WITH_VIDEO_URL]
 
 ### Installation
