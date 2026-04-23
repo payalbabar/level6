@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Wallet, Shield, Zap, ArrowRight, Flame, Database, Loader2 } from "lucide-react";
+import { 
+  Wallet, Shield, Zap, ArrowRight, Database, Loader2, 
+  ChevronRight, Globe, Lock, BarChart3, TrendingUp 
+} from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/AuthContext";
 import { checkConnection, retrievePublicKey } from "@/lib/freighter";
@@ -29,7 +32,7 @@ export default function Landing() {
       const key = await retrievePublicKey();
       setPublicKey(key);
       setIsWalletConnected(true);
-      login(); // Also log into app session
+      login();
       toast({ title: "Wallet Connected", description: `Connected: ${key.slice(0, 6)}...${key.slice(-4)}` });
     } catch (err) {
       console.error(err);
@@ -40,39 +43,40 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0c10] text-slate-200 overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-[#020408] text-slate-100 overflow-x-hidden font-sans selection:bg-primary/30 Hero-mesh">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 border-b border-border/40 bg-[#0a0c10]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
-              <Flame className="h-5 w-5 text-white" />
+      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/40 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="GasChain Logo" className="h-10 w-10 object-contain rounded-lg shadow-2xl shadow-primary/20" />
+            <div className="flex flex-col">
+              <span className="text-xl font-bold tracking-tight text-white leading-none">GasChain</span>
+              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">LPG CONNECT</span>
             </div>
-            <span className="text-xl font-bold tracking-tight text-white">GasChain <span className="text-primary-foreground/40 font-light mx-1">|</span> LPG Connect</span>
           </div>
           
+          <div className="hidden md:flex items-center gap-8 mr-12 text-sm font-medium text-slate-400">
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-white transition-colors">Process</a>
+            <a href="/dashboard/metrics" className="hover:text-white transition-colors">Network</a>
+          </div>
+
           <div className="flex items-center gap-4">
             {isWalletConnected ? (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold">
-                  <div className={`h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse`} />
-                  {publicKey ? `${publicKey.slice(0, 6)}...${publicKey.slice(-4)}` : "Connected"} • Testnet
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                  {publicKey ? `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}` : "Connected"}
                 </div>
-                <Button onClick={() => navigate('/dashboard')} size="sm" variant="outline" className="rounded-full text-[10px] font-bold h-8">Dashboard</Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-[10px] text-slate-400"
-                  onClick={() => {
-                    logout();
-                    setIsWalletConnected(false);
-                  }}
-                >
-                  Disconnect
+                <Button onClick={() => navigate('/dashboard')} size="sm" className="rounded-full px-6 bg-white text-black hover:bg-slate-200 transition-all font-bold">
+                  Dashboard
+                </Button>
+                <Button variant="ghost" size="icon" onClick={() => { logout(); setIsWalletConnected(false); }} className="text-slate-500 hover:text-white">
+                  <Lock className="h-4 w-4" />
                 </Button>
               </div>
             ) : (
-              <Button onClick={connectWallet} variant="outline" className="rounded-full border-border/60 hover:bg-white/5 text-xs font-bold h-9">
+              <Button onClick={connectWallet} className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 font-bold text-sm shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
                 Connect Wallet
               </Button>
             )}
@@ -81,80 +85,157 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
-        {/* Abstract Background Gradients */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10" />
-        <div className="absolute top-1/2 left-0 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-[100px] -z-10" />
+      <section className="relative pt-48 pb-32 px-6 overflow-hidden hero-mesh">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center text-center space-y-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold tracking-wider text-primary uppercase animate-fade-in">
+              <TrendingUp className="h-3 w-3" /> Leading the Global LPG Revolution
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-tight max-w-5xl">
+              SECURE. <span className="text-primary">SCALABLE.</span> <br />
+              TRANSPARENT.
+            </h1>
+            
+            <p className="max-w-2xl mx-auto text-slate-400 text-xl leading-relaxed font-medium">
+              Revolutionizing LPG distribution through Stellar's high-speed blockchain network. 
+              Efficiency meets transparency for the next generation of energy logistics.
+            </p>
 
-        <div className="max-w-7xl mx-auto text-center space-y-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold tracking-wide text-primary uppercase">
-            <Database className="h-3 w-3" /> Blockchain-Powered LPG
+            <div className="flex flex-col sm:flex-row items-center gap-6 pt-8">
+              {!isWalletConnected ? (
+                <Button onClick={connectWallet} disabled={isConnecting} size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/30 transition-all hover:scale-105">
+                  {isConnecting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Wallet className="mr-2 h-5 w-5" />}
+                  Launch GasChain
+                </Button>
+              ) : (
+                <Button onClick={() => navigate('/book')} size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/30 transition-all hover:scale-105">
+                  New Booking <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              )}
+              <Button onClick={() => navigate('/dashboard/metrics')} variant="outline" size="lg" className="rounded-full h-16 px-12 text-lg font-bold border-white/10 hover:bg-white/5 transition-all">
+                Live Stats <BarChart3 className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
           </div>
-          
-          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-white leading-tight">
-            The Future of <br />
-            LPG Distribution
-          </h1>
-          
-          <p className="max-w-2xl mx-auto text-slate-400 text-lg leading-relaxed">
-            Book LPG cylinders with Freighter wallet payments on Stellar testnet. <br />
-            Every transaction is immutably recorded on-chain for full transparency.
-          </p>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-full max-w-6xl aspect-[2/1] bg-primary/20 blur-[120px] rounded-full -z-10 opacity-50" />
+      </section>
 
-          <div className="flex flex-col items-center justify-center gap-6 pt-6">
-            {!isWalletConnected ? (
-              <Button onClick={connectWallet} disabled={isConnecting} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-primary hover:scale-105 transition-transform shadow-2xl shadow-primary/20">
-                {isConnecting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
-                {isConnecting ? "Connecting..." : "Connect Wallet"}
-              </Button>
-            ) : (
-              <Button onClick={() => navigate('/book')} size="lg" className="rounded-2xl h-16 px-12 text-lg font-bold w-full sm:w-auto bg-primary hover:scale-105 transition-transform shadow-2xl shadow-primary/20">
-                Book & Pay Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            )}
-          </div>
+      {/* Unified Stats */}
+      <section className="border-y border-white/5 bg-white/[0.01]">
+        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-wrap justify-center gap-12 md:gap-24">
+          <Stat label="Total Transactions" value="48.2K+" />
+          <Stat label="Active Distributors" value="1,200+" />
+          <Stat label="Avg. Delivery Time" value="45m" />
+          <Stat label="Carbon Reduction" value="12%" />
         </div>
       </section>
 
       {/* Features Grid */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-3 gap-6">
+      <section id="features" className="max-w-7xl mx-auto px-6 py-32">
+        <div className="flex flex-col items-center text-center space-y-4 mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Enterprise Infrastructure</h2>
+          <p className="text-slate-400 max-w-xl text-lg">Built on the most advanced blockchain protocol for global logistics and energy sectors.</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
           <FeatureCard 
-            icon={Wallet}
-            title="Freighter Payments"
-            description="Pay with XLM on Stellar testnet. Booking confirmed only after on-chain transaction success."
+            icon={Globe}
+            title="Global Scalability"
+            description="Our smart contract architecture supports multi-region distribution hubs with automated compliance."
           />
           <FeatureCard 
             icon={Shield}
-            title="Immutable Records"
-            description="Every booking, delivery, and subsidy is cryptographically hashed and stored on the blockchain."
+            title="Institutional Security"
+            description="End-to-end encryption for consumer data with immutable audit trails for regulatory reporting."
           />
           <FeatureCard 
-            icon={Activity}
-            title="Real-Time Tracking"
-            description="Watch your cylinder journey live — from warehouse to doorstep with block-by-block updates."
+            icon={Zap}
+            title="Real-Time Settlement"
+            description="Instant payment processing via XLM with sub-second finality on the Stellar network."
           />
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="max-w-7xl mx-auto px-6 py-20 border-t border-border/40">
-        <h2 className="text-3xl font-bold text-center mb-4">How It Works</h2>
-        <p className="text-slate-400 text-center mb-16">Three simple steps to get your LPG cylinder</p>
-        
-        <div className="grid md:grid-cols-3 gap-12 relative text-center">
-            {/* Connector Lines */}
-            <div className="hidden md:block absolute top-10 left-[25%] right-[25%] h-px bg-gradient-to-r from-primary/50 to-primary/10 -z-10" />
+      {/* Process Section */}
+      <section id="how-it-works" className="relative py-32 border-t border-white/5 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-8">
+              <h2 className="text-5xl font-bold tracking-tight">The Modern way to <br />Manage LPG.</h2>
+              <div className="space-y-12 pt-8">
+                <ProcessStep number="1" title="Digital Identity" desc="Secure your wallet and create your blockchain-verified energy profile." />
+                <ProcessStep number="2" title="Smart Booking" desc="AI-optimized routing matches your order with the nearest authorized distributor." />
+                <ProcessStep number="3" title="Crypto Settlement" desc="Transparent payments via Freighter with zero hidden fees and instant receipts." />
+              </div>
+            </div>
             
-            <Step number="01" title="Connect Wallet" desc="Connect Freighter wallet and switch to Stellar testnet network." />
-            <Step number="02" title="Book & Pay" desc="Fill booking details and pay with XLM via Freighter." />
-            <Step number="03" title="Track On-Chain" desc="Monitor real-time blockchain supply chain events for your booking." />
+            <div className="relative">
+              <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-[4rem] group overflow-hidden border border-white/10 shadow-2xl animate-float">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Database className="h-32 w-32 text-primary opacity-20 group-hover:opacity-40 transition-opacity" />
+                </div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full" />
+              </div>
+              {/* Floating tags */}
+              <div className="absolute -top-6 -right-6 px-6 py-3 bg-black/60 backdrop-blur-md rounded-2xl border border-white/10 text-primary font-bold shadow-2xl">
+                On-Chain Verified
+              </div>
+              <div className="absolute -bottom-6 -left-6 px-6 py-3 bg-black/60 backdrop-blur-md rounded-2xl border border-white/10 text-emerald-400 font-bold shadow-2xl">
+                SECURE 256-BIT
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="px-6 py-32">
+        <div className="max-w-5xl mx-auto p-12 md:p-24 rounded-[3rem] bg-primary relative overflow-hidden text-center group">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+          <h2 className="text-4xl md:text-6xl font-black text-white relative z-10">Ready to modernize your supply chain?</h2>
+          <p className="mt-6 text-white/80 text-xl font-medium relative z-10 max-w-2xl mx-auto">Join thousands of businesses and users transitioning to a transparent energy future.</p>
+          <Button onClick={connectWallet} size="lg" className="mt-12 rounded-full h-16 px-12 text-lg font-bold bg-white text-primary hover:bg-slate-100 transition-all font-bold relative z-10">
+            Get Started Now
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-border/40 text-center text-slate-500 text-sm">
-        <p>© 2026 GasChain Ecosystem. Secured by Blockchain Technology.</p>
+      <footer className="py-20 border-t border-white/5 bg-black/20">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+          <div className="col-span-2 space-y-6">
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="GasChain Logo" className="h-8 w-8 object-contain" />
+              <span className="text-xl font-bold tracking-tight text-white leading-none">GasChain</span>
+            </div>
+            <p className="text-slate-500 max-w-sm leading-relaxed">
+              Empowering the LPG industry with decentralized infrastructure, ensuring transparency and efficiency in every delivery.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-white font-bold">Platform</h4>
+            <ul className="space-y-2 text-slate-500">
+              <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Network Status</a></li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-white font-bold">Connect</h4>
+            <ul className="space-y-2 text-slate-500">
+              <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Discord</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 text-slate-600 text-sm">
+          <p>© 2026 GasChain Ecosystem. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
@@ -162,26 +243,36 @@ export default function Landing() {
 
 function FeatureCard({ icon: Icon, title, description }) {
   return (
-    <div className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:border-primary/30 transition-all group">
-      <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-        <Icon className="h-6 w-6" />
+    <div className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-primary/50 transition-all duration-500 group relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[40px] rounded-full group-hover:bg-primary/20 transition-all" />
+      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-xl shadow-primary/5">
+        <Icon className="h-7 w-7" />
       </div>
-      <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-      <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+      <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+      <p className="text-slate-400 leading-relaxed font-medium">{description}</p>
     </div>
   );
 }
 
-function Step({ number, title, desc }) {
+function ProcessStep({ number, title, desc }) {
   return (
-    <div className="space-y-4">
-      <div className="text-4xl md:text-6xl font-black text-white/5">{number}</div>
-      <h4 className="text-lg font-bold text-white uppercase tracking-wider">{title}</h4>
-      <p className="text-sm text-slate-400 max-w-[200px] mx-auto leading-relaxed">{desc}</p>
+    <div className="flex gap-6 items-start">
+      <div className="flex-shrink-0 h-10 w-10 rounded-full border border-primary/40 flex items-center justify-center text-primary font-bold text-sm">
+        {number}
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-xl font-bold text-white tracking-tight">{title}</h4>
+        <p className="text-slate-400 font-medium leading-relaxed">{desc}</p>
+      </div>
     </div>
   );
 }
 
-function Activity({ className }) {
-    return <Zap className={className} />;
+function Stat({ label, value }) {
+  return (
+    <div className="text-center md:text-left">
+      <div className="text-4xl font-black text-white tracking-tighter mb-1">{value}</div>
+      <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">{label}</div>
+    </div>
+  );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { generateHash, generateBlockHash, generateBookingId } from "@/lib/blockchain";
-import { Zap } from "lucide-react";
+import { Zap, Terminal } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const CUSTOMERS = ["Amit Sharma", "Priya Patel", "Vikram Singh", "Anjali Gupta", "Rahul Verma"];
@@ -46,16 +46,15 @@ export default function BlockchainSimulator() {
           booking_id: id,
           event_type: 'booking_created',
           event_data: JSON.stringify({ customer: name }),
-          location: 'Public Node',
-          verified_by: 'Consensus',
+          location: 'Enterprise Origin',
+          verified_by: 'Consensus Network',
         });
 
-        setLastEvent(`New Booking ${id}`);
-        toast({ title: "Real-time Event", description: `New booking ${id} recorded on chain.` });
+        setLastEvent(`INIT: ${id}`);
+        toast({ title: "Mainnet Event", description: `Transaction ${id} anchored.` });
       } else {
         const bookings = await base44.entities.Booking.list("-created_date", 50);
         
-        // Find bookings that can progress
         const eligible = bookings.filter(b => ['pending', 'confirmed', 'dispatched', 'in_transit'].includes(b.status));
         
         if (eligible.length > 0) {
@@ -66,29 +65,26 @@ export default function BlockchainSimulator() {
             nextStatus = 'confirmed';
             eventType = 'cylinder_assigned';
             eventLabel = 'Cylinder Assigned';
-            location = 'LPG Bottling Plant';
+            location = 'LPG Depot';
           } else if (b.status === 'confirmed') {
             nextStatus = 'dispatched';
             eventType = 'dispatched';
             eventLabel = 'Dispatched from Warehouse';
-            location = 'Regional Logistics Hub';
+            location = 'Global Transit Node';
           } else if (b.status === 'dispatched') {
             nextStatus = 'in_transit';
             eventType = 'in_transit';
             eventLabel = 'In Transit';
-            location = 'City Toll / Entry Point';
+            location = 'Zone Authorization';
           } else if (b.status === 'in_transit') {
             nextStatus = 'delivered';
             eventType = 'delivered';
             eventLabel = 'Delivered to Consumer';
-            location = b.customer_address || 'Customer Location';
+            location = b.customer_address || 'End User Premise';
           }
 
           const prevHash = b.block_hash;
           const newHash = generateBlockHash(prevHash, { status: nextStatus, event: eventType });
-          const nextIndex = (bookings.filter(bl => bl.booking_id === b.booking_id).length || 1) + 1; 
-          // Wait, index should be based on number of blocks for this booking.
-          // Let's get actual blocks for this booking to be precise.
           const existingBlocks = await base44.entities.SupplyChainBlock.filter({ booking_id: b.booking_id });
 
           await base44.entities.Booking.update(b.id, { status: nextStatus, block_hash: newHash });
@@ -99,40 +95,50 @@ export default function BlockchainSimulator() {
             timestamp: new Date().toISOString(),
             booking_id: b.booking_id,
             event_type: eventType,
-            event_data: JSON.stringify({ status: nextStatus, remarks: "Automated blockchain update" }),
+            event_data: JSON.stringify({ status: nextStatus, remarks: "Automated state transition" }),
             location: location,
-            verified_by: 'Stellar Node ' + Math.floor(Math.random() * 99),
+            verified_by: 'Validator Node ' + Math.floor(Math.random() * 99),
           });
 
-          setLastEvent(`${b.booking_id} → ${nextStatus}`);
-          toast({ title: "Supply Chain Update", description: `${b.booking_id} status changed to ${nextStatus}` });
+          setLastEvent(`SYNC: ${b.booking_id} → ${nextStatus.toUpperCase()}`);
+          toast({ title: "Ledger Update", description: `State mutation committed for ${b.booking_id}` });
         }
       }
-    }, 8000); // Every 8 seconds
+    }, 8000); 
 
     return () => clearInterval(interval);
   }, [isActive]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <div className={`flex items-center gap-3 p-3 rounded-2xl border shadow-2xl transition-all duration-500 bg-card/80 backdrop-blur-xl ${isActive ? 'border-primary/50 ring-4 ring-primary/10' : 'border-border'}`}>
-        <div className={`p-2 rounded-xl ${isActive ? 'bg-primary text-primary-foreground animate-pulse' : 'bg-muted text-muted-foreground'}`}>
-          <Zap className="h-4 w-4" />
+      <div className={`flex items-center gap-4 p-3 rounded-[24px] border transition-all duration-700 backdrop-blur-3xl 
+        ${isActive ? 'bg-black/80 border-primary/40 shadow-[0_0_30px_rgba(249,115,22,0.2)]' : 'bg-black/60 border-white/10 shadow-2xl'}`}>
+        
+        <div className={`h-12 w-12 rounded-xl flex items-center justify-center border transition-all duration-500
+            ${isActive ? 'bg-primary border-primary/20 text-white glow' : 'bg-white/5 border-white/5 text-slate-500'}
+        `}>
+          <Terminal className="h-5 w-5" />
         </div>
         
-        <div className="pr-2">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-0.5">Blockchain Core</p>
+        <div className="pr-4 border-r border-white/5">
+          <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-0.5">Automated Indexer</p>
           <div className="flex items-center gap-2">
-            <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-            <p className="text-xs font-semibold">{isActive ? (lastEvent || 'Live Tracking...') : 'Node Standby'}</p>
+            <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse glow' : 'bg-slate-600'}`} />
+            <p className="text-xs font-bold text-white font-mono tracking-tight max-w-[150px] truncate">
+                {isActive ? (lastEvent || 'LISTENING TO NETWORK...') : 'NODE IDLE'}
+            </p>
           </div>
         </div>
 
         <button 
           onClick={() => setIsActive(!isActive)}
-          className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${isActive ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'bg-primary text-primary-foreground hover:shadow-lg hover:scale-105'}`}
+          className={`px-4 py-2.5 rounded-xl font-black tracking-widest text-[9px] uppercase transition-all duration-300
+            ${isActive 
+                ? 'bg-transparent text-slate-400 hover:text-white hover:bg-white/5' 
+                : 'bg-primary text-white hover:bg-primary/90 hover:scale-105 shadow-xl'}
+          `}
         >
-          {isActive ? 'STOP NODE' : 'START SIMULATOR'}
+          {isActive ? 'HALT DAEMON' : 'SPIN UP NODE'}
         </button>
       </div>
     </div>

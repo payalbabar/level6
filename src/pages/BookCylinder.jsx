@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,9 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { ShoppingCart, Loader2, Shield, Wallet, MapPin } from "lucide-react";
+import { 
+  ShoppingCart, Loader2, Shield, Wallet, MapPin, 
+  ChevronRight, BadgeCheck, Zap, Info, Building2, User
+} from "lucide-react";
 import { generateHash, generateBlockHash, generateBookingId, CYLINDER_PRICES, CYLINDER_LABELS } from "@/lib/blockchain";
 import { checkConnection, sendXLM, retrievePublicKey } from "@/lib/freighter";
+import { cn } from "@/lib/utils";
 
 const STATES_CITIES = {
   "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
@@ -19,9 +23,17 @@ const STATES_CITIES = {
   "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi"]
 };
 
+// Scalable Distributors (reflecting contract capability)
+const DISTRIBUTORS = [
+  { id: "dist_1", name: "GasChain Central Depot", address: "GB2...P3K", rating: 4.9 },
+  { id: "dist_2", name: "Metro LPG Solutions", address: "GA4...R9L", rating: 4.7 },
+  { id: "dist_3", name: "EcoEnergy Distributors", address: "GC1...M2X", rating: 4.8 },
+];
+
 export default function BookCylinder() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     customer_name: "",
     customer_phone: "",
@@ -31,9 +43,10 @@ export default function BookCylinder() {
     city: "",
     state: "",
     pincode: "",
-    cylinder_type: "",
+    cylinder_type: "14.2kg_domestic",
     quantity: 1,
-    payment_method: "",
+    payment_method: "freighter",
+    distributor_id: "dist_1",
     notes: "",
   });
 
@@ -49,15 +62,15 @@ export default function BookCylinder() {
   async function handleSubmit(e) {
     e.preventDefault();
     
+    if (step < 3) {
+        setStep(step + 1);
+        return;
+    }
+
     // Validation
     const phoneRegex = /^[0-9]{10}$/;
     if (!phoneRegex.test(form.customer_phone)) {
       toast({ title: "Invalid Phone Number", description: "Please enter a valid 10-digit mobile number", variant: "destructive" });
-      return;
-    }
-
-    if (!form.customer_name || !form.house_no || !form.street_address || !form.state || !form.city || !form.cylinder_type || !form.payment_method) {
-      toast({ title: "Incomplete Address", description: "Please fill all mandatory address details", variant: "destructive" });
       return;
     }
 
@@ -72,27 +85,20 @@ export default function BookCylinder() {
       }
 
       try {
-        toast({ title: "Connecting Wallet...", description: "Please confirm the connection request" });
-
         const userAddress = await retrievePublicKey();
-
-        // Calculate Price in XLM (Simplified: 1 INR = 0.1 XLM for demo)
         const xlmPrice = (finalAmount * 0.1).toFixed(2);
+        
+        toast({ title: "Payment Pending", description: `Transaction of ${xlmPrice} XLM initiated.` });
 
-        toast({ title: "Payment Pending", description: `Please confirm the transaction of ${xlmPrice} XLM in Freighter` });
-
-        // Trigger real transaction to a dummy treasury address (sending to self for demo reliability)
         const res = await sendXLM(userAddress, xlmPrice);
         const txHash = res.hash || res.transaction_hash || "unknown_hash";
 
-        toast({ title: "Payment Confirmed!", description: `TX: ${txHash.slice(0, 10)}...` });
-        
-        // Only now proceed with booking
         const bookingId = generateBookingId();
         const fullAddress = `${form.house_no}, ${form.street_address}, ${form.landmark ? form.landmark + ', ' : ''}${form.city}, ${form.state} - ${form.pincode}, India`;
         const blockHash = generateHash({ bookingId, ...form });
 
-        // Create the booking
+        const distributor = DISTRIBUTORS.find(d => d.id === form.distributor_id);
+
         await base44.entities.Booking.create({
           ...form,
           customer_address: fullAddress,
@@ -100,12 +106,12 @@ export default function BookCylinder() {
           total_amount: totalAmount,
           subsidy_applied: subsidyAmount * form.quantity,
           final_amount: finalAmount,
-          status: "confirmed", // Mark as confirmed immediately since payed
+          status: "confirmed",
           block_hash: blockHash,
+          distributor_name: distributor.name,
           metadata: JSON.stringify({ txHash, network: "Stellar Testnet", priceXLM: xlmPrice }),
         });
 
-        // Create genesis & payment blocks
         const genesisHash = generateBlockHash("0x0000000000000000", { bookingId, event: "booking_created" });
         await base44.entities.SupplyChainBlock.create({
           block_index: 1,
@@ -114,30 +120,25 @@ export default function BookCylinder() {
           timestamp: new Date().toISOString(),
           booking_id: bookingId,
           event_type: "booking_created",
-          event_data: JSON.stringify({ customer: form.customer_name, stellar_payment: true }),
+          event_data: JSON.stringify({ customer: form.customer_name, stellar_payment: true, distributor: distributor.name }),
           location: "Stellar Node (Testnet)",
-          verified_by: "Freighter",
+          verified_by: "Protocol Node",
           nonce: Math.floor(Math.random() * 100000),
         });
 
-        setLoading(false);
-        toast({ title: "Success!", description: "Booking recorded on blockchain" });
+        toast({ title: "Success!", description: "Immutable booking record confirmed." });
         navigate("/bookings");
-        return;
-
       } catch (error) {
-        console.error(error);
-        toast({ title: "Transaction Failed", description: error.message || "User denied transaction", variant: "destructive" });
+        toast({ title: "Transaction Failed", description: error.message || "User denied request", variant: "destructive" });
         setLoading(false);
-        return;
       }
+      return;
     }
 
-    // Fallback for non-metamask payments (Existing logic)
+    // Default processing for other payment methods...
     const bookingId = generateBookingId();
     const fullAddress = `${form.house_no}, ${form.street_address}, ${form.landmark ? form.landmark + ', ' : ''}${form.city}, ${form.state} - ${form.pincode}, India`;
-    const blockHash = generateHash({ bookingId, ...form });
-    const txHash = "0x" + Math.random().toString(16).slice(2, 66);
+    const distributor = DISTRIBUTORS.find(d => d.id === form.distributor_id);
 
     await base44.entities.Booking.create({
       ...form,
@@ -147,217 +148,270 @@ export default function BookCylinder() {
       subsidy_applied: subsidyAmount * form.quantity,
       final_amount: finalAmount,
       status: "pending",
-      block_hash: blockHash,
-      distributor_name: "GasChain Central Depot",
-      metadata: JSON.stringify({ txHash, network: "Off-Chain" }),
+      distributor_name: distributor.name,
+      block_hash: generateHash({ bookingId, ...form }),
+      metadata: JSON.stringify({ network: "GasChain L2" }),
     });
 
-    const genesisHash = generateBlockHash("0x0000000000000000", { bookingId, event: "booking_created" });
-    await base44.entities.SupplyChainBlock.create({
-      block_index: 1,
-      block_hash: genesisHash,
-      previous_hash: "0x0000000000000000",
-      timestamp: new Date().toISOString(),
-      booking_id: bookingId,
-      event_type: "booking_created",
-      event_data: JSON.stringify({ customer: form.customer_name, method: form.payment_method }),
-      location: "Public Node (India)",
-      verified_by: "System",
-      nonce: Math.floor(Math.random() * 100000),
-    });
-
-    setLoading(false);
-    toast({ title: "Booking Confirmed on Chain!", description: `Booking ID: ${bookingId}` });
+    toast({ title: "Booking Pending", description: `Reference: ${bookingId}` });
     navigate("/bookings");
+    setLoading(false);
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 pb-12">
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <ShoppingCart className="h-5 w-5 text-primary" />
-          <h1 className="text-xl font-bold tracking-tight">Book LPG Cylinder</h1>
+    <div className="max-w-4xl mx-auto space-y-10 pb-20">
+      {/* Dynamic Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black tracking-widest text-primary uppercase">
+                Step {step} of 3 • {step === 1 ? "Identity" : step === 2 ? "Logistics" : "Payment"}
+            </div>
+            <h1 className="text-4xl font-black tracking-tighter text-white">Smart <span className="text-primary">Booking</span></h1>
+            <p className="text-slate-500 text-sm font-medium">Verify your profile and secure your energy supply on-chain.</p>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Blockchain-verified booking with Indian Government Subsidy (Ujjwala)
-        </p>
+        <div className="flex bg-white/5 rounded-2xl p-1 border border-white/5">
+            {[1, 2, 3].map(s => (
+                <div key={s} className={cn("h-2 w-12 rounded-full mx-1 transition-all", step === s ? "bg-primary glow" : step > s ? "bg-primary/40" : "bg-white/10")} />
+            ))}
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Customer Basic Details */}
-        <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
-          <h2 className="text-sm font-semibold flex items-center gap-2">
-            <Shield className="h-4 w-4 text-primary" /> Personal Information
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-xs">Full Name *</Label>
-              <Input
-                placeholder="Name as per Aadhaar"
-                value={form.customer_name}
-                onChange={(e) => updateForm("customer_name", e.target.value)}
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Phone Number * (10 Digits)</Label>
-              <Input
-                placeholder="e.g. 9876543210"
-                maxLength={10}
-                value={form.customer_phone}
-                onChange={(e) => updateForm("customer_phone", e.target.value.replace(/[^0-9]/g, ''))}
-              />
-            </div>
-          </div>
-        </div>
+      <form onSubmit={handleSubmit} className="grid lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-3 space-y-6">
+            {/* STEP 1: Personal + Address */}
+            {step === 1 && (
+                <div className="space-y-6 animate-in slide-in-from-right-4 duration-500">
+                    <div className="premium-card p-8 space-y-8">
+                         <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                                <User className="h-5 w-5" />
+                            </div>
+                            <h2 className="text-xl font-black text-white tracking-tight">Identity Verification</h2>
+                         </div>
+                         <div className="grid sm:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Customer Name</Label>
+                                <Input
+                                    placeholder="Enter full name"
+                                    className="h-12 bg-white/[0.02] border-white/10 focus:border-primary/50 transition-all rounded-xl"
+                                    value={form.customer_name}
+                                    onChange={(e) => updateForm("customer_name", e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Contact Node</Label>
+                                <Input
+                                    placeholder="10-digit mobile"
+                                    maxLength={10}
+                                    className="h-12 bg-white/[0.02] border-white/10 focus:border-primary/50 transition-all rounded-xl"
+                                    value={form.customer_phone}
+                                    onChange={(e) => updateForm("customer_phone", e.target.value.replace(/[^0-9]/g, ''))}
+                                />
+                            </div>
+                         </div>
+                    </div>
 
-        {/* Detailed Address Section */}
-        <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
-          <h2 className="text-sm font-semibold flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary" /> Detailed Delivery Address
-          </h2>
-          
-          <div className="grid sm:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-xs">Country</Label>
-              <Input value="India" disabled className="bg-muted/50" />
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">State *</Label>
-              <Select value={form.state} onValueChange={(v) => { updateForm("state", v); updateForm("city", ""); }}>
-                <SelectTrigger><SelectValue placeholder="Select State" /></SelectTrigger>
-                <SelectContent>
-                  {Object.keys(STATES_CITIES).map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">City *</Label>
-              <Select value={form.city} onValueChange={(v) => updateForm("city", v)} disabled={!form.state}>
-                <SelectTrigger><SelectValue placeholder="Select City" /></SelectTrigger>
-                <SelectContent>
-                  {form.state && STATES_CITIES[form.state].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-xs">House / Flat No. *</Label>
-              <Input
-                placeholder="e.g. Flat 101, Galaxy Apts"
-                value={form.house_no}
-                onChange={(e) => updateForm("house_no", e.target.value)}
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Pincode *</Label>
-              <Input
-                placeholder="6 digits"
-                maxLength={6}
-                value={form.pincode}
-                onChange={(e) => updateForm("pincode", e.target.value.replace(/[^0-9]/g, ''))}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <Label className="text-xs">Street / Colony Address *</Label>
-            <Input
-              placeholder="Detailed street address"
-              value={form.street_address}
-              onChange={(e) => updateForm("street_address", e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <Label className="text-xs">Landmark (Optional)</Label>
-            <Input
-              placeholder="Near temple/park etc."
-              value={form.landmark}
-              onChange={(e) => updateForm("landmark", e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Cylinder & Payment Selection */}
-        <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
-          <h2 className="text-sm font-semibold">Cylinder & Payment Selection</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <Label className="text-xs">Cylinder Type *</Label>
-              <Select value={form.cylinder_type} onValueChange={(v) => updateForm("cylinder_type", v)}>
-                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
-                <SelectContent>
-                  {Object.entries(CYLINDER_LABELS).map(([key, label]) => (
-                    <SelectItem key={key} value={key}>{label} — ₹{CYLINDER_PRICES[key]}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Quantity</Label>
-              <Input
-                type="number"
-                min={1}
-                max={5}
-                value={form.quantity}
-                onChange={(e) => updateForm("quantity", parseInt(e.target.value) || 1)}
-              />
-            </div>
-          </div>
-          
-          <div className="space-y-1.5">
-            <Label className="text-xs">Payment Method *</Label>
-            <Select value={form.payment_method} onValueChange={(v) => updateForm("payment_method", v)}>
-              <SelectTrigger><SelectValue placeholder="Select payment" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="online">Online Payment (UPI/Card)</SelectItem>
-                <SelectItem value="cod">Cash on Delivery</SelectItem>
-                <SelectItem value="freighter">
-                  <span className="flex items-center gap-2">
-                    <Wallet className="h-3 w-3" /> Pay via Freighter (Stellar)
-                  </span>
-                </SelectItem>
-                <SelectItem value="subsidy_wallet">Subsidy Wallet</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Price Summary */}
-        {form.cylinder_type && (
-          <div className="bg-card rounded-2xl border border-primary/20 bg-primary/5 p-6">
-            <h2 className="text-sm font-bold mb-3">Blockchain Bill Summary</h2>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">{CYLINDER_LABELS[form.cylinder_type]} × {form.quantity}</span>
-                <span>₹{totalAmount.toLocaleString()}</span>
-              </div>
-              {subsidyAmount > 0 && (
-                <div className="flex justify-between text-emerald-600 font-medium">
-                  <span>Subsidy Discount (Ujjwala Applied)</span>
-                  <span>-₹{(subsidyAmount * form.quantity).toLocaleString()}</span>
+                    <div className="premium-card p-8 space-y-8">
+                         <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
+                                <MapPin className="h-5 w-5" />
+                            </div>
+                            <h2 className="text-xl font-black text-white tracking-tight">Geo-Data Allocation</h2>
+                         </div>
+                         <div className="grid sm:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">State Entity</Label>
+                                <Select value={form.state} onValueChange={(v) => { updateForm("state", v); updateForm("city", ""); }}>
+                                    <SelectTrigger className="h-12 bg-white/[0.02] border-white/10 rounded-xl"><SelectValue placeholder="Select State" /></SelectTrigger>
+                                    <SelectContent>
+                                        {Object.keys(STATES_CITIES).map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Urban Node</Label>
+                                <Select value={form.city} onValueChange={(v) => updateForm("city", v)} disabled={!form.state}>
+                                    <SelectTrigger className="h-12 bg-white/[0.02] border-white/10 rounded-xl"><SelectValue placeholder="Select City" /></SelectTrigger>
+                                    <SelectContent>
+                                        {form.state && STATES_CITIES[form.state].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                         </div>
+                         <div className="space-y-2">
+                            <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Pincode</Label>
+                            <Input
+                                placeholder="6 digits"
+                                maxLength={6}
+                                className="h-12 bg-white/[0.02] border-white/10 rounded-xl"
+                                value={form.pincode}
+                                onChange={(e) => updateForm("pincode", e.target.value.replace(/[^0-9]/g, ''))}
+                            />
+                         </div>
+                         <div className="space-y-2">
+                            <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Street Protocol</Label>
+                            <Input
+                                placeholder="Detailed address"
+                                className="h-12 bg-white/[0.02] border-white/10 rounded-xl"
+                                value={form.street_address}
+                                onChange={(e) => updateForm("street_address", e.target.value)}
+                            />
+                         </div>
+                    </div>
                 </div>
-              )}
-              <div className="border-t border-primary/20 pt-2 flex justify-between font-bold text-base">
-                <span>Total Amount</span>
-                <span>₹{finalAmount.toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        <Button type="submit" className="w-full h-12 rounded-xl text-sm font-semibold shadow-lg shadow-primary/20" disabled={loading}>
-          {loading ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Processing Blockchain Transaction...
-            </>
-          ) : (
-            "Complete Booking & Pay"
-          )}
-        </Button>
+            {/* STEP 2: Distributor Selection */}
+            {step === 2 && (
+                <div className="space-y-6 animate-in slide-in-from-right-4 duration-500">
+                    <div className="premium-card p-8 space-y-8">
+                         <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent border border-accent/20">
+                                <Building2 className="h-5 w-5" />
+                            </div>
+                            <h2 className="text-xl font-black text-white tracking-tight">Authorized Distributors</h2>
+                         </div>
+                         <p className="text-sm text-slate-500 font-medium italic">Select a verified node for delivery.</p>
+                         <div className="space-y-3">
+                            {DISTRIBUTORS.map(d => (
+                                <div 
+                                    key={d.id} 
+                                    onClick={() => updateForm("distributor_id", d.id)}
+                                    className={cn("p-6 rounded-2xl border transition-all cursor-pointer group/dist", form.distributor_id === d.id ? "bg-primary/10 border-primary/40" : "bg-white/[0.02] border-white/5 hover:border-white/10")}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                            <div className={cn("h-10 w-10 rounded-[10px] flex items-center justify-center", form.distributor_id === d.id ? "bg-primary text-white" : "bg-white/5 text-slate-500")}>
+                                                <Building2 className="h-5 w-5" />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-black text-white">{d.name}</p>
+                                                <p className="text-[10px] font-mono text-slate-500">{d.address}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-xs font-black text-white">{d.rating} ★</p>
+                                            <p className="text-[9px] text-emerald-500 font-bold uppercase tracking-wider">Online</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* STEP 3: Payment */}
+            {step === 3 && (
+                <div className="space-y-6 animate-in slide-in-from-right-4 duration-500">
+                    <div className="premium-card p-8 space-y-8">
+                         <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                                <Zap className="h-5 w-5" />
+                            </div>
+                            <h2 className="text-xl font-black text-white tracking-tight">Settlement Layer</h2>
+                         </div>
+                         <div className="grid gap-4">
+                            {[
+                                { id: "freighter", label: "Freighter (XLM)", icon: Wallet, desc: "Direct Stellar Payment (Instant)" },
+                                { id: "online", label: "Digital UPI", icon: Info, desc: "Standard INR Gateway" },
+                                { id: "cod", label: "Cash Settlement", icon: Info, desc: "Payment upon delivery verification" },
+                            ].map(m => (
+                                <div 
+                                    key={m.id} 
+                                    onClick={() => updateForm("payment_method", m.id)}
+                                    className={cn("p-6 rounded-2xl border transition-all cursor-pointer flex items-center justify-between", form.payment_method === m.id ? "bg-primary/10 border-primary/40" : "bg-white/[0.02] border-white/5 hover:border-white/20")}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={cn("h-10 w-10 rounded-[10px] flex items-center justify-center", form.payment_method === m.id ? "bg-primary text-white" : "bg-white/5 text-slate-500")}>
+                                            <m.icon className="h-5 w-5" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-black text-white">{m.label}</p>
+                                            <p className="text-[10px] text-slate-500 font-medium">{m.desc}</p>
+                                        </div>
+                                    </div>
+                                    {form.payment_method === m.id && <BadgeCheck className="h-5 w-5 text-primary" />}
+                                </div>
+                            ))}
+                         </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="flex gap-4 pt-4">
+                {step > 1 && (
+                    <Button type="button" variant="outline" onClick={() => setStep(step - 1)} className="h-14 flex-1 rounded-2xl border-white/10 hover:bg-white/5 text-slate-400 font-black tracking-widest text-xs uppercase">
+                        Back
+                    </Button>
+                )}
+                <Button type="submit" disabled={loading} className="h-14 flex-[2] rounded-2xl bg-primary hover:bg-primary/90 text-white font-black tracking-widest text-xs uppercase shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02]">
+                    {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : step === 3 ? "Process Booking" : "Next Protocol"}
+                </Button>
+            </div>
+        </div>
+
+        {/* PRICE SUMMARY - SIDEBAR */}
+        <div className="lg:col-span-2 space-y-6">
+            <div className="premium-card p-8 relative overflow-hidden bg-white/5 border border-white/10">
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
+                    <Zap className="h-32 w-32 text-primary" />
+                </div>
+                <h3 className="text-lg font-black text-white mb-8 tracking-tight">Ledger Summary</h3>
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Network Assets</Label>
+                        <Select value={form.cylinder_type} onValueChange={(v) => updateForm("cylinder_type", v)}>
+                            <SelectTrigger className="bg-transparent border-white/10 h-11 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(CYLINDER_LABELS).map(([k,v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-white/5">
+                        <div className="flex justify-between text-xs font-bold">
+                            <span className="text-slate-500 uppercase tracking-widest">Base Rate</span>
+                            <span className="text-white font-mono">₹{price.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between text-xs font-bold">
+                            <span className="text-slate-500 uppercase tracking-widest">Quantity</span>
+                            <span className="text-white font-mono">×{form.quantity}</span>
+                        </div>
+                        {subsidyAmount > 0 && (
+                            <div className="flex justify-between text-xs font-bold">
+                                <span className="text-emerald-500 uppercase tracking-widest">Subsidy Drop</span>
+                                <span className="text-emerald-500 font-mono">-₹{(subsidyAmount * form.quantity).toLocaleString()}</span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="pt-6 border-t border-white/10">
+                        <div className="flex justify-between items-end">
+                            <div className="space-y-1">
+                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total Liability</p>
+                                <p className="text-3xl font-black text-white tracking-tighter">₹{finalAmount.toLocaleString()}</p>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-[10px] font-black text-primary uppercase tracking-widest">Hash Estimate</p>
+                                <p className="text-sm font-bold text-slate-400">{(finalAmount * 0.1).toFixed(2)} XLM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-primary/5 border border-primary/20 space-y-4">
+                <div className="flex items-center gap-3 text-primary">
+                    <Shield className="h-5 w-5" />
+                    <p className="text-sm font-black tracking-tight">On-Chain Protocol</p>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                    This booking will be cryptographically hashed and committed to the Stellar ledger. 
+                    Once confirmed, the distributor will receive a smart contract event for fulfillment.
+                </p>
+            </div>
+        </div>
       </form>
     </div>
   );
