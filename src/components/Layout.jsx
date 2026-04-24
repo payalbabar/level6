@@ -45,7 +45,7 @@ export default function Layout() {
           <img src="/logo.png" alt="GasChain Logo" className="h-10 w-10 object-contain rounded-xl shadow-2xl shadow-primary/20" />
           <div className="flex flex-col">
             <span className="text-xl font-black tracking-tight text-white leading-none">GasChain</span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-black mt-1">CORE NODE</span>
+            <span className="text-[10px] uppercase tracking-widest text-primary font-bold mt-1">LPG CONNECT</span>
           </div>
         </div>
 

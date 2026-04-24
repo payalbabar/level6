@@ -1,6 +1,8 @@
-# GasChain | LPG Connect: User Guide 📖
+# DESTATE — Decentralized Real Estate: User Guide 📖
 
-Welcome to **GasChain**, the decentralized LPG cylinder management protocol. This guide will help you navigate the platform and understand its core features.
+Welcome to **DESTATE**, the world's first decentralized real estate marketplace on Stellar. This guide will help you navigate the platform and understand its core features.
+
+---
 
 ## 🏁 Getting Started
 
@@ -8,51 +10,57 @@ Welcome to **GasChain**, the decentralized LPG cylinder management protocol. Thi
 - **Browser**: Chrome or Brave (recommended).
 - **Wallet**: [Freighter Wallet](https://www.freighter.app/) extension installed.
 - **Network**: Switch Freighter to **Testnet** (Settings -> Network -> Testnet).
+- **Test XLM**: Get free test tokens from the [Stellar Laboratory Friendbot](https://laboratory.stellar.org/#friendbot).
 
 ### 2. Connecting your Wallet
-1. Open the [GasChain Web App](https://lpg-connect-wallet.vercel.app/).
-2. Click **"Connect Wallet"** on the landing page.
+1. Open the [DESTATE Web App](https://destate-stellar.vercel.app/).
+2. Click **"Connect Wallet"** on the landing page or navbar.
 3. Approve the connection request in your Freighter extension.
 4. Once connected, your wallet address and XLM balance will appear in the top-right corner.
 
 ---
 
-## ⛽ Core Features
+## 🏠 Core Features
 
-### 📅 Booking a Cylinder
-1. Go to the **"Book Cylinder"** page from the sidebar.
-2. Select your category (General / Direct Benefit Transfer).
-3. The system automatically calculates your **Subsidy Eligibility** based on your on-chain history.
-4. Click **"Confirm Booking"**.
-5. Sign the transaction in Freighter. 
-   - *Note: Our platform uses **Fee Sponsorship**, so you don't need XLM for gas fees!*
+### 🛒 Browsing the Marketplace
+1. Navigate to the **Marketplace** page.
+2. Filter properties by price, location, or type.
+3. Every property listed has a verified metadata hash anchored to the Stellar Blockchain.
 
-### ⛓️ Tracking the Supply Chain
-1. Visit the **"Supply Chain"** page.
-2. View real-time tracking of every cylinder ID.
-3. Every status update (Dispatched, Out for Delivery, Delivered) is anchored to the Stellar Blockchain.
+### 💰 Buying a Property
+1. Select a property you like and click **"Buy Now"**.
+2. Review the transaction details (Price, Seller Address).
+3. Click **"Confirm Purchase"**.
+4. Sign the transaction in Freighter. 
+   - *Note: DESTATE implements **Fee Sponsorship**. Your listing and feedback transactions are gasless!*
+5. Once the transaction clears, you will see the property in your **Dashboard**.
 
-### 📑 Viewing the Blockchain Ledger
-1. Navigate to the **"Blockchain Ledger"** page.
-2. View real-time blocks being added to the network.
-3. Click on any Transaction Hash to view it on the **Stellar Expert** explorer.
+### 🏗️ Listing your Property
+1. Go to the **List Property** page.
+2. Fill in the details (Title, Price in XLM, Image URL, Description).
+3. Submit the form. This will register the property on the **Soroban Smart Contract**.
+4. Your property is now live and searchable by thousands of users.
 
-### 📊 Real-time Metrics
-- Admins and public users can view platform-wide stats at `/dashboard/metrics`.
-- Track Daily Active Users (DAU), Transaction Volume, and Total Subsidies disbursed.
+### 📑 Managing your Portfolio
+1. Visit your **Dashboard** to view all properties you own.
+2. Track your total investment value and transaction history on-chain.
 
 ---
 
 ## 🛡️ Security & Privacy
-- **Privacy**: Your personal details (phone/address) are encrypted off-chain, while only public IDs are stored on-chain.
-- **Security**: All financial transactions are handled via smart contracts on the Stellar network.
-
-## ❓ FAQ
-**Q: Why is my XLM balance not decreasing?**
-A: GasChain implements **Gasless Transactions**. Our platform sponsors the transaction fees for all legitimate bookings.
-
-**Q: Can I use this on Mainnet?**
-A: Currently, GasChain is in production-readiness on the **Stellar Testnet** for Level 6 validation.
+- **Ownership**: Your property deeds are stored as multi-party authenticated records on the Stellar Ledger.
+- **Non-Custodial**: We never touch your funds. All payments go directly from buyer to seller via atomicity.
+- **Verification**: Use the **Stellar Expert** link in your dashboard to verify any transaction.
 
 ---
-*For support, reach out to the GasChain Community on GitHub.*
+
+## ❓ FAQ
+**Q: What is "Fee Sponsorship"?**
+A: To make web3 easy, DESTATE pays the network fees for your on-chain feedback and listing interactions.
+
+**Q: Is this real property?**
+A: Currently, DESTATE is a production-ready application running on the **Stellar Testnet** for Level 6. All assets are digital proofs of concept.
+
+---
+
+*For support, reach out to the DESTATE Community on Discord or GitHub.*

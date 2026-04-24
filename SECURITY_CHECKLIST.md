@@ -1,6 +1,6 @@
-# Security Checklist: GasChain | LPG Connect 🛡️
+# Security Checklist: GASCHAIN 🛡️
 
-This document outlines the security measures and audits performed to ensure the integrity of the GasChain ecosystem on the Stellar Testnet.
+This document outlines the security measures and audits performed to ensure the integrity of the GASCHAIN ecosystem on the Stellar Testnet.
 
 ## 1. Smart Contract Security (Soroban)
 - [x] **Logic Audit**: Verified booking validation and fee distribution logic in `/contracts`.
@@ -8,13 +8,13 @@ This document outlines the security measures and audits performed to ensure the 
 - [x] **Resource Limits**: Configured Soroban resource limits to prevent out-of-gas or CPU-exhaustion attacks.
 
 ## 2. Wallet & Payment Security
-- [x] **Non-Custodial**: GasChain never stores user private keys. All signing is handled by the **Freighter Wallet** extension.
+- [x] **Non-Custodial**: GASCHAIN never stores user private keys. All signing is handled by the **Freighter Wallet** extension.
 - [x] **Transaction Verification**: The frontend verifies the transaction status on-chain (Horizon API) before confirming a booking in the local database.
 - [x] **Sponsorship Guard**: Fee sponsorship is restricted to authorized operations to prevent account drain on the treasury.
 
 ## 3. Frontend & API Security
 - [x] **Sanitization**: All user inputs in the "Book Cylinder" form are sanitized to prevent XSS.
-- [x] **CORS Policy**: Restricted API access to authorized domains (e.g., `*.vercel.app`).
+- [x] **CORS Policy**: Restricted API access to authorized domains.
 - [x] **Dependency Check**: Regular scans for vulnerable npm packages (`npm audit`).
 
 ## 4. Data Integrity (Immutable Ledger)
@@ -26,5 +26,5 @@ This document outlines the security measures and audits performed to ensure the 
 - [x] **Secret Management**: All VITE environment variables are encrypted and stored in Vercel/GitHub secrets.
 
 ---
-**Date of Self-Audit**: April 21, 2026
+**Auditor**: Payal Babar
 **Security Rating**: Production Ready (Level 6)

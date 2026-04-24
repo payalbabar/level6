@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { 
   Wallet, Shield, Zap, Database, Loader2, 
-  ChevronRight, Globe, Lock, BarChart3, TrendingUp 
+  ChevronRight, Globe, Lock, BarChart3, TrendingUp, ArrowRight 
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/AuthContext";
 import { checkConnection, retrievePublicKey } from "@/lib/freighter";
+import { motion } from "framer-motion";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -51,76 +52,67 @@ export default function Landing() {
             <img src="/logo.png" alt="GasChain Logo" className="h-10 w-10 object-contain rounded-lg shadow-2xl shadow-primary/20" />
             <div className="flex flex-col">
               <span className="text-xl font-bold tracking-tight text-white leading-none">GasChain</span>
-              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">LPG CONNECT</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-primary/80 mt-1">LPG Connect Protocol</span>
             </div>
           </div>
-          
-          <div className="hidden md:flex items-center gap-8 mr-12 text-sm font-medium text-slate-400">
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#how-it-works" className="hover:text-white transition-colors">Process</a>
-            <a href="/dashboard/metrics" className="hover:text-white transition-colors">Network</a>
-          </div>
 
-          <div className="flex items-center gap-4">
-            {isWalletConnected ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
-                  <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                  {publicKey ? `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}` : "Connected"}
-                </div>
-                <Button onClick={() => navigate('/dashboard')} size="sm" className="rounded-full px-6 bg-white text-black hover:bg-slate-200 transition-all font-bold">
-                  Dashboard
-                </Button>
-                <Button variant="ghost" size="icon" onClick={() => { logout(); setIsWalletConnected(false); }} className="text-slate-500 hover:text-white">
-                  <Lock className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              <Button onClick={connectWallet} className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 font-bold text-sm shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-                Connect Wallet
-              </Button>
-            )}
+          <div className="flex items-center gap-6">
+            <button className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Features</button>
+            <button className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Ecosystem</button>
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="px-6 py-2.5 rounded-full bg-primary text-secondary text-sm font-bold shadow-lg shadow-primary/25 hover:scale-105 active:scale-95 transition-all"
+            >
+              Launch GasChain
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="relative pt-48 pb-32 px-6 overflow-hidden hero-mesh">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center text-center space-y-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold tracking-wider text-primary uppercase animate-fade-in">
-              <TrendingUp className="h-3 w-3" /> Leading the Global LPG Revolution
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-tight max-w-5xl">
-              SECURE. <span className="text-primary">SCALABLE.</span> <br />
-              TRANSPARENT.
-            </h1>
-            
-            <p className="max-w-2xl mx-auto text-slate-400 text-xl leading-relaxed font-medium">
-              Revolutionizing LPG distribution through Stellar's high-speed blockchain network. 
-              Efficiency meets transparency for the next generation of energy logistics.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-6 pt-8">
-              {!isWalletConnected ? (
-                <Button onClick={connectWallet} disabled={isConnecting} size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/30 transition-all hover:scale-105">
-                  {isConnecting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Wallet className="mr-2 h-5 w-5" />}
-                  Launch GasChain
-                </Button>
-              ) : (
-                <Button onClick={() => navigate('/book')} size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/30 transition-all hover:scale-105">
-                  New Booking <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              )}
-              <Button onClick={() => navigate('/dashboard/metrics')} variant="outline" size="lg" className="rounded-full h-16 px-12 text-lg font-bold border-white/10 hover:bg-white/5 transition-all">
-                Live Stats <BarChart3 className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-primary text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Live on Stellar Testnet
+              </div>
+              
+              <h1 className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tight leading-[0.9]">
+                Decentralized <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary/80">LPG Connect</span>
+              </h1>
+              
+              <p className="text-xl text-slate-400 mb-12 leading-relaxed max-w-2xl mx-auto">
+                The world's first open-source protocol for secure, transparent, 
+                and efficient LPG supply chain management powered by Stellar.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <button 
+                  onClick={() => navigate('/dashboard')}
+                  className="w-full sm:w-auto px-10 py-5 rounded-2xl bg-white text-secondary text-lg font-black shadow-2xl shadow-white/10 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
+                >
+                  Enter Platform <ArrowRight className="w-6 h-6 text-primary" />
+                </button>
+                <div className="flex items-center gap-4 text-slate-500 font-medium">
+                  <div className="flex -space-x-3">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="w-10 h-10 rounded-full border-2 border-secondary bg-slate-800 flex items-center justify-center text-[10px] font-bold text-white overflow-hidden">
+                        <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" />
+                      </div>
+                    ))}
+                  </div>
+                  <span className="text-sm">Trusted by 30+ Active Users</span>
+                </div>
+              </div>
+            </motion.div>
         </div>
         
-        {/* Decorative elements */}
         <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-full max-w-6xl aspect-[2/1] bg-primary/20 blur-[120px] rounded-full -z-10 opacity-50" />
       </section>
 
@@ -180,7 +172,6 @@ export default function Landing() {
                 </div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full" />
               </div>
-              {/* Floating tags */}
               <div className="absolute -top-6 -right-6 px-6 py-3 bg-black/60 backdrop-blur-md rounded-2xl border border-white/10 text-primary font-bold shadow-2xl">
                 On-Chain Verified
               </div>
