@@ -2,7 +2,7 @@
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-xi.vercel.app)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app/)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
 [![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
@@ -222,7 +222,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
+- **Live Demo**: [https://gas-chain-level6.vercel.app/](https://gas-chain-level6.vercel.app/)
 - **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
 - **Dashboard**: [https://level6-xi.vercel.app/dashboard](https://level6-xi.vercel.app/dashboard) (Requires Login)
