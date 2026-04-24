@@ -1,17 +1,15 @@
-# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar [Level 6]
+# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
-
----
+[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 6 (Black Belt)**, this project has been scaled to a production-ready application with 30+ active users, complete security validation, and professional metrics monitoring.
+At **Level 5**, this project has been built as a real-world MVP with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
 ---
 
@@ -35,7 +33,14 @@ At **Level 6 (Black Belt)**, this project has been scaled to a production-ready 
 
 ---
 
-## 📋 Level 6 (Black Belt) Requirements Checklist
+
+## 📋 Level 5 Requirements Checklist
+- [x] **Functional MVP**: Core booking and tracking system working
+- [x] **5+ Testnet Users**: Real users onboarded
+- [x] **User Feedback Collected**: Google Form + Sheets linked
+- [x] **Iteration Completed**: Improvements implemented with commit proof
+- [x] **Architecture Documented**: System flow explained
+- [x] **10+ Meaningful Commits**: Development history present
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
@@ -86,8 +91,8 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
-### 💎 Production User Validations (Level 6 Milestone)
-To validate our production-grade application, we onboarded **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
+### 💎 Testnet User Validations (Level 5 Milestone)
+To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
 <summary>View 34 Verified Wallet Addresses</summary>
@@ -172,6 +177,8 @@ GasChain operates on an iterative high-velocity development cycle:
 
 ---
 
+---
+
 ## 🛡️ Advanced Feature: Fee Sponsorship
 GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to eliminate the friction of onboarding new users who don't yet own XLM.
 
@@ -215,40 +222,44 @@ The core decentralized logic is written in **Rust** and located in the `/contrac
 
 ## 📈 Scalability Design
 GasChain is engineered to scale from a testnet MVP to a national-scale production utility:
-*   **Off-Chain Indexing**: By decoupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
+*   **Off-Chain Indexing**: By de-coupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
 *   **State Optimization**: The smart contract is designed with **minimal state storage** in mind. We store only critical identity and ownership markers, while rich metadata (customer name, landmark) is handled by the indexing layer.
 *   **Fee Sponsorship Management**: Our sponsorship model is designed to be plug-and-play with enterprise treasury accounts, allowing large energy companies to sponsor millions of transactions for their customers.
 
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
-- **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
-- **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
-- **Dashboard**: [https://level6-xi.vercel.app/dashboard](https://level6-xi.vercel.app/dashboard) (Requires Login)
-- **Booking History**: [https://level6-xi.vercel.app/bookings](https://level6-xi.vercel.app/bookings) (Requires Login)
-- **Supply Chain**: [https://level6-xi.vercel.app/supply-chain](https://level6-xi.vercel.app/supply-chain) (Requires Login)
-- **Subsidies**: [https://level6-xi.vercel.app/subsidies](https://level6-xi.vercel.app/subsidies) (Requires Login)
-- **Ledger Explorer**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Login)
+- **Live Demo**: [https://gas-chain-level6.vercel.app/](https://gas-chain-level6.vercel.app/)
+- **Demo Video**: [https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L](https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L)
+- **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
+- **Dashboard**: [https://gas-chain-level6.vercel.app/dashboard](https://gas-chain-level6.vercel.app/dashboard) (Requires Login)
+- **Booking History**: [https://gas-chain-level6.vercel.app/bookings](https://gas-chain-level6.vercel.app/bookings) (Requires Login)
+- **Supply Chain**: [https://gas-chain-level6.vercel.app/supply-chain](https://gas-chain-level6.vercel.app/supply-chain) (Requires Login)
+- **Subsidies**: [https://gas-chain-level6.vercel.app/subsidies](https://gas-chain-level6.vercel.app/subsidies) (Requires Login)
+- **Ledger Explorer**: [https://gas-chain-level6.vercel.app/ledger](https://gas-chain-level6.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
 ---
 
 ## 📸 Screenshots
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121555" src="https://github.com/user-attachments/assets/58d0b83a-49c4-4c9f-adf8-bd3ca48faaee" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121529" src="https://github.com/user-attachments/assets/6c151a09-2fbb-46cc-8835-197995d5e105" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121507" src="https://github.com/user-attachments/assets/23671fa4-6d77-4ef5-a039-9482c8fc3000" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121447" src="https://github.com/user-attachments/assets/1bf10070-c863-41cf-82fb-a893b31fc536" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121431" src="https://github.com/user-attachments/assets/90baf2ef-11f2-46d1-a906-218cc15da462" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121410" src="https://github.com/user-attachments/assets/f18f6ec3-f7b2-4c39-8ef4-4a67980273ed" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121306" src="https://github.com/user-attachments/assets/6b3db461-9640-4abf-b344-879c3a676ceb" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121235" src="https://github.com/user-attachments/assets/3e1cbbca-e3ec-4254-966d-a0a26e4cf922" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-23 202738" src="https://github.com/user-attachments/assets/f5fc2e79-79ce-40c5-aa08-c38c0ffc4537" />
+<img width="1920" height="878" alt="image" src="https://github.com/user-attachments/assets/0bdcafc8-b267-44e8-ae48-f12bd3724a4f" />
+<img width="1910" height="877" alt="image" src="https://github.com/user-attachments/assets/807acb94-4f10-4340-bfa4-3e549440fba3" />
+<img width="1920" height="893" alt="image" src="https://github.com/user-attachments/assets/9718ee87-47f6-4005-a039-9482c8fc3000" />
+<img width="1918" height="887" alt="image" src="https://github.com/user-attachments/assets/8974450e-de45-4fd8-a41d-1e6aa0c49bc0" />
+<img width="1917" height="881" alt="image" src="https://github.com/user-attachments/assets/a5eddf2e-73bd-4383-b376-7cf176e2a4af" />
+<img width="1920" height="888" alt="image" src="https://github.com/user-attachments/assets/ce7f72f6-9d16-43b8-aff7-2a9d49d14c96" />
+<img width="1917" height="879" alt="image" src="https://github.com/user-attachments/assets/32e87e46-cdc5-4c54-aa82-6521c9ddff0c" />
+<img width="1911" height="880" alt="image" src="https://github.com/user-attachments/assets/43748580-edf4-4804-bf2c-c7ea46f3c7cd" />
+<img width="1913" height="876" alt="image" src="https://github.com/user-attachments/assets/a1264b08-b458-4223-9649-c6b95cfa6a66" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/012af1e4-5929-4c71-8ea2-0d527607cb9a" />
+<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/0d475dcc-0d32-4b64-b907-58238721e284" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/694e7448-3291-42b7-8dcc-b60db2482a67" />
+<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/d0252452-b1bd-4aaa-ae2c-d96ce9ffe55e" />
 
 
 ## 🛠️ Setup Instructions
-1.  **Clone**: `git clone https://github.com/payalbabar/GasChainLevel6.git`
+1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
 2.  **Install**: `npm install`
 3.  **Run**: `npm run dev`
 
