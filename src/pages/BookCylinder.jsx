@@ -45,6 +45,7 @@ export default function BookCylinder() {
     quantity: 1,
     payment_method: "freighter",
     distributor_id: "dist_1",
+    cylinder_sn: "L-102", // Default existing asset for demo
     notes: "",
   });
 
@@ -107,7 +108,8 @@ export default function BookCylinder() {
           status: "confirmed",
           block_hash: blockHash,
           distributor_name: distributor.name,
-          metadata: JSON.stringify({ txHash, network: "Stellar Testnet", priceXLM: xlmPrice }),
+          cylinder_sn: form.cylinder_sn, // Track the physical asset serial
+          metadata: JSON.stringify({ txHash, network: "Stellar Testnet", priceXLM: xlmPrice, enterprise: "v2_protocol" }),
         });
 
         const genesisHash = generateBlockHash("0x0000000000000000", { bookingId, event: "booking_created" });
@@ -269,9 +271,7 @@ export default function BookCylinder() {
                             </div>
                             <h2 className="text-xl font-black text-white tracking-tight">Authorized Distributors</h2>
                          </div>
-                         <p className="text-sm text-slate-500 font-medium italic">Select a verified node for delivery.</p>
-                         <div className="space-y-3">
-                            {DISTRIBUTORS.map(d => (
+                         <p className="text-sm text-slate-500 font-medium italic">Select a verified node for delivery.</p>                             {DISTRIBUTORS.map(d => (
                                 <div 
                                     key={d.id} 
                                     onClick={() => updateForm("distributor_id", d.id)}
@@ -293,9 +293,30 @@ export default function BookCylinder() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
-                         </div>
-                    </div>
+                             ))}
+                          </div>
+                     </div>
+
+                     <div className="premium-card p-8 space-y-8">
+                          <div className="flex items-center gap-3">
+                             <div className="h-10 w-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20">
+                                 <Shield className="h-5 w-5" />
+                             </div>
+                             <h2 className="text-xl font-black text-white tracking-tight">Cylinder Asset Verification</h2>
+                          </div>
+                          <div className="space-y-4">
+                             <Label className="text-[10px] uppercase tracking-widest text-slate-500 font-black">Serial Number (Physical Sn)</Label>
+                             <div className="relative">
+                                <Input
+                                    placeholder="Enter L-XXX series"
+                                    className="h-12 bg-white/[0.02] border-white/10 rounded-xl pl-4 pr-10"
+                                    value={form.cylinder_sn}
+                                    onChange={(e) => updateForm("cylinder_sn", e.target.value.toUpperCase())}
+                                />
+                                <BadgeCheck className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-500" />
+                             </div>
+                             <p className="text-[10px] text-slate-500 font-medium">Verified in Enterprise Asset Registry v2.0</p>
+                          </div>
                 </div>
             )}
 
