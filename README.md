@@ -4,14 +4,14 @@
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-xi.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-gold?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
+[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ---
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 6 (Black Belt)**, this project has been scaled to production readiness with 34 active users, comprehensive security audits, and real-time monitoring. The focus is on a seamless **Demo Day** presentation and global scalability.
+At **Level 5**, this project has been built as a real-world MVP with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
 ---
 
@@ -35,7 +35,7 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 
 ---
 
-## 📋 Requirements Checklist
+## 📋 Level 5 Requirements Checklist
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
@@ -86,7 +86,7 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)**
 
-### 💎 Testnet User Validations (Level 6 Milestone)
+### 💎 Testnet User Validations (Level 5 Milestone)
 To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
@@ -240,7 +240,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🛠️ Setup Instructions
-1.  **Clone**: `git clone https://github.com/payalbabar/GasChainLevel6.git`
+1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
 2.  **Install**: `npm install`
 3.  **Run**: `npm run dev`
 
