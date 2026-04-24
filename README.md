@@ -42,7 +42,7 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 - [x] **Monitoring Active**: Real-time network vitality tracking.
 - [x] **Data Indexing Implemented**: Hybrid listener for fast state retrieval.
 - [x] **Full Documentation**: Comprehensive User Guide and Architecture docs.
-- [x] **1 Community Contribution**: [Twitter Post about GASCHAIN](https://twitter.com/payal_gaschain/status/17830123456789).
+- [x] **1 Community Contribution**: [Twitter Post about GASCHAIN](https://x.com/babar_payal/status/2047562173333790744?s=20).
 - [x] **1 Advanced Feature**: Fee Sponsorship for gasless transactions.
 - [x] **15+ Meaningful Commits**: 35+ commits in total.
 
@@ -204,7 +204,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 - **Metrics Dashboard**: [https://level6-xi.vercel.app/dashboard/metrics](https://level6-xi.vercel.app/dashboard/metrics) (Requires Login)
 - **Monitoring Ledger**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
-- **Community Contribution**: [Twitter/X Post](https://twitter.com/payal_gaschain)
+- **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
 ---
 
