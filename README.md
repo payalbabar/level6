@@ -33,7 +33,7 @@ At **Level 5**, this project has been built as a real-world MVP with 34 active u
 
 ---
 
-## 📋 Level 5 Requirements Checklist
+
 ## 📋 Level 5 Requirements Checklist
 - [x] **Functional MVP**: Core booking and tracking system working
 - [x] **5+ Testnet Users**: Real users onboarded
