@@ -125,6 +125,7 @@ To eliminate the barrier of entry for new users (acquiring XLM for gas fees), Ga
 *   **Production Monitoring**: https://level6-xi.vercel.app/dashboard
 *   <img width="1920" height="1080" alt="Screenshot 2026-04-23 202753" src="https://github.com/user-attachments/assets/70b8867a-7dd2-4e0b-bd50-89146444b2f1" />
  **Data Indexing Approach**: GasChain indexes all supply chain events into an immutable linked list. We fetch and aggregate this indexed blockchain data in real-time on our [Blockchain Ledger]https://level6-xi.vercel.app/ledger endpoint to show verified chains and blocks.
+ **Data Indexing Approach**: GasChain indexes all supply chain events into an immutable linked list. We fetch and aggregate this indexed blockchain data in real-time on our [Blockchain Ledger](https://splendorous-clafoutis-f7b51c.netlify.app/ledger) endpoint to show verified chains and blocks.
 *   **Security Audit**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 *   **Community Impact**: [REPLACE_WITH_TWITTER_LINK]
 
