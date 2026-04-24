@@ -70,21 +70,12 @@ The system follows a **Reactive Hybrid Architecture**. While the final source of
 4.  **Logistics Tracking**: The distributor receives a real-time event through our WebSocket layer and prepares the dispatch.
 5.  **Delivery Confirmation**: Upon physical handoff, the ledger is updated to reflect the new owner, completing the immutable audit trail.
 
----
-
-## 📁 Project Structure
-```bash
-├── 📜 contracts/           # Soroban Smart Contract (Rust)
-│   ├── 📂 gas_chain/       # Core protocol logic & tests
-│   └── 📄 PROOF.md         # Advanced feature validation
-├── 📂 src/
-│   ├── 📂 api/             # Base44 / Supabase configuration
-│   ├── 📂 components/      # Reusable UI (Radix, Lucide)
-│   ├── 📂 lib/             # Stellar SDK, Blockchain helpers
-│   └── 📂 pages/           # Metrics, Dashboard, Web3 flows
-├── ⚙️ .github/workflows/    # CI/CD (Frontend & Contracts)
-└── 📄 vercel.json          # Deployment routing config
-```
+## 📂 Project Structure 🏗️
+- **[`/contracts`](./contracts)**: Core **Soroban (Rust)** smart contracts for decentralized bookings and supply chain logic.
+  - **`/contracts/gas_chain`**: Main contract implementation, tests, and mock verification.
+- **`/src`**: Premium Frontend React application, state management, and Stellar SDK integration.
+- **`.github/workflows`**: Automated **CI/CD Pipeline** using GitHub Actions for full-stack builds and testing.
+- **`vercel.json`**: Production routing configuration for Vercel deployment.
 
 ---
 
