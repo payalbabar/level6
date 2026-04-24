@@ -106,8 +106,8 @@ GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to elimi
 - **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
 - **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
 - **Active Wallets**: [List of 34 Verified Wallets](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
-- **Metrics Dashboard**: [https://level6-xi.vercel.app/dashboard/metrics](https://level6-xi.vercel.app/dashboard/metrics)
-- **Monitoring Dashboard**: [Monitoring Link](https://level6-xi.vercel.app/ledger)
+- **Metrics Dashboard**: [https://level6-xi.vercel.app/dashboard/metrics](https://level6-xi.vercel.app/dashboard/metrics) (Requires Freighter Login)
+- **Monitoring Dashboard**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Freighter Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://twitter.com/payal_gaschain)
 
