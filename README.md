@@ -2,10 +2,9 @@
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-xi.vercel.app)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
-
+[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-gold?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 ---
 
 ## 🌟 Overview
