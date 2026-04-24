@@ -1,6 +1,6 @@
-# Submission Checklist: Level 6 (Black Belt) 🎓
+# Submission Checklist: Level 5 (Blue Belt) 🎓
 
-This checklist confirms that the **GASCHAIN — Decentralized LPG Ecosystem** project satisfies all requirements for the Level 6 milestone and Demo Day.
+This checklist confirms that the **GASCHAIN — Decentralized LPG Ecosystem** project satisfies all requirements for the Level 5 milestone.
 
 ---
 
