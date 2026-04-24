@@ -6,6 +6,8 @@
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
 [![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
+---
+
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
@@ -33,14 +35,7 @@ At **Level 5**, this project has been built as a real-world MVP with 34 active u
 
 ---
 
-
 ## 📋 Level 5 Requirements Checklist
-- [x] **Functional MVP**: Core booking and tracking system working
-- [x] **5+ Testnet Users**: Real users onboarded
-- [x] **User Feedback Collected**: Google Form + Sheets linked
-- [x] **Iteration Completed**: Improvements implemented with commit proof
-- [x] **Architecture Documented**: System flow explained
-- [x] **10+ Meaningful Commits**: Development history present
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
