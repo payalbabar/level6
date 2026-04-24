@@ -4,8 +4,7 @@
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-gold?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
----
+[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
