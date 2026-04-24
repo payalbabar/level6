@@ -235,9 +235,16 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 📸 Screenshots
-*(Include high-resolution screenshots here of your App Landing Page, Metrics Dashboard, and Smart Booking Flow to showcase the premium UI engineering.)*
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121555" src="https://github.com/user-attachments/assets/98f4514b-4da0-464c-bf25-81e56fe720de" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121529" src="https://github.com/user-attachments/assets/868cb960-3076-416f-9704-dc0f13457ae0" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121507" src="https://github.com/user-attachments/assets/8addfe35-88bf-44eb-890a-e71995375cbb" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121447" src="https://github.com/user-attachments/assets/d5f31e34-e9e9-4d42-8ca7-5b6de4573736" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121431" src="https://github.com/user-attachments/assets/886179cc-82e6-46a2-a390-20df9c407dd9" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121410" src="https://github.com/user-attachments/assets/cdeed25a-ecb7-4871-8c4e-8fc1ba541fc1" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121306" src="https://github.com/user-attachments/assets/65b234cb-cce5-4ae1-aa2d-7f18768bf0f9" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-24 121235" src="https://github.com/user-attachments/assets/7070b14f-a714-4c39-bcb1-a265f6a4285d" />
+<img width="1920" height="1080" alt="Screenshot 2026-04-23 202738" src="https://github.com/user-attachments/assets/34d1a4bb-6cf9-4967-870d-8a83b8ab62c7" />
 
----
 
 ## 🛠️ Setup Instructions
 1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
