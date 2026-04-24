@@ -243,15 +243,19 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 📸 Screenshots
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121555" src="https://github.com/user-attachments/assets/98f4514b-4da0-464c-bf25-81e56fe720de" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121529" src="https://github.com/user-attachments/assets/868cb960-3076-416f-9704-dc0f13457ae0" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121507" src="https://github.com/user-attachments/assets/8addfe35-88bf-44eb-890a-e71995375cbb" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121447" src="https://github.com/user-attachments/assets/d5f31e34-e9e9-4d42-8ca7-5b6de4573736" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121431" src="https://github.com/user-attachments/assets/886179cc-82e6-46a2-a390-20df9c407dd9" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121410" src="https://github.com/user-attachments/assets/cdeed25a-ecb7-4871-8c4e-8fc1ba541fc1" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121306" src="https://github.com/user-attachments/assets/65b234cb-cce5-4ae1-aa2d-7f18768bf0f9" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-24 121235" src="https://github.com/user-attachments/assets/7070b14f-a714-4c39-bcb1-a265f6a4285d" />
-<img width="1920" height="1080" alt="Screenshot 2026-04-23 202738" src="https://github.com/user-attachments/assets/34d1a4bb-6cf9-4967-870d-8a83b8ab62c7" />
+<img width="1920" height="878" alt="image" src="https://github.com/user-attachments/assets/0bdcafc8-b267-44e8-ae48-f12bd3724a4f" />
+<img width="1910" height="877" alt="image" src="https://github.com/user-attachments/assets/807acb94-4f10-4340-bfa4-3e549440fba3" />
+<img width="1920" height="893" alt="image" src="https://github.com/user-attachments/assets/9718ee87-47f6-4005-a03a-bf0a777b54b0" />
+<img width="1918" height="887" alt="image" src="https://github.com/user-attachments/assets/8974450e-de45-4fd8-a41d-1e6aa0c49bc0" />
+<img width="1917" height="881" alt="image" src="https://github.com/user-attachments/assets/a5eddf2e-73bd-4383-b376-7cf176e2a4af" />
+<img width="1920" height="888" alt="image" src="https://github.com/user-attachments/assets/ce7f72f6-9d16-43b8-aff7-2a9d49d14c96" />
+<img width="1917" height="879" alt="image" src="https://github.com/user-attachments/assets/32e87e46-cdc5-4c54-aa82-6521c9ddff0c" />
+<img width="1911" height="880" alt="image" src="https://github.com/user-attachments/assets/43748580-edf4-4804-bf2c-c7ea46f3c7cd" />
+<img width="1913" height="876" alt="image" src="https://github.com/user-attachments/assets/a1264b08-b458-4223-9649-c6b95cfa6a66" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/012af1e4-5929-4c71-8ea2-0d527607cb9a" />
+<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/0d475dcc-0d32-4b64-b907-58238721e284" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/694e7448-3291-42b7-8dcc-b60db2482a67" />
+<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/d0252452-b1bd-4aaa-ae2c-d96ce9ffe55e" />
 
 
 ## 🛠️ Setup Instructions
