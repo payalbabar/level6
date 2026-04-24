@@ -33,7 +33,7 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 As part of validating our MVP, we collected feedback from real testnet users via **[this Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeEEkw9WKm8rf73X4fk0EcvWSQWT8G3TvID-9w_82UFZOEj2w/viewform?usp=publish-editor)**. 
 You can view the raw exported responses and feedback analysis in our Excel sheet below:
 
-- **[View User Feedback (Excel Sheet) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?usp=sharing)**
+- **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)**
 
 ### 💎 Testnet User Validations (Level 6 Milestone)
 To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
@@ -105,9 +105,9 @@ GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to elimi
 ## 🔗 Submission Checklist
 - **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
 - **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
-- **Active Wallets**: [List of 34 Verified Wallets](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
-- **Metrics Dashboard**: [Click here to view Metrics Dashboard](https://level6-xi.vercel.app/dashboard/metrics) (Requires Freighter Login)
-- **Monitoring Dashboard**: [Click here to view Monitoring Ledger](https://level6-xi.vercel.app/ledger) (Requires Freighter Login)
+- **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
+- **Metrics Dashboard**: [https://level6-xi.vercel.app/dashboard/metrics](https://level6-xi.vercel.app/dashboard/metrics) (Requires Login)
+- **Monitoring Ledger**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://twitter.com/payal_gaschain)
 
