@@ -15,6 +15,26 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 
 ---
 
+## 🛠️ Tech Stack
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 18, Vite, Tailwind CSS, Framer Motion, Radix UI |
+| **Blockchain** | Stellar Network, Soroban Smart Contracts (Rust), Freighter Wallet API |
+| **Indexing/Backend** | Base44 SDK, PostgreSQL (via Supabase), Real-time WebSocket Listeners |
+| **DevOps/CI/CD** | GitHub Actions, Vercel, Rust Toolchain (wasm32) |
+
+---
+
+## ✨ Features
+*   **Decentralized Cylinder Booking**: Secure, on-chain recording of LPG bookings with immutable reference IDs.
+*   **Real-time Chain of Custody**: End-to-end tracking of assets from Central Depot to Metro Distributors and final consumers.
+*   **Automated Subsidy Logic**: Smart contract-driven subsidy calculation based on domestic vs. commercial profiles.
+*   **Enterprise Monitoring**: Real-time heartbeat monitoring of node latency and ledger state.
+*   **Gasless User Experience**: Seamless onboarding via Stellar Fee-Bump transactions (sponsored fees).
+*   **Blockchain Simulator**: A high-fidelity internal tool to visualize ledger changes and transaction hashing in real-time.
+
+---
+
 ## 📋 Requirements Checklist
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
@@ -25,6 +45,46 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 - [x] **1 Community Contribution**: [Twitter Post about GASCHAIN](https://twitter.com/payal_gaschain/status/17830123456789).
 - [x] **1 Advanced Feature**: Fee Sponsorship for gasless transactions.
 - [x] **15+ Meaningful Commits**: 35+ commits in total.
+
+---
+
+## 🏛️ System Architecture
+```mermaid
+graph TD
+    User([End User]) -->|Freighter Auth| App[GasChain Web App]
+    App -->|JSON-RPC| Soroban[Soroban Smart Contract]
+    Soroban -->|State Change| Stellar[Stellar Ledger]
+    Stellar -->|Events| Indexer[Base44 Indexer/Listener]
+    Indexer -->|Database Update| Postgres[(PostgreSQL)]
+    Postgres -->|WebSocket| App
+```
+### Engineering Depth:
+The system follows a **Reactive Hybrid Architecture**. While the final source of truth remains the Stellar Ledger, we utilize an **Event-Driven Indexer** (Base44) to ensure the UI updates instantly without polling the Horizon API excessively. This ensures a high-performance "web2-speed" experience with "web3-security".
+
+---
+
+## 🚀 How It Works
+1.  **Wallet Connection**: Participant connects via the Freighter browser extension for non-custodial login.
+2.  **Cylinder Selection**: User selects the required asset (e.g., 14.2kg Domestic) and verified distributor.
+3.  **On-Chain Booking**: User signs a transaction. The GasChain treasury sponsors the fee, and the booking is committed to the $gas\_chain$ contract.
+4.  **Logistics Tracking**: The distributor receives a real-time event through our WebSocket layer and prepares the dispatch.
+5.  **Delivery Confirmation**: Upon physical handoff, the ledger is updated to reflect the new owner, completing the immutable audit trail.
+
+---
+
+## 📁 Project Structure
+```bash
+├── 📜 contracts/           # Soroban Smart Contract (Rust)
+│   ├── 📂 gas_chain/       # Core protocol logic & tests
+│   └── 📄 PROOF.md         # Advanced feature validation
+├── 📂 src/
+│   ├── 📂 api/             # Base44 / Supabase configuration
+│   ├── 📂 components/      # Reusable UI (Radix, Lucide)
+│   ├── 📂 lib/             # Stellar SDK, Blockchain helpers
+│   └── 📂 pages/           # Metrics, Dashboard, Web3 flows
+├── ⚙️ .github/workflows/    # CI/CD (Frontend & Contracts)
+└── 📄 vercel.json          # Deployment routing config
+```
 
 ---
 
@@ -118,6 +178,14 @@ The core decentralized logic is written in **Rust** and located in the `/contrac
 
 ---
 
+## 📈 Scalability Design
+GasChain is engineered to scale from a testnet MVP to a national-scale production utility:
+*   **Off-Chain Indexing**: By decoupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
+*   **State Optimization**: The smart contract is designed with **minimal state storage** in mind. We store only critical identity and ownership markers, while rich metadata (customer name, landmark) is handled by the indexing layer.
+*   **Fee Sponsorship Management**: Our sponsorship model is designed to be plug-and-play with enterprise treasury accounts, allowing large energy companies to sponsor millions of transactions for their customers.
+
+---
+
 ## 🔗 Submission Checklist
 - **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
 - **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
@@ -126,6 +194,11 @@ The core decentralized logic is written in **Rust** and located in the `/contrac
 - **Monitoring Ledger**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://twitter.com/payal_gaschain)
+
+---
+
+## 📸 Screenshots
+*(Include high-resolution screenshots here of your App Landing Page, Metrics Dashboard, and Smart Booking Flow to showcase the premium UI engineering.)*
 
 ---
 
