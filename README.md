@@ -223,7 +223,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 
 ## 🔗 Submission Checklist
 - **Live Demo**: [https://gas-chain-level6.vercel.app/](https://gas-chain-level6.vercel.app/)
-- **Demo Video**: [https://youtu.be/eJhywfG2F2c](https://youtu.be/eJhywfG2F2c)
+- **Demo Video**: [https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L](https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
 - **Dashboard**: [https://gas-chain-level6.vercel.app/dashboard](https://gas-chain-level6.vercel.app/dashboard) (Requires Login)
 - **Booking History**: [https://gas-chain-level6.vercel.app/bookings](https://gas-chain-level6.vercel.app/bookings) (Requires Login)
