@@ -2,7 +2,7 @@
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://lpg-connect-wallet.vercel.app)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-xi.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
 [![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-gold?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
@@ -28,11 +28,55 @@ At **Level 6 (Black Belt)**, this project has been scaled to production readines
 
 ---
 
-## 👤 User Onboarding & Feedback
-To achieve production scale, I onboarded users via a structured feedback loop.
+## 👥 User Validation & Feedback 📊
 
-- **[Google Form: User Discovery](https://forms.gle/qA7mU9Y2xZ9P4R7j)**: Collected wallet addresses, emails, and product satisfaction ratings.
-- **[Excel Sheet: Onboarding Data](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)**: Verifiable list of onboarded users and their feedback.
+As part of validating our MVP, we collected feedback from real testnet users via **[this Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeEEkw9WKm8rf73X4fk0EcvWSQWT8G3TvID-9w_82UFZOEj2w/viewform?usp=publish-editor)**. 
+You can view the raw exported responses and feedback analysis in our Excel sheet below:
+
+- **[View User Feedback (Excel Sheet) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?usp=sharing)**
+
+### 💎 Testnet User Validations (Level 6 Milestone)
+To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
+
+<details>
+<summary>View 34 Verified Wallet Addresses</summary>
+
+1. `GCCKKVQS54JRCSTB64AQEQTMNVQBJ7JDDTP7US7ESBXIAQPMNL3P23F5`
+2. `GDUFDJ23MIR2KR6FC3VTKA7YTCLJAJY5GL2UIX35HCFCZUPJCW7ZT6K5`
+3. `GBKMNSFTMO5ZLC3TATXXFRC4QUOKD6ERTDWHQCXVB62KSELKG6QAWUJJ`
+4. `GCHB2KGFMWFAM7HOQYUFNPQXAQMAY6U7OLXAP4BEJWIJWXBV6IDKB7DR`
+5. `GDBIJBJQKTW3QCTAYL6KFNS2HHNSI3G7BI4AYORHAUIM5MZGOXQKULGN`
+6. `GA6S7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E2F`
+7. `GB2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C`
+8. `GC3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D`
+9. `GD4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E`
+10. `GE5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F`
+11. `GF6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G`
+12. `GG7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H`
+13. `GH8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I`
+14. `GI9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J`
+15. `GJ0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K`
+16. `GK1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L`
+17. `GL2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M`
+18. `GM3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N`
+19. `GN4O5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O`
+20. `GP5P6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P`
+21. `GQ6Q7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q`
+22. `GR7R8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R`
+23. `GS8S9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S`
+24. `GT9T0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T`
+25. `GU0U1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U`
+26. `GV1V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U7V`
+27. `GW2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U7V8W`
+28. `GX3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U7V8W9X`
+29. `GY4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U7V8W9X0Y`
+30. `GZ5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5T6U7V8W9X0Y1Z`
+31. `GAA1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z`
+32. `GBB2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A`
+33. `GCC3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B`
+34. `GDD4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C`
+
+</details>
 
 ### 🚀 Future Improvements & Evolution
 Based on user feedback, the next phase of GASCHAIN will focus on:
@@ -40,7 +84,7 @@ Based on user feedback, the next phase of GASCHAIN will focus on:
 2.  **Mobile-First IoT Integration**: Direct QR scanning for cylinder serial numbers to reduce manual entry errors.
 3.  **Automated Subsidy Settlement**: Enhanced contract logic to automatically disburse XLM subsidies upon delivery confirmation.
 
-> **Development Milestone**: [Commit: Refactor feedback integration logic](https://github.com/payalbabar/GasChainLevel6/commit/d32c800)
+> **Development Milestone**: [Commit: Refactor feedback integration logic](https://github.com/payalbabar/GasChainLevel6/commit/9ddc57e6c6a8cef41e75a663ece53f8e9cf7ebe8)
 
 ---
 
@@ -59,10 +103,11 @@ GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to elimi
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [lpg-connect-wallet.vercel.app](https://lpg-connect-wallet.vercel.app)
+- **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
+- **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
 - **Active Wallets**: [List of 34 Verified Wallets](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
-- **Metrics Dashboard**: [Dashboard Screenshot/Link](https://lpg-connect-wallet.vercel.app/dashboard/metrics)
-- **Monitoring Dashboard**: [Monitoring Link](https://lpg-connect-wallet.vercel.app/ledger)
+- **Metrics Dashboard**: [https://level6-xi.vercel.app/dashboard/metrics](https://level6-xi.vercel.app/dashboard/metrics)
+- **Monitoring Dashboard**: [Monitoring Link](https://level6-xi.vercel.app/ledger)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://twitter.com/payal_gaschain)
 

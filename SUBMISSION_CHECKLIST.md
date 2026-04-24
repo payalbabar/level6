@@ -20,7 +20,7 @@ This checklist confirms that the **GASCHAIN — Decentralized LPG Ecosystem** pr
 
 ## 3. DevOps & Deployment
 - [x] **CI/CD Pipeline**: GitHub Actions configured for automated linting and builds.
-- [x] **Live Production URL**: Deployed to [lpg-connect-wallet.vercel.app](https://lpg-connect-wallet.vercel.app/).
+- [x] **Live Production URL**: Deployed to [level6-xi.vercel.app](https://level6-xi.vercel.app/).
 
 ## 4. Presentation & Community
 - [x] **Demo Day Ready**: Premium Enterprise UI and high-fidelity visualizations.
