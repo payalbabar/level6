@@ -1,17 +1,17 @@
-# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar
+# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar [Level 6]
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
+[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ---
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 5**, this project has been built as a real-world MVP with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
+At **Level 6 (Black Belt)**, this project has been scaled to a production-ready application with 30+ active users, complete security validation, and professional metrics monitoring.
 
 ---
 
@@ -35,7 +35,7 @@ At **Level 5**, this project has been built as a real-world MVP with 34 active u
 
 ---
 
-## 📋 Level 5 Requirements Checklist
+## 📋 Level 6 (Black Belt) Requirements Checklist
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
@@ -86,8 +86,8 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
-### 💎 Testnet User Validations (Level 5 Milestone)
-To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
+### 💎 Production User Validations (Level 6 Milestone)
+To validate our production-grade application, we onboarded **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
 <summary>View 34 Verified Wallet Addresses</summary>
@@ -172,8 +172,6 @@ GasChain operates on an iterative high-velocity development cycle:
 
 ---
 
----
-
 ## 🛡️ Advanced Feature: Fee Sponsorship
 GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to eliminate the friction of onboarding new users who don't yet own XLM.
 
@@ -224,14 +222,14 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://gas-chain-level6.vercel.app/](https://gas-chain-level6.vercel.app/)
-- **Demo Video**: [https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L](https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L)
-- **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
-- **Dashboard**: [https://gas-chain-level6.vercel.app/dashboard](https://gas-chain-level6.vercel.app/dashboard) (Requires Login)
-- **Booking History**: [https://gas-chain-level6.vercel.app/bookings](https://gas-chain-level6.vercel.app/bookings) (Requires Login)
-- **Supply Chain**: [https://gas-chain-level6.vercel.app/supply-chain](https://gas-chain-level6.vercel.app/supply-chain) (Requires Login)
-- **Subsidies**: [https://gas-chain-level6.vercel.app/subsidies](https://gas-chain-level6.vercel.app/subsidies) (Requires Login)
-- **Ledger Explorer**: [https://gas-chain-level6.vercel.app/ledger](https://gas-chain-level6.vercel.app/ledger) (Requires Login)
+- **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
+- **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
+- **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)
+- **Dashboard**: [https://level6-xi.vercel.app/dashboard](https://level6-xi.vercel.app/dashboard) (Requires Login)
+- **Booking History**: [https://level6-xi.vercel.app/bookings](https://level6-xi.vercel.app/bookings) (Requires Login)
+- **Supply Chain**: [https://level6-xi.vercel.app/supply-chain](https://level6-xi.vercel.app/supply-chain) (Requires Login)
+- **Subsidies**: [https://level6-xi.vercel.app/subsidies](https://level6-xi.vercel.app/subsidies) (Requires Login)
+- **Ledger Explorer**: [https://level6-xi.vercel.app/ledger](https://level6-xi.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
@@ -250,7 +248,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 
 
 ## 🛠️ Setup Instructions
-1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
+1.  **Clone**: `git clone https://github.com/payalbabar/GasChainLevel6.git`
 2.  **Install**: `npm install`
 3.  **Run**: `npm run dev`
 
