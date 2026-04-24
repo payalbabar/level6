@@ -46,12 +46,12 @@ export const CYLINDER_LABELS = {
 };
 
 export const STATUS_COLORS = {
-  pending: 'bg-amber-100 text-amber-800',
-  confirmed: 'bg-blue-100 text-blue-800',
-  dispatched: 'bg-indigo-100 text-indigo-800',
-  in_transit: 'bg-purple-100 text-purple-800',
-  delivered: 'bg-emerald-100 text-emerald-800',
-  cancelled: 'bg-red-100 text-red-800',
+  pending: 'bg-amber-500/10 text-amber-500 border border-amber-500/20',
+  confirmed: 'bg-blue-500/10 text-blue-500 border border-blue-500/20',
+  dispatched: 'bg-indigo-500/10 text-indigo-500 border border-indigo-500/20',
+  in_transit: 'bg-purple-500/10 text-purple-500 border border-purple-500/20',
+  delivered: 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',
+  cancelled: 'bg-red-500/10 text-red-500 border border-red-500/20',
 };
 
 export const EVENT_LABELS = {

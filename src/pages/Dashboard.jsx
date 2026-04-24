@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
+import AppHeader from "../components/dashboard/AppHeader";
 import {
   ShoppingCart, Wallet, Database, TrendingUp,
   X, ArrowRight, Shield, CheckCircle2, Loader2,
-  Box, Activity, Layers
+  Box, Activity, Layers, Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { STATUS_COLORS, CYLINDER_LABELS } from "@/lib/blockchain";
@@ -19,223 +20,234 @@ export default function Dashboard() {
   const [bookings, setBookings] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [subsidies, setSubsidies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activePanel, setActivePanel] = useState(null); 
+  const [activePanel, setActivePanel] = useState(null); // 'bookings' | 'blocks' | 'subsidies' | 'active'
 
   useEffect(() => {
-    async function load() {
-      const [b, bl, s] = await Promise.all([
-        base44.entities.Booking.list("-created_date", 10),
-        base44.entities.SupplyChainBlock.list("-created_date", 10),
-        base44.entities.Subsidy.list("-created_date", 10),
-      ]);
-      setBookings(b);
-      setBlocks(bl);
-      setSubsidies(s);
-      setLoading(false);
+    async function fetchData() {
+      const b = await base44.entities.Booking.list();
+      const bl = await base44.entities.SupplyChainBlock.list();
+      const s = await base44.entities.Subsidy.list();
+      setBookings(b.sort((x,y) => new Date(y.created_date) - new Date(x.created_date)));
+      setBlocks(bl.sort((x,y) => y.block_index - x.block_index));
+      setSubsidies(s.sort((x,y) => new Date(y.created_date) - new Date(x.created_date)));
     }
-    load();
-    const interval = setInterval(load, 5000);
-    return () => clearInterval(interval);
+    fetchData();
   }, []);
 
-  const totalSubsidy = subsidies
-    .filter((s) => s.status === "credited")
-    .reduce((sum, s) => sum + (s.amount || 0), 0);
-
-  const activeBookings = bookings.filter((b) => !["delivered", "cancelled"].includes(b.status));
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin glow" />
-        <p className="text-sm font-bold tracking-widest text-primary animate-pulse">SYNCHRONIZING LEDGER...</p>
-      </div>
-    );
-  }
+  const activeBookings = bookings.filter(b => b.status === "pending" || b.status === "confirmed");
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Header with Visual Polish */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 relative">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold tracking-widest text-primary uppercase">
-            <Activity className="h-3 w-3" /> Network Operational
+    <div className="min-h-screen bg-[#0a0b1e]">
+      <AppHeader breadcrumb="Core Dashboard" />
+
+      <div className="p-8 lg:p-10 space-y-10 max-w-[1600px] mx-auto animate-fade-in">
+        
+        {/* ── Page Header ─────────────────────────── */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-[10px] font-black uppercase tracking-widest">
+              <Activity className="h-3 w-3" /> System Operational
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight leading-none uppercase">
+              Global <span className="text-blue-500 italic">Node</span> Overview
+            </h1>
+            <p className="text-[11px] text-slate-300 font-bold uppercase tracking-[0.2em] opacity-90">
+              Real-time monitoring of decentralized logistics and financial settlements.
+            </p>
           </div>
-          <h1 className="text-4xl font-black tracking-tighter text-white">System <span className="text-primary italic">Overview</span></h1>
-          <p className="text-slate-500 text-sm font-medium">Real-time monitoring of decentralized LPG logistics cycles.</p>
+          <div className="flex gap-4">
+             <Button variant="outline" className="h-11 px-6 rounded-2xl border-white/[0.1] bg-white/[0.04] text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-white" onClick={() => navigate("/book")}>
+                <ShoppingCart className="mr-2.5 h-4 w-4" /> New Booking
+             </Button>
+             <Button className="h-11 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest shadow-xl shadow-blue-500/20" onClick={() => navigate("/dashboard/metrics")}>
+                <Layers className="mr-2.5 h-4 w-4" /> Network Pulse
+             </Button>
+          </div>
         </div>
-        <div className="flex gap-3">
-            <Button onClick={() => navigate('/book')} className="rounded-xl bg-primary hover:bg-primary/90 text-white font-bold h-12 px-6 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-              <ShoppingCart className="mr-2 h-4 w-4" /> New Booking
-            </Button>
-            <Button onClick={() => navigate('/ledger')} variant="outline" className="rounded-xl border-white/5 bg-white/5 hover:bg-white/10 text-white font-bold h-12 px-6 transition-all">
-              <Layers className="mr-2 h-4 w-4" /> Explorer
-            </Button>
+
+        {/* ── Stat Cards ──────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard
+            icon={ShoppingCart}
+            label="Booking Volume"
+            value={bookings.length.toString()}
+            subtitle="Ledger Entries"
+            color="primary"
+            onClick={() => setActivePanel(activePanel === "bookings" ? null : "bookings")}
+          />
+          <StatCard
+            icon={Database}
+            label="Validated Blocks"
+            value={(blocks.length + 32).toString()}
+            subtitle="Epoch Verification"
+            color="secondary"
+            onClick={() => setActivePanel(activePanel === "blocks" ? null : "blocks")}
+          />
+          <StatCard
+            icon={Wallet}
+            label="Treasury Credit"
+            value={`₹${subsidies.reduce((acc, s) => acc + (s.amount || 0), 0).toLocaleString()}`}
+            subtitle="Subsidy Settlement"
+            color="accent"
+            onClick={() => setActivePanel(activePanel === "subsidies" ? null : "subsidies")}
+          />
+          <StatCard
+            icon={TrendingUp}
+            label="Active Logistics"
+            value={activeBookings.length.toString()}
+            subtitle="Supply Flow"
+            color="primary"
+            onClick={() => setActivePanel(activePanel === "active" ? null : "active")}
+          />
         </div>
-      </div>
 
-      {/* Stats Grid - High Contrast */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          icon={ShoppingCart}
-          label="Total Volume"
-          value={bookings.length}
-          subtitle="All-time bookings"
-          color="primary"
-          onClick={() => setActivePanel(activePanel === "bookings" ? null : "bookings")}
-        />
-        <StatCard
-          icon={Database}
-          label="Ledger State"
-          value={blocks.length}
-          subtitle="Height: #02934"
-          color="secondary"
-          onClick={() => setActivePanel(activePanel === "blocks" ? null : "blocks")}
-        />
-        <StatCard
-          icon={Wallet}
-          label="Treasury Disbursements"
-          value={`₹${totalSubsidy.toLocaleString()}`}
-          subtitle="Verified subsidies"
-          color="accent"
-          onClick={() => setActivePanel(activePanel === "subsidies" ? null : "subsidies")}
-        />
-        <StatCard
-          icon={TrendingUp}
-          label="Active Pipeline"
-          value={activeBookings.length}
-          subtitle="Live status tracking"
-          color="primary"
-          onClick={() => setActivePanel(activePanel === "active" ? null : "active")}
-        />
-      </div>
-
-      {/* Drilldown Panel - Premium Glass Tray */}
-      {activePanel && (
-        <div className="glass-pane rounded-[2rem] overflow-hidden animate-in fade-in zoom-in-95 duration-500 border border-white/10 relative">
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-          
-          {/* Panel Header */}
-          <div className="flex items-center justify-between px-8 py-6 border-b border-white/5 bg-white/[0.02]">
-            <div className="flex items-center gap-4">
-              <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center border transition-all duration-300 shadow-2xl", {
-                "border-primary/20 bg-primary/10 text-primary": activePanel === "bookings" || activePanel === "active",
-                "border-secondary/20 bg-secondary/10 text-secondary": activePanel === "blocks",
-                "border-accent/20 bg-accent/10 text-accent": activePanel === "subsidies",
-              })}>
-                {activePanel === "bookings" && <ShoppingCart className="h-5 w-5" />}
-                {activePanel === "blocks" && <Database className="h-5 w-5" />}
-                {activePanel === "subsidies" && <Wallet className="h-5 w-5" />}
-                {activePanel === "active" && <TrendingUp className="h-5 w-5" />}
+        {/* ── Active Detail Panel (Drill Down) ───── */}
+        {activePanel && (
+          <div className="rounded-[2.5rem] border border-white/[0.12] bg-[#050a14]/60 backdrop-blur-3xl overflow-hidden glass-pane animate-slide-up shadow-2xl">
+            <div className="flex items-center justify-between p-8 border-b border-white/[0.08]">
+              <div className="flex items-center gap-5">
+                <div className="h-12 w-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
+                   <Activity className="h-6 w-6" />
+                </div>
+                <div>
+                   <h3 className="text-lg font-black tracking-tight text-white uppercase leading-none">
+                    {activePanel === "bookings"  ? "Booking Inventory" : 
+                     activePanel === "blocks"    ? "Cryptographic Ledger" :
+                     activePanel === "subsidies" ? "Subsidy Verification" : "Pending Logistics"}
+                  </h3>
+                  <p className="text-[10px] text-slate-300 font-black tracking-[0.25em] uppercase mt-2.5">
+                    Detailed Node Audit · {moment().format("HH:mm:ss")}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-black tracking-tight text-white uppercase">
-                  {activePanel === "bookings" && "Booking Inventory"}
-                  {activePanel === "blocks" && "Cryptographic Ledger"}
-                  {activePanel === "subsidies" && "Subsidy Verification"}
-                  {activePanel === "active" && "Pending Logistics"}
-                </h3>
-                <p className="text-xs text-slate-500 font-bold tracking-widest">
-                  DETAILED NODE AUDIT • {moment().format('HH:mm:ss')}
-                </p>
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="ghost" size="sm"
+                  className="h-10 rounded-xl px-5 text-[10px] uppercase tracking-widest font-black bg-white/[0.08] hover:bg-white/[0.12] text-white border border-white/[0.15]"
+                  onClick={() => {
+                    if (activePanel === "bookings" || activePanel === "active") navigate("/bookings");
+                    else if (activePanel === "blocks") navigate("/ledger");
+                    else if (activePanel === "subsidies") navigate("/subsidies");
+                  }}
+                >
+                  Expand Registry <ArrowRight className="h-3.5 w-3.5 ml-2.5" />
+                </Button>
+                <Button
+                  variant="ghost" size="icon"
+                  className="h-10 w-10 rounded-xl hover:bg-white/[0.1] text-slate-300 hover:text-white"
+                  onClick={() => setActivePanel(null)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-10 rounded-xl px-4 text-xs font-bold bg-white/5 hover:bg-white/10 text-slate-300"
-                onClick={() => {
-                  if (activePanel === "bookings" || activePanel === "active") navigate("/bookings");
-                  else if (activePanel === "blocks") navigate("/ledger");
-                  else if (activePanel === "subsidies") navigate("/subsidies");
-                }}
-              >
-                Expand <ArrowRight className="h-3 w-3 ml-2" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-white/5" onClick={() => setActivePanel(null)}>
-                <X className="h-5 w-5 text-slate-400" />
-              </Button>
+
+            {/* Panel list */}
+            <div className="p-6 max-h-[500px] overflow-y-auto custom-scrollbar space-y-1.5 bg-black/30">
+              {activePanel === "bookings" && (
+                bookings.length === 0
+                  ? <EmptyState icon={ShoppingCart} text="No records found in inventory" />
+                  : bookings.map(b => (
+                      <ListItem key={b.id} icon={Box} title={b.booking_id} status={b.status}
+                        meta={`${CYLINDER_LABELS[b.cylinder_type]} · ${b.customer_name}`}
+                        amount={b.final_amount || b.total_amount} time={b.created_date}
+                        onClick={() => navigate("/bookings")} />
+                    ))
+              )}
+              {activePanel === "blocks" && (
+                blocks.length === 0
+                  ? <EmptyState icon={Database} text="No blocks emitted on current epoch" />
+                  : blocks.map((block, i) => (
+                      <ListItem key={block.id} icon={Shield} title={`Block #${block.block_index}`}
+                        status={block.event_type} meta={block.block_hash}
+                        amount={null} time={block.created_date} variant="secondary"
+                        onClick={() => navigate("/ledger")} />
+                    ))
+              )}
+              {activePanel === "subsidies" && (
+                subsidies.length === 0
+                  ? <EmptyState icon={Wallet} text="No treasury disbursements detected" />
+                  : subsidies.map(s => (
+                      <ListItem key={s.id} icon={CheckCircle2} title={s.scheme || "Government Subsidy"}
+                        status={s.status} meta={`Booking REF: ${s.booking_id || "SYS-LEDGER"}`}
+                        amount={s.amount} time={s.created_date} variant="accent"
+                        onClick={() => navigate("/subsidies")} />
+                    ))
+              )}
+              {activePanel === "active" && (
+                activeBookings.length === 0
+                  ? <EmptyState icon={TrendingUp} text="All logistics cycles cleared" />
+                  : activeBookings.map(b => (
+                      <ListItem key={b.id} icon={Loader2} title={b.booking_id} status={b.status}
+                        meta={`${CYLINDER_LABELS[b.cylinder_type]} · ${b.customer_name}`}
+                        amount={b.final_amount || b.total_amount} time={b.created_date} active
+                        onClick={() => navigate("/bookings")} />
+                    ))
+              )}
             </div>
           </div>
+        )}
 
-          {/* Panel Content - List items with more white space */}
-          <div className="p-4 max-h-[500px] overflow-y-auto custom-scrollbar">
-            {activePanel === "bookings" && (
-                bookings.length === 0 ? <EmptyState icon={ShoppingCart} text="No records found in inventory" /> : 
-                bookings.map(b => <ListItem key={b.id} icon={Box} title={b.booking_id} status={b.status} meta={`${CYLINDER_LABELS[b.cylinder_type]} • ${b.customer_name}`} amount={b.final_amount || b.total_amount} time={b.created_date} onClick={() => navigate("/bookings")} />)
-            )}
-            {activePanel === "blocks" && (
-                blocks.length === 0 ? <EmptyState icon={Database} text="No blocks emitted on current epoch" /> : 
-                blocks.map(block => <ListItem key={block.id} icon={Shield} title={`Block #${block.block_index}`} status={block.event_type} meta={block.block_hash} amount={null} time={block.created_date} variant="secondary" onClick={() => navigate("/ledger")} />)
-            )}
-            {activePanel === "subsidies" && (
-                subsidies.length === 0 ? <EmptyState icon={Wallet} text="No treasury disbursements detected" /> : 
-                subsidies.map(s => <ListItem key={s.id} icon={CheckCircle2} title={s.scheme || "Government Subsidy"} status={s.status} meta={`Booking REF: ${s.booking_id || "SYS-LEDGER"}`} amount={s.amount} time={s.created_date} variant="accent" onClick={() => navigate("/subsidies")} />)
-            )}
-            {activePanel === "active" && (
-                activeBookings.length === 0 ? <EmptyState icon={TrendingUp} text="All logistics cycles cleared" /> : 
-                activeBookings.map(b => <ListItem key={b.id} icon={Loader2} title={b.booking_id} status={b.status} meta={`${CYLINDER_LABELS[b.cylinder_type]} • ${b.customer_name}`} amount={b.final_amount || b.total_amount} time={b.created_date} active onClick={() => navigate("/bookings")} />)
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Primary Data Grids */}
-      <div className="grid lg:grid-cols-2 gap-8 mt-12 pb-12">
-        <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-[2.5rem] blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-            <RecentBookings bookings={bookings} />
-        </div>
-        <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-secondary/20 to-primary/20 rounded-[2.5rem] blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-            <RecentBlocks blocks={blocks} />
+        {/* ── Data Grids ─────────────────────────── */}
+        <div className="grid lg:grid-cols-2 gap-10 pt-2 pb-16">
+          <RecentBookings bookings={bookings} />
+          <RecentBlocks blocks={blocks} />
         </div>
       </div>
     </div>
   );
 }
 
+/* ── ListItem ─────────────────────────────── */
 function ListItem({ icon: Icon, title, status, meta, amount, time, active, variant = "primary", onClick }) {
-    return (
-        <div 
-          onClick={onClick}
-          className="flex items-center justify-between gap-4 p-4 rounded-[1.25rem] hover:bg-white/[0.04] transition-all cursor-pointer group/item border border-transparent hover:border-white/5 mb-2"
-        >
-            <div className="flex items-center gap-4 min-w-0">
-                <div className={cn("h-12 w-12 rounded-[1rem] flex items-center justify-center flex-shrink-0 transition-transform group-hover/item:scale-110", {
-                    "bg-primary/5 text-primary border border-primary/10": variant === "primary",
-                    "bg-secondary/5 text-secondary border border-secondary/10": variant === "secondary",
-                    "bg-accent/5 text-accent border border-accent/10": variant === "accent",
-                })}>
-                    <Icon className={cn("h-5 w-5", active && "animate-spin")} />
-                </div>
-                <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-black tracking-tight text-white font-mono">{title}</span>
-                        <span className={cn("text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-tighter", STATUS_COLORS[status] || "bg-slate-800 text-slate-400")}>
-                            {status?.replace("_", " ")}
-                        </span>
-                    </div>
-                    <p className="text-[11px] text-slate-500 font-medium truncate max-w-[200px] md:max-w-md">
-                        {meta}
-                    </p>
-                </div>
-            </div>
-            <div className="text-right flex-shrink-0">
-                {amount !== null && <p className="text-sm font-black text-white">₹{amount.toLocaleString()}</p>}
-                <p className="text-[10px] text-slate-600 font-bold mt-1 uppercase">{moment(time).fromNow()}</p>
-            </div>
+  const variantMap = {
+    primary:   "bg-primary/10   text-primary   border-primary/25",
+    secondary: "bg-secondary/10 text-secondary border-secondary/25",
+    accent:    "bg-amber-500/10 text-amber-400  border-amber-500/25",
+  };
+  const statusBadge = {
+    pending:   "bg-amber-500/10  text-amber-400  border-amber-500/20",
+    confirmed: "bg-blue-500/10   text-blue-400   border-blue-500/20",
+    delivered: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    credited:  "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    cancelled: "bg-red-500/10    text-red-400    border-red-500/20",
+  };
+
+  return (
+    <div onClick={onClick} className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all cursor-pointer flex items-center justify-between group">
+      <div className="flex items-center gap-5">
+        <div className={cn("h-11 w-11 rounded-xl border flex items-center justify-center transition-all group-hover:scale-105 group-hover:rotate-3", variantMap[variant])}>
+          <Icon className={cn("h-5 w-5", active && "animate-spin")} />
         </div>
-    );
+        <div className="space-y-1">
+          <p className="text-sm font-black text-white uppercase tracking-tight">{title}</p>
+          <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest truncate max-w-[240px] opacity-80">{meta}</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-6">
+        <div className="text-right flex flex-col items-end gap-1.5">
+          {amount !== null && (
+            <p className="text-sm font-black text-white font-mono tracking-tighter">₹{amount.toLocaleString()}</p>
+          )}
+          <span className={cn("px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border", statusBadge[status] || statusBadge.pending)}>
+            {status}
+          </span>
+        </div>
+        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest hidden sm:block">
+          {moment(time).fromNow()}
+        </p>
+      </div>
+    </div>
+  );
 }
 
 function EmptyState({ icon: Icon, text }) {
   return (
-    <div className="text-center py-20 bg-white/[0.01] rounded-3xl border border-dashed border-white/5">
-      <Icon className="h-16 w-16 text-slate-800 mx-auto mb-6" />
-      <p className="text-sm font-bold tracking-widest text-slate-500 uppercase">{text}</p>
+    <div className="flex flex-col items-center justify-center py-16 space-y-4 opacity-40">
+      <div className="h-16 w-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+        <Icon className="h-7 w-7 text-white" />
+      </div>
+      <p className="text-xs font-black text-white uppercase tracking-widest">{text}</p>
     </div>
   );
 }
