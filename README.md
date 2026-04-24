@@ -89,7 +89,7 @@ The system follows a **Reactive Hybrid Architecture**. While the final source of
 As part of validating our MVP, we collected feedback from real testnet users via **[this Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeEEkw9WKm8rf73X4fk0EcvWSQWT8G3TvID-9w_82UFZOEj2w/viewform?usp=publish-editor)**. 
 You can view the raw exported responses and feedback analysis in our Excel sheet below:
 
-- **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1vA5X4M6L9p2R9R_R8z-V6Pq9P4R5_V3/edit?usp=sharing)**
+- **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
 ### 💎 Testnet User Validations (Level 5 Milestone)
 To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
