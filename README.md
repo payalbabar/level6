@@ -102,6 +102,22 @@ GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to elimi
 
 ---
 
+## 📂 Project Infrastructure
+To ensure enterprise-grade stability, **GASCHAIN** is built with a robust DevOps pipeline:
+
+### ⚙️ CI/CD Pipeline (`.github/workflows/ci.yml`)
+- **Automated Frontend Audit**: Every push triggers a Vite build and ESLint scan to prevent production regressions.
+- **Contract Verification**: The pipeline automatically builds and tests the **Soroban Smart Contract** (`cargo check` & `cargo test`) to ensure on-chain logic integrity.
+- **Status**: [![CI/CD Pipeline](https://github.com/payalbabar/GasChainLevel6/actions/workflows/ci.yml/badge.svg)](https://github.com/payalbabar/GasChainLevel6/actions)
+
+### 📜 Smart Contract Layer (`/contracts/gas_chain`)
+The core decentralized logic is written in **Rust** and located in the `/contracts` directory.
+- **State Management**: Handles cylinder inventory, distributor verification, and ownership transfers.
+- **Subsidy Oracle**: Computes domestic subsidy drops based on user profile metadata.
+- **Fee Bump Logic**: Architected to support Stellar's network fee sponsorship for a zero-cost initial user experience.
+
+---
+
 ## 🔗 Submission Checklist
 - **Live Demo**: [https://level6-xi.vercel.app](https://level6-xi.vercel.app)
 - **Demo Video**: [https://youtu.be/3YjlJPZg_R8](https://youtu.be/3YjlJPZg_R8)
