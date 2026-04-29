@@ -1,0 +1,17 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(200, 100%, 55%)"></stop>
+      <stop offset="100%" stop-color="hsl(170, 80%, 45%)"></stop>
+    </linearGradient>
+    <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(200, 100%, 75%)"></stop>
+      <stop offset="100%" stop-color="hsl(200, 100%, 55%)"></stop>
+    </linearGradient>
+  </defs>
+
+  <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.4"></circle>
+  <path d="M20 5L32 12V28L20 35L8 28V12L20 5Z" fill="url(#logoGrad)" opacity="0.12" stroke="url(#logoGrad)" stroke-width="1.5"></path>
+  <path d="M20 30C20 30 13 24 13 18.5C13 14.5 16 11 20 8C20 8 18 14 20 16C22 18 24 16 24 14C26 17 27 19.5 27 22C27 26.5 24 30 20 30Z" fill="url(#logoGrad2)"></path>
+  <path d="M20 28C20 28 16 24 16 21C16 19 17.5 17.5 19 17C18.5 19 20 20 21 19C22 21 22 22.5 22 23.5C22 26 21 28 20 28Z" fill="white" opacity="0.3"></path>
+</svg>
