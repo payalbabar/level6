@@ -5,13 +5,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        inter: ['var(--font-inter)'],
-        mono: ['var(--font-mono)'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: '0.625rem',
+        md: '0.375rem',
+        sm: '0.25rem',
+        xl: '0.875rem',
+        '2xl': '1rem',
+        '3xl': '1.25rem',
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -47,23 +50,16 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        chart: {
-          1: 'hsl(var(--chart-1))',
-          2: 'hsl(var(--chart-2))',
-          3: 'hsl(var(--chart-3))',
-          4: 'hsl(var(--chart-4))',
-          5: 'hsl(var(--chart-5))',
-        },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
+        success: 'hsl(var(--success))',
+        warning: 'hsl(var(--warning))',
+      },
+      boxShadow: {
+        'glow-sm': '0 0 15px hsl(var(--primary) / 0.1)',
+        'glow-md': '0 0 30px hsl(var(--primary) / 0.15)',
+        'glow-lg': '0 0 50px hsl(var(--primary) / 0.2)',
+        'card': '0 1px 3px hsl(220 20% 0% / 0.3), 0 4px 12px hsl(220 20% 0% / 0.15)',
+        'card-hover': '0 4px 16px hsl(220 20% 0% / 0.4), 0 0 0 1px hsl(var(--primary) / 0.08)',
+        'elevated': '0 8px 32px hsl(220 20% 0% / 0.4)',
       },
       keyframes: {
         'accordion-down': {
@@ -74,15 +70,10 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
-        'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 0 0 hsl(199 89% 48% / 0.4)' },
-          '50%': { boxShadow: '0 0 0 12px hsl(199 89% 48% / 0)' },
-        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
       },
     },
   },

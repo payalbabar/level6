@@ -67,9 +67,9 @@ export default function BookingDetail({ booking, onBack }) {
           50
         );
         setBlocks(updatedBlocks);
-        toast({ title: "✓ Network State Synchronized", description: "New state successfully committed to blockchain." });
+        toast({ title: "Status Updated", description: "New state committed to blockchain." });
     } catch (err) {
-        toast({ title: "Command Failed", description: "Failed to broadcast state update.", variant: "destructive" });
+        toast({ title: "Update Failed", description: "Failed to broadcast state update.", variant: "destructive" });
     } finally {
         setUpdating(false);
         setNewStatus("");
@@ -79,34 +79,33 @@ export default function BookingDetail({ booking, onBack }) {
   const currentIdx = STATUS_FLOW.indexOf(booking.status);
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 pb-16">
+    <div className="space-y-6 max-w-4xl mx-auto p-8 pb-16">
       
+      {/* Back */}
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="sm" onClick={onBack} className="rounded-xl hover:bg-white/[0.04] text-slate-500 hover:text-white transition-all">
-            <ArrowLeft className="h-4 w-4 mr-2" /> Return to Index
+        <Button variant="ghost" size="sm" onClick={onBack}>
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back
         </Button>
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-[10px] font-black text-slate-500 uppercase tracking-widest">
+        <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted text-xs text-muted-foreground">
             <ShieldCheck className="h-3 w-3" /> Audit Active
         </div>
       </div>
 
       {/* Main Order Card */}
-      <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.07] bg-white/[0.02] shadow-2xl">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-        
-        <div className="p-8 lg:p-10">
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 pb-8 border-b border-white/[0.06]">
-                <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-lg shadow-primary/5">
-                            <Terminal className="h-6 w-6" />
+      <div className="rounded-xl border border-border bg-card shadow-sm">        
+        <div className="p-6">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-border">
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <Terminal className="h-5 w-5" />
                         </div>
                         <div>
-                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-1">Contract Execution</p>
-                            <div className="flex items-center gap-3">
-                                <h1 className="text-3xl font-black text-white font-mono tracking-tighter leading-none">{booking.booking_id}</h1>
-                                <span className={cn("text-[9px] px-2.5 py-1 rounded-full font-black uppercase tracking-widest border", 
-                                    booking.status === 'delivered' ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-primary/10 text-primary border-primary/20"
+                            <p className="text-xs text-muted-foreground mb-0.5">Contract ID</p>
+                            <div className="flex items-center gap-2">
+                                <h1 className="text-xl font-semibold font-mono">{booking.booking_id}</h1>
+                                <span className={cn("text-[10px] px-2 py-0.5 rounded-full font-medium uppercase",
+                                    booking.status === 'delivered' ? "bg-success/10 text-success" : "bg-primary/10 text-primary"
                                 )}>
                                     {booking.status?.replace("_", " ")}
                                 </span>
@@ -114,53 +113,46 @@ export default function BookingDetail({ booking, onBack }) {
                         </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4">
-                        <div className="space-y-1">
-                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest flex items-center gap-2">
-                                <Activity className="h-2.5 w-2.5" /> Identity Node
-                            </p>
-                            <p className="text-sm font-bold text-slate-300">{booking.customer_name}</p>
-                            <p className="text-[11px] text-slate-500 font-medium">{booking.customer_phone}</p>
+                    <div className="grid grid-cols-2 gap-6">
+                        <div>
+                            <p className="text-xs text-muted-foreground mb-0.5">Customer</p>
+                            <p className="text-sm font-medium">{booking.customer_name}</p>
+                            <p className="text-xs text-muted-foreground">{booking.customer_phone}</p>
                         </div>
-                        <div className="space-y-1">
-                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest flex items-center gap-2">
-                                <MapPin className="h-2.5 w-2.5" /> Destination Node
-                            </p>
-                            <p className="text-[11px] text-slate-400 font-medium leading-relaxed max-w-[200px]">{booking.customer_address}</p>
+                        <div>
+                            <p className="text-xs text-muted-foreground mb-0.5">Delivery Address</p>
+                            <p className="text-xs text-muted-foreground max-w-[200px]">{booking.customer_address}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="text-left md:text-right space-y-2">
-                    <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Global Settlement</p>
-                    <p className="text-4xl font-black text-white tracking-widest font-mono">₹{(booking.final_amount || 0).toLocaleString()}</p>
+                <div className="text-left md:text-right">
+                    <p className="text-xs text-muted-foreground mb-1">Total Amount</p>
+                    <p className="text-3xl font-semibold">₹{(booking.final_amount || 0).toLocaleString()}</p>
                     {booking.subsidy_applied > 0 && (
-                        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/8 text-emerald-500 border border-emerald-500/10">
-                            <CheckCircle2 className="h-3 w-3" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Sponsored by Scheme</span>
+                        <div className="inline-flex items-center gap-1 mt-1 text-xs text-success">
+                            <CheckCircle2 className="h-3 w-3" /> Subsidy Applied
                         </div>
                     )}
                 </div>
             </div>
 
             {/* Lifecycle Progress */}
-            <div className="mt-12">
-                <div className="flex items-center justify-between mb-8">
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Asset Lifecycle Tracking</p>
-                    <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Current Step: {currentIdx + 1} / {STATUS_FLOW.length}</p>
+            <div className="mt-6">
+                <div className="flex items-center justify-between mb-4">
+                    <p className="text-sm font-medium">Lifecycle</p>
+                    <p className="text-xs text-muted-foreground">Step {currentIdx + 1} of {STATUS_FLOW.length}</p>
                 </div>
                 <div className="flex items-center gap-2">
                 {STATUS_FLOW.map((status, i) => (
-                    <div key={status} className="flex-1 space-y-4">
-                        <div
-                            className={cn(
-                            "h-1.5 w-full rounded-full transition-all duration-1000",
-                            i <= currentIdx ? "bg-primary shadow-[0_0_15px_rgba(249,115,22,0.3)]" : "bg-white/[0.05]"
-                            )}
-                        />
+                    <div key={status} className="flex-1 space-y-2">
+                        <div className={cn(
+                            "h-1.5 w-full rounded-full transition-all",
+                            i <= currentIdx ? "bg-primary" : "bg-muted"
+                        )} />
                         <span className={cn(
-                            "text-[9px] font-black uppercase tracking-[0.1em] block text-center transition-colors",
-                            i <= currentIdx ? "text-primary" : "text-slate-700"
+                            "text-[10px] font-medium capitalize block text-center",
+                            i <= currentIdx ? "text-primary" : "text-muted-foreground"
                         )}>
                             {status.replace("_", " ")}
                         </span>
@@ -171,132 +163,115 @@ export default function BookingDetail({ booking, onBack }) {
         </div>
       </div>
 
-      {/* Broadcast Command - Dynamic Panel */}
+      {/* Status Update */}
       {booking.status !== "delivered" && booking.status !== "cancelled" && (
-        <div className="relative group p-6 md:p-8 rounded-3xl border border-white/[0.08] bg-[#050a14]/60 backdrop-blur-xl overflow-hidden shadow-2xl">
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="flex items-start gap-4 flex-1">
-                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shrink-0">
-                    <Database className="h-5 w-5" />
-                </div>
+        <div className="p-6 rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+                <Database className="h-5 w-5 text-primary" />
                 <div>
-                   <h3 className="text-sm font-black text-white uppercase tracking-widest">Command State Transition</h3>
-                   <p className="text-[11px] text-slate-500 font-medium mt-1">Authorized node required to broadcast status update to the network.</p>
+                   <h3 className="text-sm font-semibold">Update Status</h3>
+                   <p className="text-xs text-muted-foreground">Broadcast a state transition to the network.</p>
                 </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
               <Select value={newStatus} onValueChange={setNewStatus}>
-                <SelectTrigger className="w-full sm:w-[180px] bg-white/[0.03] border-white/[0.08] h-11 rounded-xl text-white font-bold text-xs">
-                    <SelectValue placeholder="Select new state..." />
+                <SelectTrigger className="w-full sm:w-[180px] h-10 bg-muted/50 border-border">
+                    <SelectValue placeholder="Select status..." />
                 </SelectTrigger>
-                <SelectContent className="bg-[#050a14] border-white/[0.1] text-white">
+                <SelectContent>
                   {STATUS_FLOW.filter((_, i) => i > currentIdx).map((s) => (
-                    <SelectItem key={s} value={s} className="font-bold text-[10px] uppercase tracking-widest focus:bg-primary/20 focus:text-primary transition-colors py-2.5">
+                    <SelectItem key={s} value={s} className="capitalize">
                         {s.replace("_", " ")}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <Button 
-                onClick={handleStatusUpdate} 
-                disabled={!newStatus || updating} 
-                className="w-full sm:w-auto h-11 px-8 rounded-xl bg-primary hover:bg-primary/90 text-[#020408] font-black tracking-[0.1em] text-[10px] uppercase transition-all shadow-lg shadow-primary/20 hover:scale-[1.02]"
-              >
+              <Button onClick={handleStatusUpdate} disabled={!newStatus || updating}>
                 {updating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Zap className="h-4 w-4 mr-2" />}
-                {updating ? "Processing..." : "Commit Change"}
+                {updating ? "Processing..." : "Commit"}
               </Button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Cryptographic Ledger Trail */}
-      <div className="relative rounded-[2rem] border border-white/[0.07] bg-white/[0.015] overflow-hidden">
-        <div className="flex items-center justify-between p-8 border-b border-white/[0.06] bg-white/[0.01]">
-          <div className="flex items-center gap-4">
-            <div className="h-9 w-9 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
+      {/* Audit Trail */}
+      <div className="rounded-xl border border-border bg-card overflow-hidden shadow-sm">
+        <div className="flex items-center justify-between p-6 border-b border-border">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-success/10 text-success flex items-center justify-center">
                 <Link2 className="h-4 w-4" />
             </div>
             <div>
-                <h2 className="text-sm font-black text-white uppercase tracking-widest">Cryptographic Audit Trail</h2>
-                <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest mt-1">Network Execution Logs</p>
+                <h2 className="text-sm font-semibold">Audit Trail</h2>
+                <p className="text-xs text-muted-foreground">{blocks.length} blocks indexed</p>
             </div>
-          </div>
-          <div className="text-right">
-             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Indexed Blocks</p>
-             <p className="text-xl font-black text-white font-mono leading-none">{blocks.length}</p>
           </div>
         </div>
 
-        <div className="p-8 lg:p-10">
+        <div className="p-6">
             {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-4">
-                <div className="w-10 h-10 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
-                <p className="text-[10px] text-primary font-black uppercase tracking-widest">Syncing trail state...</p>
+            <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
             </div>
             ) : blocks.length === 0 ? (
-            <div className="text-center py-20 opacity-50">
-                <Database className="h-10 w-10 text-slate-700 mx-auto mb-4" />
-                <p className="text-xs font-black text-slate-600 uppercase tracking-widest">No block emissions detected</p>
+            <div className="text-center py-12">
+                <Database className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+                <p className="text-sm text-muted-foreground">No blocks recorded yet</p>
             </div>
             ) : (
-            <div className="relative pl-4 sm:pl-8">
-                <div className="absolute left-[34px] sm:left-[50px] top-4 bottom-4 w-px bg-gradient-to-b from-primary/40 via-primary/10 to-transparent" />
-                <div className="space-y-10">
+            <div className="relative pl-8">
+                <div className="absolute left-[15px] top-2 bottom-2 w-px bg-border" />
+                <div className="space-y-6">
                 {blocks.map((block, idx) => (
-                    <div key={block.id} className="relative flex flex-col sm:flex-row gap-6 sm:gap-10 group/item">
-                    {/* Block circle */}
+                    <div key={block.id} className="relative flex gap-4">
+                    {/* Dot */}
                     <div className={cn(
-                        "h-10 w-10 sm:h-12 sm:w-12 rounded-2xl flex items-center justify-center z-10 shrink-0 border transition-all duration-500",
-                        idx === 0 ? "bg-primary text-[#020408] border-primary shadow-xl shadow-primary/20 scale-110" : "bg-[#050a14] text-slate-500 border-white/[0.08]"
+                        "absolute left-[-24px] top-1 h-5 w-5 rounded-full flex items-center justify-center z-10 border-2",
+                        idx === 0 ? "bg-primary border-primary text-primary-foreground" : "bg-card border-border text-muted-foreground"
                     )}>
-                        <span className="text-[11px] font-black font-mono">#{block.block_index}</span>
+                        <span className="text-[8px] font-bold">{block.block_index}</span>
                     </div>
                     
-                    <div className="flex-1 space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div className="flex items-center gap-3">
-                                <span className="text-xs font-black text-white uppercase tracking-widest">
+                    <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium">
                                     {EVENT_LABELS[block.event_type] || block.event_type?.replace(/_/g, " ")}
                                 </span>
-                                {idx === 0 && <span className="text-[8px] px-1.5 py-0.5 rounded bg-primary/20 text-primary border border-primary/20 font-black animate-pulse uppercase">Latest</span>}
+                                {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">Latest</span>}
                             </div>
-                            <span className="text-[10px] font-black text-slate-600 flex items-center gap-2 uppercase tracking-widest">
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
-                                {moment(block.created_date).format("DD MMM YYYY, HH:mm:ss")}
+                                {moment(block.created_date).format("DD MMM, HH:mm")}
                             </span>
                         </div>
 
                         {block.location && (
-                        <p className="text-[10px] text-primary font-black flex items-center gap-2 uppercase tracking-widest">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1 mb-2">
                             <MapPin className="h-3 w-3" /> {block.location}
                         </p>
                         )}
 
-                        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] group-hover/item:border-white/[0.12] transition-colors space-y-3">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1.5">
-                                    <p className="text-[9px] font-black text-slate-700 uppercase tracking-widest">Verification Node</p>
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                                        <p className="text-[10px] font-bold text-slate-400">{block.verified_by || "Protocol Agent"}</p>
-                                    </div>
+                        <div className="p-3 rounded-lg bg-muted/50 border border-border space-y-2">
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <p className="text-xs text-muted-foreground">Verified By</p>
+                                    <p className="text-xs font-medium">{block.verified_by || "Protocol Agent"}</p>
                                 </div>
-                                <div className="space-y-1.5">
-                                    <p className="text-[9px] font-black text-slate-700 uppercase tracking-widest">Event Hash</p>
-                                    <p className="text-[10px] font-mono text-slate-500 truncate">{block.block_hash}</p>
+                                <div>
+                                    <p className="text-xs text-muted-foreground">Hash</p>
+                                    <p className="text-xs font-mono text-muted-foreground truncate">{block.block_hash}</p>
                                 </div>
                             </div>
-                            
-                            <div className="pt-3 border-t border-white/[0.04] flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-2">
-                                    <ShieldCheck className="h-3 w-3 text-emerald-500/60" />
-                                    <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Blockchain Validated</p>
+                            <div className="pt-2 border-t border-border flex items-center justify-between">
+                                <div className="flex items-center gap-1">
+                                    <ShieldCheck className="h-3 w-3 text-success" />
+                                    <p className="text-[10px] text-muted-foreground">Validated</p>
                                 </div>
-                                <p className="text-[9px] font-mono text-slate-700 uppercase">Nonce: {block.nonce || "000000"}</p>
+                                <p className="text-[10px] font-mono text-muted-foreground">Nonce: {block.nonce || "000000"}</p>
                             </div>
                         </div>
                     </div>

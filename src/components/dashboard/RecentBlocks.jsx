@@ -4,19 +4,21 @@ import { EVENT_LABELS } from "@/lib/blockchain";
 import { cn } from "@/lib/utils";
 import moment from "moment";
 
-/* ── Event type colour map ─────────────────────── */
-const eventColors = {
-  booking_created:   "bg-blue-500/10   text-blue-400   border-blue-500/20",
-  payment_confirmed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  delivery_updated:  "bg-cyan-500/10   text-cyan-400   border-cyan-500/20",
-  subsidy_credited:  "bg-amber-500/10  text-amber-400  border-amber-500/20",
-};
-
 function EventBadge({ type }) {
+  const map = {
+    booking_created:   "bg-primary/10 text-primary border-primary/20",
+    payment_confirmed: "bg-success/10 text-success border-success/20",
+    delivery_updated:  "bg-primary/10 text-primary border-primary/20",
+    subsidy_credited:  "bg-warning/10 text-warning border-warning/20",
+    cylinder_assigned: "bg-accent/10 text-accent border-accent/20",
+    dispatched:        "bg-sky-500/10 text-sky-400 border-sky-500/20",
+    in_transit:        "bg-primary/10 text-primary border-primary/20",
+    delivered:         "bg-success/10 text-success border-success/20",
+  };
   return (
     <span className={cn(
-      "text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider border",
-      eventColors[type] || "bg-secondary/10 text-secondary border-secondary/30"
+      "text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide border",
+      map[type] || "bg-muted/20 text-muted-foreground border-border/20"
     )}>
       {EVENT_LABELS[type] || type?.replace(/_/g, " ") || "event"}
     </span>
@@ -28,73 +30,78 @@ export default function RecentBlocks({ blocks }) {
   const isEmpty = !blocks || blocks.length === 0;
 
   return (
-    <div className="relative rounded-2xl border border-white/[0.08] bg-white/[0.025] overflow-hidden flex flex-col h-[540px]">
-      {/* Top accent line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-secondary/40 to-transparent" />
-
+    <div
+      className="rounded-2xl border border-border/50 overflow-hidden flex flex-col h-[480px] shadow-card"
+      style={{ background: "hsl(220 18% 7% / 0.9)" }}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/[0.08] flex-shrink-0">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-border/30 flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-xl bg-secondary/10 border border-secondary/30 flex items-center justify-center">
-            <Database className="h-4 w-4 text-secondary" />
+          <div
+            className="h-9 w-9 rounded-xl flex items-center justify-center"
+            style={{
+              background: "hsl(260 60% 58% / 0.1)",
+              border: "1px solid hsl(260 60% 58% / 0.15)",
+            }}
+          >
+            <Database className="h-4 w-4 text-accent" />
           </div>
           <div>
-            <h3 className="text-sm font-black uppercase tracking-widest text-white leading-none">Blockchain Activity</h3>
-            <p className="text-[9px] text-slate-400 font-bold mt-1.5 uppercase tracking-widest">
+            <h3 className="text-sm font-semibold text-foreground">Blockchain Activity</h3>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
               {blocks?.length || 0} blocks indexed
             </p>
           </div>
         </div>
         <Link
           to="/ledger"
-          className="group flex items-center gap-1.5 text-[10px] font-black tracking-widest text-secondary hover:text-secondary/80 uppercase transition-colors"
+          className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors group"
         >
           View All
-          <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
 
       {/* Content */}
       {isEmpty ? (
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-12">
-          <div className="h-16 w-16 rounded-2xl bg-white/[0.04] border border-white/[0.1] flex items-center justify-center mb-4">
-            <Database className="h-7 w-7 text-white opacity-20" />
+        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 gap-3">
+          <div className="h-14 w-14 rounded-2xl bg-muted/20 flex items-center justify-center">
+            <Database className="h-6 w-6 text-muted-foreground" />
           </div>
-          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">No blocks yet</p>
-          <p className="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-widest">Initialize a booking to start consensus.</p>
+          <div className="text-center">
+            <p className="text-sm font-medium text-muted-foreground">No blocks yet</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">Initialize a booking to start consensus.</p>
+          </div>
         </div>
       ) : (
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-1.5">
+        <div className="flex-1 overflow-y-auto divide-y divide-border/20">
           {blocks.slice(0, 8).map((block) => (
             <div
               key={block.id}
               onClick={() => navigate("/ledger")}
-              className="group flex items-center gap-3.5 p-4 rounded-xl hover:bg-white/[0.06] active:bg-white/[0.08] transition-all duration-150 cursor-pointer border border-transparent hover:border-white/[0.1]"
+              className="flex items-center justify-between px-6 py-3.5 hover:bg-muted/15 transition-colors cursor-pointer group"
             >
-              {/* Icon */}
-              <div className="h-10 w-10 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-secondary/20 transition-all duration-200">
-                <Database className="h-4 w-4 text-secondary" />
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <p className="text-xs font-black text-white font-mono truncate tracking-tight">
-                    Block #{block.block_index}
-                  </p>
-                  <ShieldCheck className="h-3 w-3 text-secondary flex-shrink-0" />
-                  <EventBadge type={block.event_type} />
+              <div className="flex items-center gap-3 min-w-0">
+                {/* Block index badge */}
+                <div
+                  className="h-8 w-8 rounded-lg flex items-center justify-center text-[10px] font-bold font-mono flex-shrink-0 text-accent group-hover:bg-accent/10 transition-colors"
+                  style={{ background: "hsl(260 60% 58% / 0.08)" }}
+                >
+                  #{block.block_index}
                 </div>
-                <p className="text-[10px] font-mono text-slate-500 truncate lowercase">{block.block_hash}</p>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <ShieldCheck className="h-3 w-3 text-success flex-shrink-0" />
+                    <EventBadge type={block.event_type} />
+                  </div>
+                  <p className="text-[11px] font-mono text-muted-foreground truncate">
+                    {block.block_hash}
+                  </p>
+                </div>
               </div>
-
-              {/* Time + arrow */}
-              <div className="flex-shrink-0 text-right">
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                  {moment(block.created_date).fromNow()}
-                </p>
-                <ArrowRight className="h-3.5 w-3.5 text-secondary opacity-0 group-hover:opacity-100 ml-auto mt-1.5 transition-all group-hover:translate-x-0.5" />
-              </div>
+              <p className="text-xs text-muted-foreground flex-shrink-0 ml-4">
+                {moment(block.created_date).fromNow()}
+              </p>
             </div>
           ))}
         </div>
