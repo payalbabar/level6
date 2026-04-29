@@ -2,14 +2,14 @@
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-o3nk.vercel.app/)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
+[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 5**, this project has been built as a real-world MVP with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
+At **Level 6**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
 ---
 
@@ -34,7 +34,7 @@ At **Level 5**, this project has been built as a real-world MVP with 34 active u
 ---
 
 
-## 📋 Level 5 Requirements Checklist
+## 📋 Level 6 Requirements Checklist
 - [x] **Functional MVP**: Core booking and tracking system working
 - [x] **5+ Testnet Users**: Real users onboarded
 - [x] **User Feedback Collected**: Google Form + Sheets linked
@@ -91,7 +91,7 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
-### 💎 Testnet User Validations (Level 5 Milestone)
+### 💎 Testnet User Validations (Level 6 Milestone)
 To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
@@ -229,14 +229,14 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://gas-chain-level6.vercel.app/](https://gas-chain-level6.vercel.app/)
-- **Demo Video**: [https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L](https://youtu.be/eINN_JZOZTA?si=Irxn8nSS2iyU_W6L)
+- **Live Demo**: [https://level6-o3nk.vercel.app/](https://level6-o3nk.vercel.app/)
+- **Demo Video**: [https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J](https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
-- **Dashboard**: [https://gas-chain-level6.vercel.app/dashboard](https://gas-chain-level6.vercel.app/dashboard) (Requires Login)
-- **Booking History**: [https://gas-chain-level6.vercel.app/bookings](https://gas-chain-level6.vercel.app/bookings) (Requires Login)
-- **Supply Chain**: [https://gas-chain-level6.vercel.app/supply-chain](https://gas-chain-level6.vercel.app/supply-chain) (Requires Login)
-- **Subsidies**: [https://gas-chain-level6.vercel.app/subsidies](https://gas-chain-level6.vercel.app/subsidies) (Requires Login)
-- **Ledger Explorer**: [https://gas-chain-level6.vercel.app/ledger](https://gas-chain-level6.vercel.app/ledger) (Requires Login)
+- **Dashboard**: [https://level6-o3nk.vercel.app/dashboard](https://level6-o3nk.vercel.app/dashboard) (Requires Login)
+- **Booking History**: [https://level6-o3nk.vercel.app/bookings](https://level6-o3nk.vercel.app/bookings) (Requires Login)
+- **Supply Chain**: [https://level6-o3nk.vercel.app/supply-chain](https://level6-o3nk.vercel.app/supply-chain) (Requires Login)
+- **Subsidies**: [https://level6-o3nk.vercel.app/subsidies](https://level6-o3nk.vercel.app/subsidies) (Requires Login)
+- **Ledger Explorer**: [https://level6-o3nk.vercel.app/ledger](https://level6-o3nk.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
