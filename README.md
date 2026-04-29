@@ -16,7 +16,8 @@ At **Level 5**, this project has been built as a production-grade decentralized 
 
 GasChain uses a custom SVG logo integrated into the UI for consistent branding.
 
-![GasChain Logo](public/download.svg)
+![GasChain Logo](<img width="644" height="639" alt="image" src="https://github.com/user-attachments/assets/5bda7d32-8ef3-4ee5-b1b7-f3ede6f25669" />
+)
 
 
 ## 🛠️ Tech Stack
