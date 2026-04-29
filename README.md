@@ -12,6 +12,12 @@
 At **Level 5**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
 ---
+## 🖼️ Logo & Branding
+
+GasChain uses a custom SVG logo integrated into the UI for consistent branding.
+
+![GasChain Logo](public/download.svg)
+
 
 ## 🛠️ Tech Stack
 | Layer | Technologies |
