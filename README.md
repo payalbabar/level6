@@ -1,4 +1,4 @@
-# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar
+# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar [Level 6]
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
@@ -12,10 +12,11 @@
 https://youtu.be/TrbpXrAEVR8?si=FiUOj2q2blXKmvwl
 ---
 
+
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 6**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
+At **Level 6 (Black Belt)**, this project has been scaled to a production-ready application with 30+ active users, complete security validation, and professional metrics monitoring.
 
 ---
 
@@ -39,14 +40,7 @@ At **Level 6**, this project has been built as a production-grade decentralized 
 
 ---
 
-
-## 📋 Level 6 Requirements Checklist
-- [x] **Functional MVP**: Core booking and tracking system working
-- [x] **5+ Testnet Users**: Real users onboarded
-- [x] **User Feedback Collected**: Google Form + Sheets linked
-- [x] **Iteration Completed**: Improvements implemented with commit proof
-- [x] **Architecture Documented**: System flow explained
-- [x] **10+ Meaningful Commits**: Development history present
+## 📋 Level 6 (Black Belt) Requirements Checklist
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
@@ -97,8 +91,8 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
-### 💎 Testnet User Validations (Level 6 Milestone)
-To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
+### 💎 Production User Validations (Level 6 Milestone)
+To validate our production-grade application, we onboarded **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
 <summary>View 34 Verified Wallet Addresses</summary>
@@ -183,8 +177,6 @@ GasChain operates on an iterative high-velocity development cycle:
 
 ---
 
----
-
 ## 🛡️ Advanced Feature: Fee Sponsorship
 GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to eliminate the friction of onboarding new users who don't yet own XLM.
 
@@ -228,7 +220,7 @@ The core decentralized logic is written in **Rust** and located in the `/contrac
 
 ## 📈 Scalability Design
 GasChain is engineered to scale from a testnet MVP to a national-scale production utility:
-*   **Off-Chain Indexing**: By de-coupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
+*   **Off-Chain Indexing**: By decoupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
 *   **State Optimization**: The smart contract is designed with **minimal state storage** in mind. We store only critical identity and ownership markers, while rich metadata (customer name, landmark) is handled by the indexing layer.
 *   **Fee Sponsorship Management**: Our sponsorship model is designed to be plug-and-play with enterprise treasury accounts, allowing large energy companies to sponsor millions of transactions for their customers.
 
@@ -246,26 +238,37 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
----
+
 
 ## 📸 Screenshots
-<img width="1920" height="878" alt="image" src="https://github.com/user-attachments/assets/0bdcafc8-b267-44e8-ae48-f12bd3724a4f" />
-<img width="1910" height="877" alt="image" src="https://github.com/user-attachments/assets/807acb94-4f10-4340-bfa4-3e549440fba3" />
-<img width="1920" height="893" alt="image" src="https://github.com/user-attachments/assets/9718ee87-47f6-4005-a039-9482c8fc3000" />
-<img width="1918" height="887" alt="image" src="https://github.com/user-attachments/assets/8974450e-de45-4fd8-a41d-1e6aa0c49bc0" />
-<img width="1917" height="881" alt="image" src="https://github.com/user-attachments/assets/a5eddf2e-73bd-4383-b376-7cf176e2a4af" />
-<img width="1920" height="888" alt="image" src="https://github.com/user-attachments/assets/ce7f72f6-9d16-43b8-aff7-2a9d49d14c96" />
-<img width="1917" height="879" alt="image" src="https://github.com/user-attachments/assets/32e87e46-cdc5-4c54-aa82-6521c9ddff0c" />
-<img width="1911" height="880" alt="image" src="https://github.com/user-attachments/assets/43748580-edf4-4804-bf2c-c7ea46f3c7cd" />
-<img width="1913" height="876" alt="image" src="https://github.com/user-attachments/assets/a1264b08-b458-4223-9649-c6b95cfa6a66" />
-<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/012af1e4-5929-4c71-8ea2-0d527607cb9a" />
-<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/0d475dcc-0d32-4b64-b907-58238721e284" />
-<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/694e7448-3291-42b7-8dcc-b60db2482a67" />
-<img width="1920" height="882" alt="image" src="https://github.com/user-attachments/assets/d0252452-b1bd-4aaa-ae2c-d96ce9ffe55e" />
+
+<img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/0a55ffda-56a3-4151-93f1-339559100197" />
+<img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/c8ef55d2-a6b7-4be5-a4ef-b94f820dba44" />
+<img width="1899" height="859" alt="image" src="https://github.com/user-attachments/assets/ddf81700-91d9-4637-bbc7-7150f9cbd30f" />
+<img width="1920" height="870" alt="image" src="https://github.com/user-attachments/assets/aaa0bd78-ad96-495c-a0d7-1dec48a4af49" />
+<img width="1920" height="865" alt="image" src="https://github.com/user-attachments/assets/22f3f8af-3e7d-4daa-bdad-406f92849f6f" />
+<img width="1920" height="873" alt="image" src="https://github.com/user-attachments/assets/7ff7ffa6-58e3-48b7-8317-2b759848b75e" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/b70efdd1-aa42-46a9-9c96-878a7ec4392f" />
+<img width="1920" height="871" alt="image" src="https://github.com/user-attachments/assets/9ec01fff-7f1f-4b46-8043-f09a54b6dbbd" />
+<img width="1920" height="863" alt="image" src="https://github.com/user-attachments/assets/8e3ed197-bcc5-4af1-9758-ac3f54f3c65d" />
+<img width="1920" height="873" alt="image" src="https://github.com/user-attachments/assets/9e05a22f-2b54-464c-b02e-4097e993347c" />
+<img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/64bdf94f-5f4f-46ff-bcf3-e6a23cd2760a" />
+<img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/00bb063e-4acf-4199-8d53-36494e4ad183" />
+<img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/7f01e25a-caac-438e-a26f-7f623556e37b" />
+<img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
+
+
+
+
+
+
+
+
+
 
 
 ## 🛠️ Setup Instructions
-1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
+1.  **Clone**: `git clone https://github.com/payalbabar/GasChainLevel6.git`
 2.  **Install**: `npm install`
 3.  **Run**: `npm run dev`
 
