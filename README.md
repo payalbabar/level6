@@ -1,11 +1,14 @@
 # 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar [Level 6]
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
-
-[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://gas-chain-level6.vercel.app/)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-o3nk.vercel.app/)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
 [![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
+---
+
+## 🎥 Demo Video
+https://youtu.be/TrbpXrAEVR8?si=FiUOj2q2blXKmvwl
 ---
 
 ## 🌟 Overview
