@@ -77,24 +77,24 @@ export default function Layout() {
           "fixed lg:sticky top-0 left-0 z-50 h-screen w-[260px]",
           "flex flex-col transition-transform duration-300 ease-in-out",
           "border-r border-border/50",
-          "bg-card/80 backdrop-blur-xl",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
         style={{
-          background: "linear-gradient(180deg, hsl(220 18% 7% / 0.95) 0%, hsl(220 18% 6% / 0.98) 100%)"
+          background: "linear-gradient(180deg, hsl(220 18% 7% / 0.97) 0%, hsl(220 18% 6% / 0.99) 100%)",
+          backdropFilter: "blur(24px)"
         }}
       >
         {/* ── Logo Area ── */}
         <div className="h-20 flex items-center gap-3.5 px-5 border-b border-border/30 flex-shrink-0">
-          <div className="relative">
-            <div className="absolute inset-0 blur-xl bg-primary/30 rounded-full scale-150" />
-            <GasChainMark size={36} />
+          <div className="relative flex-shrink-0">
+            <div className="absolute inset-0 blur-2xl bg-primary/40 rounded-full scale-150" />
+            <GasChainMark size={40} />
           </div>
           <div>
-            <div className="text-base font-bold tracking-tight text-foreground leading-tight">
+            <div className="text-base font-extrabold tracking-tight text-foreground leading-tight">
               GasChain
             </div>
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-primary/80 mt-0.5">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-primary mt-0.5">
               Enterprise Network
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function Layout() {
         </div>
 
         {/* ── Navigation ── */}
-        <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto">
+        <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto custom-scrollbar">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60 px-3 mb-3">
             Main Menu
           </p>
@@ -156,6 +156,15 @@ export default function Layout() {
             </div>
             <p className="text-sm font-semibold text-foreground">Stellar Testnet</p>
             <p className="text-[10px] text-muted-foreground mt-0.5">us-east-1.gaschain.io</p>
+            {/* Sync progress bar — from remote */}
+            <div className="mt-3 space-y-1">
+              <div className="flex justify-between text-[9px] text-muted-foreground font-semibold uppercase">
+                <span>Sync</span><span>88%</span>
+              </div>
+              <div className="h-1 w-full bg-muted rounded-full overflow-hidden">
+                <div className="h-full w-[88%] bg-gradient-to-r from-primary to-success rounded-full" />
+              </div>
+            </div>
           </div>
         </div>
 

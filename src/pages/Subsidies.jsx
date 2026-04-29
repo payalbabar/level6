@@ -16,10 +16,10 @@ const initialProposals = [
 ];
 
 const statusConfig = {
-  active:   { style: 'bg-primary/10 text-primary', icon: Vote, label: 'Active' },
-  passed:   { style: 'bg-success/10 text-success', icon: CheckCircle, label: 'Passed' },
-  rejected: { style: 'bg-destructive/10 text-destructive', icon: XCircle, label: 'Rejected' },
-  pending:  { style: 'bg-warning/10 text-warning', icon: Clock, label: 'Pending' },
+  active:   { style: 'bg-primary/10 text-primary border-primary/25', icon: Vote, label: 'ACTIVE' },
+  passed:   { style: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/25', icon: CheckCircle, label: 'PASSED' },
+  rejected: { style: 'bg-red-400/10 text-red-400 border-red-400/25', icon: XCircle, label: 'REJECTED' },
+  pending:  { style: 'bg-amber-400/10 text-amber-400 border-amber-400/25', icon: Clock, label: 'PENDING' },
 };
 
 export default function Subsidies() {
@@ -27,39 +27,32 @@ export default function Subsidies() {
   const [proposals, setProposals] = useState(initialProposals);
   const [expandedId, setExpandedId] = useState(null);
   const [isBroadcasting, setIsBroadcasting] = useState(false);
-  const [activeTab, setActiveTab] = useState('all'); 
+  const [activeTab, setActiveTab] = useState('all');
   const [selectedMetric, setSelectedMetric] = useState(null);
 
+  // Local: governance info for inline detail panels
   const governanceInfo = {
-    "Total Proposals": {
-      title: "Protocol Ledger Stats",
-      desc: "Total number of GasChain Improvement Proposals (GIP) submitted since network genesis. Includes active, passed, and rejected states."
-    },
-    "Active Votes": {
-      title: "Live Consensus",
-      desc: "Proposals currently in the active voting window. Requires 66% supermajority for protocol parameter adjustments."
-    },
-    "Passed": {
-      title: "Governance History",
-      desc: "Successful proposals that have been merged into the protocol's master logic and committed to the Stellar blockchain."
-    },
-    "Voting Power": {
-      title: "Authority Weight",
-      desc: "Your current voting weight based on XLM staked in the governance vault. Higher authority allows for greater influence on GIP outcomes."
-    }
+    total: { title: "Protocol Ledger Stats", desc: "Total number of GasChain Improvement Proposals (GIP) submitted since network genesis. Includes active, passed, and rejected states." },
+    active: { title: "Live Consensus", desc: "Proposals currently in the active voting window. Requires 66% supermajority for protocol parameter adjustments." },
+    passed: { title: "Governance History", desc: "Successful proposals that have been merged into the protocol's master logic and committed to the Stellar blockchain." },
+    power: { title: "Authority Weight", desc: "Your current voting weight based on XLM staked in the governance vault. Higher authority allows for greater influence on GIP outcomes." },
   };
+
   const handleVote = (id, choice) => {
     setIsBroadcasting(true);
     setTimeout(() => {
         setVoted(prev => ({ ...prev, [id]: choice }));
         setProposals(prev => prev.map(p => {
             if (p.id === id) {
-                return { ...p, votes: { ...p.votes, [choice]: p.votes[choice] + 1 } };
+                return {
+                    ...p,
+                    votes: { ...p.votes, [choice]: p.votes[choice] + 1 }
+                };
             }
             return p;
         }));
         setIsBroadcasting(false);
-        toast({ title: "Vote Recorded", description: `Your vote has been committed to the protocol.` });
+        toast({ title: "Broadcast Successful", description: `Signature committed to protocol.` });
     }, 1500);
   };
 
@@ -76,11 +69,16 @@ export default function Subsidies() {
       
       <div className="p-8 max-w-7xl mx-auto space-y-8 pb-20">
         
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-border pb-6">
-          <div className="space-y-1.5">
-            <h1 className="text-3xl font-semibold tracking-tight">Protocol Governance</h1>
-            <p className="text-sm text-muted-foreground">Decentralized decision-making. Each vote is cryptographically signed.</p>
+        {/* Header — Remote's badge style + local's design tokens */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-border pb-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/25 text-accent text-[10px] font-bold uppercase tracking-widest">
+              <Shield className="h-3.5 w-3.5" /> Consensus Protocol 09
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+              Protocol <span className="gradient-text">Governance</span>
+            </h1>
+            <p className="text-sm text-muted-foreground">Decentralized decision-making. Each vote is cryptographically signed and committed.</p>
           </div>
           
           <div className="flex p-1 rounded-lg bg-muted border border-border">
@@ -99,35 +97,39 @@ export default function Subsidies() {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Metric Cards — Remote's interactive style + local's toggle logic */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <MetricCard 
             label="Total Proposals" 
             value={proposals.length.toString()} 
             icon={FileText} 
-            onClick={() => setSelectedMetric(selectedMetric === "Total Proposals" ? null : "Total Proposals")}
+            active={selectedMetric === 'total'}
+            onClick={() => setSelectedMetric(selectedMetric === 'total' ? null : 'total')}
           />
           <MetricCard 
             label="Active Votes" 
             value={proposals.filter(p => p.status === 'active').length.toString()} 
-            icon={Zap} 
-            onClick={() => setSelectedMetric(selectedMetric === "Active Votes" ? null : "Active Votes")}
+            icon={Zap}
+            active={selectedMetric === 'active'}
+            onClick={() => setSelectedMetric(selectedMetric === 'active' ? null : 'active')}
           />
           <MetricCard 
             label="Passed" 
             value={proposals.filter(p => p.status === 'passed').length.toString()} 
-            icon={CheckCircle} 
-            onClick={() => setSelectedMetric(selectedMetric === "Passed" ? null : "Passed")}
+            icon={CheckCircle}
+            active={selectedMetric === 'passed'}
+            onClick={() => setSelectedMetric(selectedMetric === 'passed' ? null : 'passed')}
           />
           <MetricCard 
             label="Voting Power" 
             value="100 XLM" 
-            icon={Cpu} 
-            onClick={() => setSelectedMetric(selectedMetric === "Voting Power" ? null : "Voting Power")}
+            icon={Cpu}
+            active={selectedMetric === 'power'}
+            onClick={() => setSelectedMetric(selectedMetric === 'power' ? null : 'power')}
           />
         </div>
 
-        {/* Inline Detail Panel */}
+        {/* Inline Detail Panel — Local's governanceInfo concept */}
         <AnimatePresence mode="wait">
           {selectedMetric && (
             <motion.div
@@ -189,7 +191,7 @@ export default function Subsidies() {
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
                                 <span className="text-xs font-medium text-muted-foreground">{p.id}</span>
-                                <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium uppercase", cfg.style)}>
+                                <span className={cn("flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium uppercase border", cfg.style)}>
                                     <StatusIcon className="h-3 w-3" /> {cfg.label}
                                 </span>
                             </div>
@@ -217,6 +219,7 @@ export default function Subsidies() {
                     )}
                 </div>
 
+                {/* Expanded Detail */}
                 <AnimatePresence>
                     {isExpanded && (
                       <motion.div
@@ -257,7 +260,7 @@ export default function Subsidies() {
                                 <div className="p-4 rounded-lg bg-success/10 border border-success/20 flex items-center gap-3">
                                     <CheckCircle className="h-5 w-5 text-success" />
                                     <div>
-                                        <p className="text-sm font-semibold text-success">Vote Recorded</p>
+                                        <p className="text-sm font-semibold text-success">Broadcast Successful</p>
                                         <p className="text-xs text-muted-foreground">Decision: {voted[p.id]} · Committed to ledger</p>
                                     </div>
                                 </div>
@@ -274,6 +277,29 @@ export default function Subsidies() {
               </div>
             );
           })}
+        </div>
+
+        {/* Live Consensus Stream — from Remote */}
+        <div className="pt-8 space-y-6">
+            <div className="flex items-center justify-between border-b border-border/50 pb-4">
+                <h4 className="text-xs font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
+                    <Radio className="h-4 w-4 text-primary animate-pulse" /> Live Consensus Stream
+                </h4>
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Global Epoch 428</span>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+                {[1, 2, 3].map(i => (
+                    <div key={i} className="p-4 rounded-xl bg-card border border-border flex items-center gap-4 group hover:border-primary/30 transition-colors">
+                        <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/15 flex items-center justify-center text-primary">
+                            <Zap className="h-5 w-5" />
+                        </div>
+                        <div className="space-y-0.5">
+                            <p className="text-xs text-foreground font-semibold">Vote Received</p>
+                            <p className="text-[10px] text-muted-foreground font-medium">Node_{i === 1 ? 'Alpha' : i === 2 ? 'Gamma' : 'Theta'} · YES</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
       </div>
 
@@ -292,13 +318,13 @@ export default function Subsidies() {
   );
 }
 
-function MetricCard({ label, value, icon: Icon, onClick }) {
+function MetricCard({ label, value, icon: Icon, active, onClick }) {
   return (
     <div 
       onClick={onClick}
       className={cn(
-        "p-6 rounded-xl bg-card border border-border transition-all duration-300",
-        onClick && "cursor-pointer hover:border-primary/50 hover:shadow-glow-sm hover:-translate-y-1"
+        "p-6 rounded-xl bg-card border transition-all duration-300 cursor-pointer",
+        active ? "border-primary/50 bg-primary/5 shadow-glow-sm" : "border-border hover:border-primary/30 hover:-translate-y-1"
       )}
     >
       <div className="flex justify-between items-start">
@@ -306,7 +332,7 @@ function MetricCard({ label, value, icon: Icon, onClick }) {
           <p className="text-sm text-muted-foreground">{label}</p>
           <p className="text-2xl font-semibold text-foreground mt-1">{value}</p>
         </div>
-        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+        <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center", active ? "bg-primary/20 text-primary" : "bg-primary/10 text-primary")}>
           <Icon className="h-5 w-5" />
         </div>
       </div>

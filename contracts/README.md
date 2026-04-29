@@ -30,3 +30,7 @@ cargo test
 
 ## Security
 For detailed security considerations regarding the smart contracts, please refer to the root [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md).
+
+## Logo & Branding
+
+![GasChain Logo](./public/download.svg)
