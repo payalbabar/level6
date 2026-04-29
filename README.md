@@ -11,6 +11,9 @@
 ## 🎥 Demo Video
 https://youtu.be/TrbpXrAEVR8?si=FiUOj2q2blXKmvwl
 ---
+## Logo
+![GasChain Logo](./public/logo.svg)
+---
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
