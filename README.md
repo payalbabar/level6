@@ -11,13 +11,7 @@
 
 At **Level 5**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
----
-## 🖼️ Logo & Branding
 
-GasChain uses a custom SVG logo integrated into the UI for consistent branding.
-
-(<img width="644" height="639" alt="image" src="https://github.com/user-attachments/assets/5bda7d32-8ef3-4ee5-b1b7-f3ede6f25669" />
-)
 
 
 ## 🛠️ Tech Stack
@@ -264,6 +258,12 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/00bb063e-4acf-4199-8d53-36494e4ad183" />
 <img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/7f01e25a-caac-438e-a26f-7f623556e37b" />
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
+---
+## 🖼️ Logo & Branding
+
+GasChain uses a custom SVG logo integrated into the UI for consistent branding.
+
+<img width="644" height="639" alt="image" src="https://github.com/user-attachments/assets/5bda7d32-8ef3-4ee5-b1b7-f3ede6f25669" />
 
 
 
