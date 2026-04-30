@@ -1,24 +1,18 @@
-# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar [Level 6]
+# 🏛️ GASCHAIN — Decentralized LPG Ecosystem on Stellar
 
 **The world's first production-grade decentralized supply chain protocol for LPG distribution.** Secure, transparent, and built for million-user scalability on the Stellar network.
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://level6-o3nk.vercel.app/)
 [![Stellar Network](https://img.shields.io/badge/Network-Stellar%20Testnet-blue?style=for-the-badge&logo=stellar)](https://stellar.expert/explorer/testnet)
-[![Black Belt](https://img.shields.io/badge/Belt-Black%20(Level%206)-black?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
-
----
-
-## 🎥 Demo Video
-https://youtu.be/TrbpXrAEVR8?si=FiUOj2q2blXKmvwl
----
-
+[![Blue Belt](https://img.shields.io/badge/Belt-Blue%20(Level%205)-blue?style=for-the-badge)](SUBMISSION_CHECKLIST.md)
 
 ## 🌟 Overview
 **GASCHAIN** is a production-ready decentralized LPG management protocol designed to eliminate supply chain fraud, automate government subsidies, and provide complete transparency from Manufacturer to Consumer. 
 
-At **Level 6 (Black Belt)**, this project has been scaled to a production-ready application with 30+ active users, complete security validation, and professional metrics monitoring.
+At **Level 5**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
----
+
+
 
 ## 🛠️ Tech Stack
 | Layer | Technologies |
@@ -40,7 +34,14 @@ At **Level 6 (Black Belt)**, this project has been scaled to a production-ready 
 
 ---
 
-## 📋 Level 6 (Black Belt) Requirements Checklist
+
+## 📋 Level 5 Requirements Checklist
+- [x] **Functional MVP**: Core booking and tracking system working
+- [x] **5+ Testnet Users**: Real users onboarded
+- [x] **User Feedback Collected**: Google Form + Sheets linked
+- [x] **Iteration Completed**: Improvements implemented with commit proof
+- [x] **Architecture Documented**: System flow explained
+- [x] **10+ Meaningful Commits**: Development history present
 - [x] **30+ Verified Active Users**: 34 wallets onboarded.
 - [x] **Metrics Dashboard Live**: Real-time DAU and transaction tracking.
 - [x] **Security Checklist Completed**: Audited for production logic.
@@ -91,8 +92,8 @@ You can view the raw exported responses and feedback analysis in our Excel sheet
 
 - **[View User Feedback (Google Sheets) 🔗](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)**
 
-### 💎 Production User Validations (Level 6 Milestone)
-To validate our production-grade application, we onboarded **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
+### 💎 Testnet User Validations (Level 6 Milestone)
+To validate our real-world MVP, we tested the platform with **34 real testnet users** using Freighter wallets. Here is the list of verified Stellar wallet addresses (verifiable on Stellar Explorer):
 
 <details>
 <summary>View 34 Verified Wallet Addresses</summary>
@@ -177,6 +178,8 @@ GasChain operates on an iterative high-velocity development cycle:
 
 ---
 
+---
+
 ## 🛡️ Advanced Feature: Fee Sponsorship
 GASCHAIN implements **Stellar Fee Sponsorship** (Fee-Bump Transactions) to eliminate the friction of onboarding new users who don't yet own XLM.
 
@@ -220,7 +223,7 @@ The core decentralized logic is written in **Rust** and located in the `/contrac
 
 ## 📈 Scalability Design
 GasChain is engineered to scale from a testnet MVP to a national-scale production utility:
-*   **Off-Chain Indexing**: By decoupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
+*   **Off-Chain Indexing**: By de-coupling read-heavy operations (Metrics/History) from the blockchain via our indexing layer, we can support thousands of concurrent users without hitting Stellar rate limits.
 *   **State Optimization**: The smart contract is designed with **minimal state storage** in mind. We store only critical identity and ownership markers, while rich metadata (customer name, landmark) is handled by the indexing layer.
 *   **Fee Sponsorship Management**: Our sponsorship model is designed to be plug-and-play with enterprise treasury accounts, allowing large energy companies to sponsor millions of transactions for their customers.
 
@@ -238,10 +241,9 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
-
+---
 
 ## 📸 Screenshots
-
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/0a55ffda-56a3-4151-93f1-339559100197" />
 <img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/c8ef55d2-a6b7-4be5-a4ef-b94f820dba44" />
 <img width="1899" height="859" alt="image" src="https://github.com/user-attachments/assets/ddf81700-91d9-4637-bbc7-7150f9cbd30f" />
@@ -257,6 +259,13 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 <img width="1920" height="877" alt="image" src="https://github.com/user-attachments/assets/7f01e25a-caac-438e-a26f-7f623556e37b" />
 <img width="1920" height="885" alt="image" src="https://github.com/user-attachments/assets/ca1af85c-2a9f-48b8-b39c-e150fc39feef" />
 
+## 🖼️ Logo & Branding
+
+GasChain uses a custom SVG logo integrated into the UI for consistent branding.
+
+<img width="644" height="639" alt="image" src="https://github.com/user-attachments/assets/5bda7d32-8ef3-4ee5-b1b7-f3ede6f25669" />
+
+
 
 
 
@@ -268,7 +277,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 
 
 ## 🛠️ Setup Instructions
-1.  **Clone**: `git clone https://github.com/payalbabar/GasChainLevel6.git`
+1.  **Clone**: `git clone https://github.com/payalbabar/level6.git`
 2.  **Install**: `npm install`
 3.  **Run**: `npm run dev`
 
