@@ -10,6 +10,23 @@
 
 At **Level 5**, this project has been built as a production-grade decentralized protocol with 34 active users, comprehensive architecture documentation, and verified user validation. The focus is on rapid MVP development and feedback iteration.
 
+## 🛡️ Mock Data Removal
+
+All mock, static, and hardcoded data has been removed from this project.
+
+* No seeded data or fake entries
+* No hardcoded metrics or governance data
+* No static identities (e.g., "Admin", "Demo User")
+
+All data is now **real and dynamic**, derived from:
+
+* `Booking` (user interactions)
+* `SupplyChainBlock` (blockchain events)
+
+The app starts in an empty state and updates only after real user actions.
+**Live Demo**: [https://level6-2mgt.vercel.app/](https://level6-2mgt.vercel.app/)
+
+**Status:** ✅ 100% Dynamic | No Mock Data
 
 
 
@@ -230,7 +247,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 
 ## 🔗 Submission Checklist
 - **Live Demo**: [https://level6-2mgt.vercel.app/](https://level6-2mgt.vercel.app/)
-- **Demo Video**: [https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J](https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J)
+- **Demo Video**: [https://youtu.be/zZf87KZLVSM?si=lINzm4Cm_OKGjbYp](https://youtu.be/zZf87KZLVSM?si=lINzm4Cm_OKGjbYp)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
 - **Dashboard**: [https://level6-2mgt.vercel.app/dashboard](https://level6-2mgt.vercel.app/dashboard) (Requires Login)
 - **Booking History**: [https://level6-2mgt.vercel.app/bookings](https://level6-2mgt.vercel.app/bookings) (Requires Login)
