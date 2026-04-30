@@ -205,7 +205,7 @@ export default function SupplyChain() {
               <h3 className="text-sm font-semibold mb-4 pb-3 border-b border-border/30">Network Authority</h3>
               <div className="space-y-3">
                 {[
-                  { icon: Globe, label: "Active Hubs",  val: "24" },
+                  { icon: Globe, label: "Active Hubs",  val: "—" },
                   { icon: Zap,   label: "In-Flight",    val: bookings.filter(b=>b.status==="confirmed").length },
                   { icon: CheckCircle, label: "Completed", val: bookings.filter(b=>b.status==="delivered").length },
                 ].map(r => (
@@ -233,11 +233,9 @@ export default function SupplyChain() {
                 All logistic records are immutable and cryptographically signed on Stellar Soroban.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["ISO-9001", "BLOCK_V2", "ECDSA", "SOC-2"].map(tag => (
-                  <span key={tag} className="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-primary/8 border border-primary/15 text-primary">
-                    {tag}
-                  </span>
-                ))}
+                <span className="px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-primary/8 border border-primary/15 text-primary">
+                  NETWORK_ACTIVE
+                </span>
               </div>
             </div>
           </div>

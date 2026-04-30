@@ -37,7 +37,7 @@ export const mockBase44 = {
     }
   },
   auth: {
-    me: async () => ({ id: 'mock-user-1', name: 'Demo User', email: 'demo@gaschain.com' }),
+    me: async () => null,
     logout: () => { localStorage.clear(); window.location.reload(); },
     redirectToLogin: () => console.log('Mock login redirect'),
   }

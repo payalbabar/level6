@@ -1,6 +1,6 @@
-import { ArrowRight, ShoppingCart, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { STATUS_COLORS, CYLINDER_LABELS } from "@/lib/blockchain";
+import { CYLINDER_LABELS } from "@/lib/blockchain";
 import { cn } from "@/lib/utils";
 import moment from "moment";
 

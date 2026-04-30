@@ -5,7 +5,7 @@ import AppHeader from "../components/dashboard/AppHeader";
 import {
   ShoppingCart, Wallet, Database, TrendingUp,
   X, ArrowRight, Shield, CheckCircle2, Loader2,
-  Box, Activity, Zap, ChevronRight
+  Box, Activity, ChevronRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CYLINDER_LABELS } from "@/lib/blockchain";
@@ -86,16 +86,14 @@ export default function Dashboard() {
             label="Total Bookings"
             value={bookings.length.toString()}
             subtitle="Ledger entries"
-            trend="+12% this week"
             onClick={() => setActivePanel(activePanel === "bookings" ? null : "bookings")}
             className={cn(activePanel === "bookings" && "ring-2 ring-primary/50")}
           />
           <StatCard
             icon={Database}
             label="Validated Blocks"
-            value={(blocks.length + 32).toString()}
+            value={blocks.length.toString()}
             subtitle="On-chain"
-            trend="Epoch verified"
             onClick={() => setActivePanel(activePanel === "blocks" ? null : "blocks")}
             className={cn(activePanel === "blocks" && "ring-2 ring-primary/50")}
           />

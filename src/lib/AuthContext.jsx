@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
           setUser(null);
         } else {
           setIsAuthenticated(true);
-          setUser({ id: 'mock-user-1', name: 'Demo User' });
+          setUser({ id: 'node-' + Math.random().toString(36).substr(2, 5), name: 'unknown-node' });
         }
         return;
       }
@@ -149,8 +149,7 @@ export const AuthProvider = ({ children }) => {
   const login = () => {
     if (appParams.appId === 'test-app-id' || !appParams.appId) {
       localStorage.removeItem('mock_logged_out');
-      setIsAuthenticated(true);
-      setUser({ id: 'mock-user-1', name: 'Demo User' });
+      setUser({ id: 'node-' + Math.random().toString(36).substr(2, 5), name: 'unknown-node' });
       navigate('/dashboard');
       return;
     }

@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Shield, Wallet, MapPin, BadgeCheck, Zap, Info, Building2, User, ChevronRight, Activity, Terminal
+import { Loader2, Shield, MapPin, BadgeCheck, Zap, User, Activity
 } from "lucide-react";
-import { generateHash, generateBlockHash, generateBookingId, CYLINDER_PRICES, CYLINDER_LABELS } from "@/lib/blockchain";
+import { generateHash, generateBlockHash, generateBookingId } from "@/lib/blockchain";
 import { checkConnection, sendXLM, retrievePublicKey } from "@/lib/freighter";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,8 +47,8 @@ export default function BookCylinder() {
     cylinder_type: "14.2kg_domestic",
     quantity: 1,
     payment_method: "freighter",
-    distributor_id: "dist_1",
-    cylinder_sn: "L-102",
+    distributor_id: "",
+    cylinder_sn: "",
     notes: "",
   });
 
@@ -93,8 +93,8 @@ export default function BookCylinder() {
         final_amount: finalAmount,
         status: "confirmed",
         block_hash: blockHash,
-        distributor_name: "GasChain Central Depot",
-        metadata: JSON.stringify({ network: "Stellar Testnet", estimate: hashEstimate }),
+        distributor_name: "",
+        metadata: JSON.stringify({ network: "", estimate: hashEstimate }),
       });
 
       await base44.entities.SupplyChainBlock.create({
@@ -105,7 +105,7 @@ export default function BookCylinder() {
         booking_id: bookingId,
         event_type: "booking_created",
         location: "Network Node",
-        verified_by: "Protocol Node",
+        verified_by: "unknown-node",
         nonce: Math.floor(Math.random() * 100000),
       });
 

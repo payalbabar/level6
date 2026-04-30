@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import {
-  Wallet, Shield, Zap, Database, Loader2,
-  Globe, ArrowRight, Flame, ChevronRight, CheckCircle2, Play
+  Zap, ArrowRight, ChevronRight, CheckCircle2
 } from "lucide-react";
+import { GasChainMark } from "@/components/Layout";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/AuthContext";
 import { checkConnection, retrievePublicKey } from "@/lib/freighter";
@@ -63,9 +63,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo & Version */}
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
-              <Flame className="h-4 w-4 text-cyan-400" />
-            </div>
+            <GasChainMark size={28} />
             <div className="flex items-baseline gap-2">
               <span className="text-lg font-bold tracking-tight">GasChain</span>
               <span className="text-[10px] text-white/40 font-mono">v2.4</span>

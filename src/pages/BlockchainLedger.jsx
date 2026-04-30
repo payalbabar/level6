@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import AppHeader from "../components/dashboard/AppHeader";
 import { 
-  Database, Search, Hash, Shield, ChevronDown, CheckCircle2, Link2, X, ChevronRight, Activity, Lock, Terminal, Zap, Globe, Cpu, Loader2
+  Database, Search, Hash, Shield, ChevronDown, CheckCircle2, Link2, X, ChevronRight, Activity, Lock, Loader2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -93,7 +93,7 @@ export default function BlockchainLedger() {
             active={activeFilter === "chains"} onClick={() => handleStatClick("chains")}
           />
           <StatPanel 
-            label="Integrity Rate" value="100%" icon={Shield}
+            label="Integrity Rate" value={blocks.length > 0 ? "Verified" : "—"} icon={Shield}
             active={activeFilter === "verified"} onClick={() => handleStatClick("verified")}
           />
         </div>
@@ -165,7 +165,7 @@ export default function BlockchainLedger() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-6 rounded-lg bg-muted border border-border text-center">
                   <CheckCircle2 className="h-8 w-8 text-success mx-auto mb-3" />
-                  <p className="text-3xl font-semibold text-foreground">100.0%</p>
+                  <p className="text-3xl font-semibold text-foreground">{blocks.length > 0 ? "Verified" : "—"}</p>
                   <p className="text-xs text-muted-foreground mt-1">Consensus Integrity</p>
                 </div>
                 <div className="p-6 rounded-lg bg-muted border border-border text-center">
@@ -233,7 +233,7 @@ export default function BlockchainLedger() {
                         <DetailItem label="Previous Hash" value={block.previous_hash} mono />
                         <DetailItem label="Chain ID" value={block.booking_id} mono />
                         <DetailItem label="Location" value={block.location} />
-                        <DetailItem label="Verified By" value={block.verified_by || "Consensus Protocol"} />
+                        <DetailItem label="Verified By" value={block.verified_by || "unknown-node"} />
                         <DetailItem label="Nonce" value={block.nonce} mono />
                       </div>
                       

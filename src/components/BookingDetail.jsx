@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Database, MapPin, Clock, Loader2, Terminal, Link2, CheckCircle2, ShieldCheck, Zap, Activity } from "lucide-react";
+import { ArrowLeft, Database, MapPin, Clock, Loader2, Terminal, Link2, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { STATUS_COLORS, EVENT_LABELS, generateBlockHash } from "@/lib/blockchain";
+import { EVENT_LABELS, generateBlockHash } from "@/lib/blockchain";
 import { cn } from "@/lib/utils";
 import moment from "moment";
 import { toast } from "@/hooks/use-toast";
@@ -57,7 +57,7 @@ export default function BookingDetail({ booking, onBack }) {
           event_type: eventMap[newStatus] || newStatus,
           event_data: JSON.stringify({ status: newStatus, updated_at: new Date().toISOString() }),
           location: newStatus === "delivered" ? booking.customer_address : "Distribution Network",
-          verified_by: "Decentralized Node Authority",
+          verified_by: "unknown-node",
           nonce: Math.floor(Math.random() * 100000),
         });
 
@@ -259,7 +259,7 @@ export default function BookingDetail({ booking, onBack }) {
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <p className="text-xs text-muted-foreground">Verified By</p>
-                                    <p className="text-xs font-medium">{block.verified_by || "Protocol Agent"}</p>
+                                    <p className="text-xs font-medium">{block.verified_by || "unknown-node"}</p>
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground">Hash</p>

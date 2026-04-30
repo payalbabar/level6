@@ -3,13 +3,13 @@ import { useState } from "react";
 import {
   LayoutDashboard, ShoppingCart, ClipboardList,
   Database, Menu, LogOut, User, Activity, Globe,
-  ShieldCheck, X, Flame, ChevronRight
+  ShieldCheck, X, ChevronRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/AuthContext";
 
 // Premium SVG Logo — flame + chain link
-const GasChainMark = ({ size = 32 }) => (
+export const GasChainMark = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -174,10 +174,10 @@ export default function Layout() {
             <div className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 text-primary font-bold text-sm"
               style={{ background: "linear-gradient(135deg, hsl(200 100% 55% / 0.15), hsl(260 60% 58% / 0.15))" }}
             >
-              {user?.name?.[0]?.toUpperCase() || <User className="h-4 w-4" />}
+              {user?.name?.[0]?.toUpperCase() || "U"}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-foreground truncate leading-tight">{user?.name || "Admin"}</p>
+              <p className="text-sm font-semibold text-foreground truncate leading-tight">{user?.name || "unknown-node"}</p>
               <p className="text-[10px] text-primary font-medium truncate">Verified Authority</p>
             </div>
             <button

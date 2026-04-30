@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AppHeader from '../components/dashboard/AppHeader';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Cpu, Wifi, Zap, Clock, Activity, Globe, Shield, Terminal, ArrowUpRight, X, Layers, Database, ChevronRight } from 'lucide-react';
+import { Cpu, Wifi, Zap, Clock, Activity, Terminal, X, ChevronRight, Loader2 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { base44 } from '@/api/base44Client';
+import moment from 'moment';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const latencyData = [45, 60, 40, 75, 50, 90, 30, 55, 65, 80, 50, 70, 45, 60, 85, 40, 95, 60, 50, 75].map((v, i) => ({ time: i, value: v }));
-const throughputData = [120, 145, 110, 160, 135, 180, 100, 150, 140, 170, 130, 155, 125, 145, 175, 115, 190, 150, 135, 165].map((v, i) => ({ time: i, value: v }));
+const latencyData = [];
+const throughputData = [];
 
-const stats = [
-  { id: 'uptime', icon: Cpu, label: 'Node Uptime', value: '99.98%', sub: 'Last 30 days', color: 'text-success bg-success/10' },
-  { id: 'latency', icon: Clock, label: 'Avg Latency', value: '1.2s', sub: 'Block propagation', color: 'text-primary bg-primary/10' },
-  { id: 'blocks', icon: Zap, label: 'Total Blocks', value: '642', sub: 'Confirmed on-chain', color: 'text-warning bg-warning/10' },
-  { id: 'chains', icon: Wifi, label: 'Active Chains', value: '12', sub: 'Live connections', color: 'text-purple-500 bg-purple-500/10' },
-];
+const stats = [];
 
-const nodes = [
-  { id: 'node1', label: 'Enterprise Node 01', loc: 'US East-1', status: 'Active', uptime: '99.98%', ip: '102.16.8.1', version: 'v2.4.1' },
-  { id: 'node2', label: 'Public Node (India)', loc: 'Mumbai', status: 'Active', uptime: '99.71%', ip: '19.45.2.10', version: 'v2.4.0' },
-  { id: 'node3', label: 'Stellar Horizon', loc: 'Testnet', status: 'Syncing', uptime: '97.50%', ip: 'stellar.rpc.node', version: 'v2.5.0' },
-];
+const nodes = [];
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload?.length) {
@@ -33,69 +27,113 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 export default function MetricsDashboard() {
+  const [data, setData] = useState({ bookings: [], blocks: [], loading: true });
   const [activeStat, setActiveStat] = useState(null);
-  const [activeNode, setActiveNode] = useState(null);
 
-  const statDetails = {
-    uptime: (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-muted-foreground">Instance Uptime Timeline</p>
-            <span className="text-xs font-medium text-success">Target: 99.99%</span>
-        </div>
-        <div className="grid grid-cols-10 gap-1">
-            {Array.from({ length: 40 }).map((_, i) => (
-                <div key={i} className={cn("h-6 rounded-sm", i === 32 ? "bg-warning" : "bg-success")} />
-            ))}
-        </div>
-        <div className="p-4 rounded-lg bg-muted/50 border border-border">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Protocol Logs</p>
-            <div className="space-y-1 font-mono text-xs text-muted-foreground">
-                <p>[14:22:01] Node Alpha heartbeat received</p>
-                <p>[14:22:05] Consensus reach: 24/24 nodes</p>
-                <p>[14:22:12] Ledger seq: 642398 finalized</p>
-            </div>
-        </div>
-      </div>
-    ),
-    latency: (
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-muted/50 border border-border text-center">
-                <p className="text-xs font-medium text-muted-foreground mb-1">Internal RTT</p>
-                <p className="text-xl font-semibold text-foreground">42ms</p>
-            </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border text-center">
-                <p className="text-xs font-medium text-muted-foreground mb-1">Global Avg</p>
-                <p className="text-xl font-semibold text-foreground">1,204ms</p>
-            </div>
-        </div>
-      </div>
-    ),
-    blocks: (
-      <div className="space-y-2">
-        {[1, 2, 3].map(i => (
-            <div key={i} className="p-3 rounded-lg bg-muted/50 border border-border flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <Database className="h-4 w-4 text-muted-foreground" />
-                    <p className="text-sm font-medium text-foreground font-mono">#64239{i}</p>
-                </div>
-                <p className="text-xs font-mono text-muted-foreground">0xfa82...{i}ed9</p>
-            </div>
-        ))}
-      </div>
-    ),
-    chains: (
-        <div className="grid grid-cols-2 gap-3">
-            {['LOGISTICS_P0', 'FINANCE_S1', 'RETAIL_X4', 'AUDIT_Q2'].map(id => (
-                <div key={id} className="p-3 rounded-lg bg-muted/50 border border-border flex items-center gap-2">
-                    <Layers className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-xs font-medium text-foreground">{id}</span>
-                </div>
-            ))}
-        </div>
-    )
-  };
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const [bookings, blocks] = await Promise.all([
+          base44.entities.Booking.list("-created_date", 200),
+          base44.entities.SupplyChainBlock.list("-created_date", 200)
+        ]);
+        setData({ bookings, blocks, loading: false });
+      } catch (err) {
+        console.error("Metrics fetch failed:", err);
+        setData(prev => ({ ...prev, loading: false }));
+      }
+    };
+    fetchMetrics();
+  }, []);
+
+  const metrics = useMemo(() => {
+    const { bookings, blocks } = data;
+    if (!bookings.length && !blocks.length) return null;
+
+    const today = moment().format('YYYY-MM-DD');
+    const dailyActivity = {};
+    const userActivityMap = {}; // userId -> { count, latestTx, type, lastSeen }
+
+    const trackActivity = (userId, type, timestamp, metadata = {}) => {
+      const day = moment(timestamp).format('YYYY-MM-DD');
+      if (!dailyActivity[day]) dailyActivity[day] = { users: new Set(), txs: 0 };
+      dailyActivity[day].users.add(userId);
+      dailyActivity[day].txs += 1;
+
+      if (!userActivityMap[userId]) {
+        userActivityMap[userId] = { count: 0, firstSeen: timestamp, latestTx: null, type, metadata };
+      }
+      userActivityMap[userId].count += 1;
+      if (!userActivityMap[userId].latestTx || moment(timestamp).isAfter(userActivityMap[userId].latestTx)) {
+        userActivityMap[userId].latestTx = timestamp;
+      }
+    };
+
+    // Process Bookings
+    bookings.forEach(b => trackActivity(b.customer_phone || b.id, 'Consumer', b.created_date, { name: b.customer_name }));
+
+    // Process Blocks
+    blocks.forEach(bl => trackActivity(bl.verified_by || bl.node_id || "unknown-node", 'Network Node', bl.created_date || bl.timestamp));
+
+    // DAU Details (Today)
+    const dauToday = dailyActivity[today]?.users.size || 0;
+    const dauDetails = [...bookings, ...blocks]
+      .filter(x => moment(x.created_date || x.timestamp).format('YYYY-MM-DD') === today)
+      .map(x => ({
+        id: x.customer_phone || x.verified_by || x.node_id || "unknown-node",
+        time: x.created_date || x.timestamp,
+        type: x.customer_phone ? 'Booking' : 'Block Commit',
+        label: x.customer_name || x.event_type || 'System Event'
+      }))
+      .sort((a, b) => moment(b.time).diff(moment(a.time)));
+
+    // Transactions Details
+    const transactionDetails = [...bookings.map(b => ({ id: b.booking_id, type: 'Booking', time: b.created_date, status: b.status })), 
+                                ...blocks.map(bl => ({ id: bl.block_hash, type: 'Block', time: bl.created_date || bl.timestamp, status: bl.event_type }))]
+      .sort((a, b) => moment(b.time).diff(moment(a.time)));
+
+    // User / Identifier Details
+    const identifierDetails = Object.entries(userActivityMap).map(([id, info]) => ({
+      id,
+      ...info
+    })).sort((a, b) => b.count - a.count);
+
+    // Retention Details
+    const returningUsers = identifierDetails.filter(u => u.count > 1);
+    const newUsers = identifierDetails.filter(u => u.count === 1);
+    const retentionRate = identifierDetails.length > 0 ? ((returningUsers.length / identifierDetails.length) * 100).toFixed(1) : 0;
+
+    // Trends
+    const throughputTrend = Object.keys(dailyActivity).sort().map(day => ({
+      time: day,
+      value: dailyActivity[day].txs
+    }));
+
+    const userTrend = Object.keys(dailyActivity).sort().map(day => ({
+      time: day,
+      value: dailyActivity[day].users.size
+    }));
+
+    return {
+      dau: dauToday,
+      dauDetails,
+      totalTransactions: transactionDetails.length,
+      transactionDetails,
+      retention: retentionRate,
+      retentionDetails: { returning: returningUsers, new: newUsers },
+      totalUsers: identifierDetails.length,
+      identifierDetails,
+      throughputTrend,
+      userTrend
+    };
+  }, [data]);
+
+  const stats = metrics ? [
+    { id: 'dau', icon: Cpu, label: 'DAU (Today)', value: metrics.dau.toString(), sub: 'Active signatures', color: 'text-success bg-success/10' },
+    { id: 'retention', icon: Clock, label: 'User Retention', value: `${metrics.retention}%`, sub: 'Repeat interactions', color: 'text-primary bg-primary/10' },
+    { id: 'txs', icon: Zap, label: 'Total Transactions', value: metrics.totalTransactions.toString(), sub: 'Ledger volume', color: 'text-warning bg-warning/10' },
+    { id: 'identifiers', icon: Wifi, label: 'Unique Identifiers', value: metrics.totalUsers.toString(), sub: 'Verified identities', color: 'text-purple-500 bg-purple-500/10' },
+  ] : [];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -105,121 +143,194 @@ export default function MetricsDashboard() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-6">
           <div className="space-y-1.5">
             <h1 className="text-3xl font-semibold tracking-tight">Network Vitality</h1>
-            <p className="text-sm text-muted-foreground">Global cluster monitoring with sub-millisecond precision.</p>
+            <p className="text-sm text-muted-foreground">Audit-grade protocol monitoring and real-time user flow.</p>
           </div>
           <div className="flex gap-3">
-             <Button variant="outline" className="gap-2 text-sm">
-                <Terminal className="h-4 w-4" /> Console
-             </Button>
-             <Button className="gap-2 text-sm">
-                <Globe className="h-4 w-4" /> Global Map
+             <Button variant="outline" className="gap-2 text-sm" onClick={() => window.location.reload()}>
+                <Terminal className="h-4 w-4" /> Refresh Ledger
              </Button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((s) => (
-            <div
-              key={s.id}
-              onClick={() => setActiveStat(activeStat === s.id ? null : s.id)}
-              className={cn(
-                  "p-6 rounded-xl border transition-colors cursor-pointer group",
-                  activeStat === s.id 
-                    ? "bg-muted border-primary" 
-                    : "bg-card border-border hover:border-primary/50"
-              )}
-            >
-              <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center mb-4", s.color)}>
-                  <s.icon className="h-5 w-5" />
-              </div>
-              <p className="text-2xl font-semibold text-foreground tracking-tight">{s.value}</p>
-              <p className="text-sm font-medium text-foreground mt-1">{s.label}</p>
-              <div className="flex items-center justify-between mt-1">
-                  <p className="text-xs text-muted-foreground">{s.sub}</p>
-                  <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform", activeStat === s.id && "rotate-90 text-primary")} />
-              </div>
+        {data.loading ? (
+          <div className="flex flex-col items-center justify-center py-24 gap-4">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground animate-pulse">Synchronizing with node cluster...</p>
+          </div>
+        ) : !metrics ? (
+          <div className="text-center py-24 border-2 border-dashed border-border rounded-2xl bg-card/30">
+            <Activity className="h-12 w-12 mx-auto text-muted-foreground/20 mb-4" />
+            <h3 className="text-lg font-medium text-muted-foreground">Protocol Idle</h3>
+            <p className="text-sm text-muted-foreground/60 max-w-xs mx-auto">
+              No ledger activity detected. Metrics will populate once bookings or blocks are broadcasted.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {stats.map((s) => (
+                <div
+                  key={s.id}
+                  onClick={() => setActiveStat(activeStat === s.id ? null : s.id)}
+                  className={cn(
+                      "p-6 rounded-xl border transition-all cursor-pointer group relative overflow-hidden",
+                      activeStat === s.id ? "bg-muted border-primary ring-1 ring-primary/30" : "bg-card border-border hover:border-primary/50 hover:-translate-y-0.5"
+                  )}
+                >
+                  <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center mb-4 transition-colors", s.color)}>
+                      <s.icon className="h-5 w-5" />
+                  </div>
+                  <p className="text-2xl font-semibold text-foreground tracking-tight">{s.value}</p>
+                  <p className="text-sm font-medium text-foreground mt-1">{s.label}</p>
+                  <div className="flex items-center justify-between mt-1">
+                    <p className="text-xs text-muted-foreground">{s.sub}</p>
+                    <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform", activeStat === s.id && "rotate-90 text-primary")} />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {activeStat && (
-            <div className="rounded-xl border border-border bg-card p-6 shadow-sm animate-in slide-in-from-top-2">
-                <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                            <Activity className="h-4 w-4 text-primary" /> Details
-                        </h3>
+            <AnimatePresence>
+              {activeStat && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="rounded-xl border border-border bg-card p-6 shadow-xl relative overflow-hidden"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        <Activity className="h-4 w-4" />
+                      </div>
+                      <h3 className="text-base font-semibold capitalize">{activeStat.replace('txs', 'transactions')} Underlying Data</h3>
                     </div>
                     <Button variant="ghost" size="icon" onClick={() => setActiveStat(null)}>
-                        <X className="h-4 w-4" />
+                      <X className="h-4 w-4" />
                     </Button>
-                </div>
-                <div className="max-w-3xl">{statDetails[activeStat]}</div>
-            </div>
-        )}
-
-        <div className="grid lg:grid-cols-2 gap-6">
-          <ChartPanel title="Global Latency Map" subtitle="Regional block propagation delay (ms)" badge="Live">
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={latencyData} barCategoryGap="20%">
-                <XAxis dataKey="time" hide />
-                <YAxis hide />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
-                <Bar dataKey="value" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} opacity={0.8} />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartPanel>
-          <ChartPanel title="Throughput Velocity" subtitle="Events processed per block cycle" badge="Protocol A">
-            <ResponsiveContainer width="100%" height={260}>
-              <AreaChart data={throughputData}>
-                <defs>
-                  <linearGradient id="tpGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.2} />
-                    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="time" hide />
-                <YAxis hide />
-                <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.2)' }} />
-                <Area type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} fill="url(#tpGrad)" dot={false} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </ChartPanel>
-        </div>
-
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
-              <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground"><Shield className="h-4 w-4" /></div>
-                  <div>
-                      <h3 className="text-base font-semibold text-foreground">Authorized Node Cluster</h3>
-                      <p className="text-sm text-muted-foreground">Epoch 429</p>
                   </div>
-              </div>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {nodes.map((node) => (
-              <div key={node.id} onClick={() => setActiveNode(activeNode === node.id ? null : node.id)} className={cn("p-4 rounded-lg border transition-colors cursor-pointer", activeNode === node.id ? "bg-muted border-border" : "bg-card border-border hover:border-primary/50")}>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-foreground">{node.label}</p>
-                  <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-medium uppercase", node.status === 'Active' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning')}>{node.status}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                    <p className="text-xs text-muted-foreground flex items-center gap-1"><Globe className="h-3 w-3" /> {node.loc}</p>
-                    <p className="text-xs font-mono text-muted-foreground">{node.uptime}</p>
-                </div>
-                {activeNode === node.id && (
-                    <div className="pt-4 mt-4 border-t border-border space-y-2">
-                        <div className="flex justify-between items-center"><span className="text-xs text-muted-foreground">IP Address</span><span className="text-xs font-mono text-foreground">{node.ip}</span></div>
-                        <div className="flex justify-between items-center"><span className="text-xs text-muted-foreground">Version</span><span className="text-xs font-mono text-foreground">{node.version}</span></div>
-                    </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+
+                  <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {activeStat === 'dau' && (
+                      <DataTable 
+                        headers={['User Signature', 'Activity', 'Timestamp']}
+                        data={metrics.dauDetails.map(d => [
+                          <span className="font-mono text-xs">{d.id}</span>,
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-muted border border-border">{d.label}</span>,
+                          <span className="text-xs text-muted-foreground">{moment(d.time).fromNow()}</span>
+                        ])}
+                      />
+                    )}
+
+                    {activeStat === 'retention' && (
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-4">
+                          <p className="text-xs font-bold uppercase tracking-widest text-success">Returning Users ({metrics.retentionDetails.returning.length})</p>
+                          <DataTable 
+                             headers={['Identity', 'Frequency']}
+                             data={metrics.retentionDetails.returning.map(u => [
+                               <span className="font-mono text-xs">{u.id}</span>,
+                               <span className="text-xs font-bold text-primary">{u.count} interactions</span>
+                             ])}
+                          />
+                        </div>
+                        <div className="space-y-4">
+                          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">New Users ({metrics.retentionDetails.new.length})</p>
+                          <DataTable 
+                             headers={['Identity', 'Status']}
+                             data={metrics.retentionDetails.new.map(u => [
+                               <span className="font-mono text-xs">{u.id}</span>,
+                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted border border-border uppercase">First Interaction</span>
+                             ])}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {activeStat === 'txs' && (
+                      <DataTable 
+                        headers={['Event Hash / ID', 'Type', 'Status', 'Time']}
+                        data={metrics.transactionDetails.map(t => [
+                          <span className="font-mono text-xs truncate max-w-[120px] block">{t.id}</span>,
+                          <span className="text-xs font-medium">{t.type}</span>,
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase font-bold">{t.status?.replace(/_/g, ' ')}</span>,
+                          <span className="text-xs text-muted-foreground">{moment(t.time).format('MMM DD, HH:mm')}</span>
+                        ])}
+                      />
+                    )}
+
+                    {activeStat === 'identifiers' && (
+                      <DataTable 
+                        headers={['Signature ID', 'Classification', 'Total Activity']}
+                        data={metrics.identifierDetails.map(i => [
+                          <span className="font-mono text-xs">{i.id}</span>,
+                          <span className="text-xs">{i.type}</span>,
+                          <span className="text-xs font-bold">{i.count} events</span>
+                        ])}
+                      />
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div className="grid lg:grid-cols-2 gap-6">
+              <ChartPanel title="Daily Active Users" subtitle="Unique interaction signatures per day" badge="User Flow">
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={metrics.userTrend} barCategoryGap="20%">
+                    <XAxis dataKey="time" hide />
+                    <YAxis hide />
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} opacity={0.8} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartPanel>
+              <ChartPanel title="Transaction Throughput" subtitle="Bookings and Blocks processed" badge="Velocity">
+                <ResponsiveContainer width="100%" height={260}>
+                  <AreaChart data={metrics.throughputTrend}>
+                    <defs>
+                      <linearGradient id="tpGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.2} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="time" hide />
+                    <YAxis hide />
+                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.2)' }} />
+                    <Area type="monotone" dataKey="value" stroke="hsl(var(--primary))" strokeWidth={2} fill="url(#tpGrad)" dot={false} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </ChartPanel>
+            </div>
+          </>
+        )}
       </div>
     </div>
+  );
+}
+
+function DataTable({ headers, data }) {
+  return (
+    <table className="w-full text-left border-collapse">
+      <thead>
+        <tr className="border-b border-border/40">
+          {headers.map(h => (
+            <th key={h} className="text-[10px] font-black uppercase tracking-widest text-muted-foreground py-3 px-2">{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-border/20">
+        {data.length === 0 ? (
+          <tr><td colSpan={headers.length} className="py-8 text-center text-xs text-muted-foreground">No data available in this segment</td></tr>
+        ) : data.map((row, i) => (
+          <tr key={i} className="hover:bg-muted/10 transition-colors">
+            {row.map((cell, j) => (
+              <td key={j} className="py-3 px-2 whitespace-nowrap">{cell}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 

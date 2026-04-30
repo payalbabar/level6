@@ -1,7 +1,9 @@
-import { Bell, Activity, ShieldCheck, Sparkles, Clock } from "lucide-react";
+import { Bell, Activity, ShieldCheck, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function AppHeader({ breadcrumb }) {
+  const { user } = useAuth();
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -61,10 +63,10 @@ export default function AppHeader({ breadcrumb }) {
           <div className="h-6 w-6 rounded-full flex items-center justify-center text-primary text-xs font-bold flex-shrink-0"
             style={{ background: "hsl(200 100% 55% / 0.15)" }}
           >
-            A
+            {user?.name?.[0]?.toUpperCase() || "U"}
           </div>
           <div className="hidden xl:block text-right">
-            <p className="text-xs font-semibold text-foreground leading-tight">Admin Node</p>
+            <p className="text-xs font-semibold text-foreground leading-tight">{user?.name || "unknown-node"}</p>
             <p className="text-[10px] text-primary font-medium leading-tight">Validated</p>
           </div>
           <ShieldCheck className="h-3.5 w-3.5 text-primary" />
