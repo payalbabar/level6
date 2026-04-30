@@ -249,6 +249,7 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 <img width="1920" height="870" alt="image" src="https://github.com/user-attachments/assets/aaa0bd78-ad96-495c-a0d7-1dec48a4af49" />
 <img width="1920" height="865" alt="image" src="https://github.com/user-attachments/assets/22f3f8af-3e7d-4daa-bdad-406f92849f6f" />
 <img width="1920" height="873" alt="image" src="https://github.com/user-attachments/assets/7ff7ffa6-58e3-48b7-8317-2b759848b75e" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c92a4ed-64c9-4e4c-8a6c-3141b79b3f42" />
 
 <img width="1920" height="871" alt="image" src="https://github.com/user-attachments/assets/9ec01fff-7f1f-4b46-8043-f09a54b6dbbd" />
 <img width="1920" height="863" alt="image" src="https://github.com/user-attachments/assets/8e3ed197-bcc5-4af1-9758-ac3f54f3c65d" />
