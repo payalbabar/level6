@@ -229,14 +229,14 @@ GasChain is engineered to scale from a testnet MVP to a national-scale productio
 ---
 
 ## 🔗 Submission Checklist
-- **Live Demo**: [https://level6-o3nk.vercel.app/](https://level6-o3nk.vercel.app/)
+- **Live Demo**: [https://level6-2mgt.vercel.app/](https://level6-2mgt.vercel.app/)
 - **Demo Video**: [https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J](https://youtu.be/WSb3E11AG_0?si=8gWmj0895uArYz9J)
 - **Active Wallets**: [View Verified Wallets & Feedback (Google Sheets)](https://docs.google.com/spreadsheets/d/1EUd0swodawwLFv8Btvce9rkJ55qmvpYR-9wI3NWukZw/edit?gid=248345574#gid=248345574)
-- **Dashboard**: [https://level6-o3nk.vercel.app/dashboard](https://level6-o3nk.vercel.app/dashboard) (Requires Login)
-- **Booking History**: [https://level6-o3nk.vercel.app/bookings](https://level6-o3nk.vercel.app/bookings) (Requires Login)
-- **Supply Chain**: [https://level6-o3nk.vercel.app/supply-chain](https://level6-o3nk.vercel.app/supply-chain) (Requires Login)
-- **Subsidies**: [https://level6-o3nk.vercel.app/subsidies](https://level6-o3nk.vercel.app/subsidies) (Requires Login)
-- **Ledger Explorer**: [https://level6-o3nk.vercel.app/ledger](https://level6-o3nk.vercel.app/ledger) (Requires Login)
+- **Dashboard**: [https://level6-2mgt.vercel.app/dashboard](https://level6-2mgt.vercel.app/dashboard) (Requires Login)
+- **Booking History**: [https://level6-2mgt.vercel.app/bookings](https://level6-2mgt.vercel.app/bookings) (Requires Login)
+- **Supply Chain**: [https://level6-2mgt.vercel.app/supply-chain](https://level6-2mgt.vercel.app/supply-chain) (Requires Login)
+- **Subsidies**: [https://level6-2mgt.vercel.app/subsidies](https://level6-2mgt.vercel.app/subsidies) (Requires Login)
+- **Ledger Explorer**: [https://level6-2mgt.vercel.app/ledger](https://level6-2mgt.vercel.app/ledger) (Requires Login)
 - **Security Checklist**: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 - **Community Contribution**: [Twitter/X Post](https://x.com/babar_payal/status/2047562173333790744?s=20)
 
